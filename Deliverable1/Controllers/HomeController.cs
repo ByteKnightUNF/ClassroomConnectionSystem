@@ -23,11 +23,7 @@ namespace Deliverable1.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-        public IActionResult Testing()
+        public IActionResult Login()
         {
             return View();
         }
