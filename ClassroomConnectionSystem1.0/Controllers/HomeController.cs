@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Deliverable1.Models;
+using ClassroomConnectionSystem1._0.Models;
 
-namespace Deliverable1.Controllers
+namespace ClassroomConnectionSystem1._0.Controllers
 {
     public class HomeController : Controller
     {
@@ -23,7 +23,7 @@ namespace Deliverable1.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Privacy()
         {
             return View();
         }
