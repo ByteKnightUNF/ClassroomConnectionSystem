@@ -8,13 +8,12 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-
+using CCS2._0.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pre_SemesterAssignment.Data;
 
-namespace ClassroomConnectionSystem1._0
+namespace CCS2._0
 {
     public class Startup
     {
