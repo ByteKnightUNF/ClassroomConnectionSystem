@@ -8,7 +8,7 @@
 <h1>ViewImage</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Photo_Upload">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -21,7 +21,10 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.School_Year)
+                @Html.DisplayNameFor(model => model.School_Year_Begin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.School_Year_End)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Grade)
@@ -38,31 +41,34 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.School_Year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Grade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Teacher_Name)
-                </td>
-                <td>
-                    <img src="@item.src" width="auto" height="50%" alt="Unknown Image" />
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { ID = item.Id }) |
-                    @Html.ActionLink("Delete", "DeleteImage", new { ID = item.Id }, new { onclick = "return confirm ( 'Are you sure?');" })
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.School_Year_Begin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.School_Year_End)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher_Name)
+            </td>
+            <td>
+                <img src="@item.src" width="auto" height="50%" alt="Unknown Image" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { ID = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteImage", new { ID = item.Id }, new { onclick = "return confirm ( 'Are you sure?');" })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

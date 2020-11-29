@@ -7,64 +7,249 @@
     ViewData["Title"] = "Admin Home Page";
 }
 <head>
-    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
 </head>
 <div class="text-center">
 
     @if (SignInManager.IsSignedIn(User))
     {
-        <h1 class="display-4">Classroom Connection Admin System</h1>
+        <h1 class="display-4">Admin Dashboard</h1>
 
+        <style>
+            #Admin_View:link, #Admin_View:visited {
+                border-style: solid;
+                border-color: darkblue;
+                box-shadow: 5px 10px darkblue;
+                padding: 50px 25px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
+
+            #Admin_View:hover, #Admin_View:active {
+                background-color: darkorange;
+            }
+        </style>
+
+
+
+
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="Photo_Upload">
+            Upload Photo
+        </a>
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
+            Delete Photo
+        </a>
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
+            View Images
+        </a>
+        <br />
+        <br />
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
+            Flagged Comments
+        </a>
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
+            New Comments
+        </a>
+
+
+
+
+        <div id="Admin_Stuff">
+
+
+
+        </div>
 
     }
     else
     {
-        <h1 class="display-4">Classroom Connection Alumnus System</h1>
-        
-       
-
-            <div data-role="collapsible">
-                <h1>Click me - I'm collapsible!</h1>
-                <p>I'm the expanded content.</p>
-                <div data-role="collapsible">
-                    <h1>Click me - I'm a nested collapsible block!</h1>
-                    <p>I'm the expanded content in the nested collapsible block.</p>
-                    <div data-role="collapsible">
-                        <h1>Click me - I'm a nested collapsible block!</h1>
-                        <p>I'm the expanded content in the nested collapsible block.</p>
-                        <div data-role="collapsible">
-                            <h1>Click me - I'm a nested collapsible block!</h1>
-                            <p>I'm the expanded content in the nested collapsible block.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <h1 class="display-4">Welcome Alumni</h1>
 
 
-            <div data-role="collapsible">
-                <h1>Click me - I'm collapsible!</h1>
-                <p>I'm the expanded content.</p>
-                <div data-role="collapsible">
-                    <h1>Click me - I'm a nested collapsible block!</h1>
-                    <p>I'm the expanded content in the nested collapsible block.</p>
-                    <div data-role="collapsible">
-                        <h1>Click me - I'm a nested collapsible block!</h1>
-                        <p>I'm the expanded content in the nested collapsible block.</p>
-                        <div data-role="collapsible">
-                            <h1>Click me - I'm a nested collapsible block!</h1>
-                            <p>I'm the expanded content in the nested collapsible block.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <style>
+            .collapsible {
+                background-color: darkblue;
+                color: white;
+                cursor: pointer;
+                padding: 18px;
+                width: 100%;
+                border: none;
+                text-align: left;
+                outline: none;
+                font-size: 15px;
+            }
+
+                .collapsible:hover {
+                    background-color: darkorange;
+                }
+
+            .content {
+                padding: 0 18px;
+                display: none;
+                overflow: hidden;
+            }
+        </style>
+
+        <div id="AlumniHome">
+
+
+        </div>
+
+        <script>
+            function createDiv() {
+
+
+
+                if (!document.getElementById(arguments[0])) {
+                    holder = document.getElementById(arguments[1]);
+                    add2 = document.createElement("button");
+                    add2.setAttribute("type", "button");
+                    add2.setAttribute("class", "collapsible");
+
+
+                    add5 = document.createTextNode(arguments[2]);
+                    add2.append(add5);
+
+                    add3 = document.createElement("div");
+                    add3.setAttribute("class", "content");
+                    add3.setAttribute("Id", arguments[0]);
+
+
+
+                    holder.append(add2, add3);
+                } else {
+
+                }
+            }
+        </script>
+
+        @if (Model.Count() == 0)
+        {
+            <script>
+                holder = document.getElementById("AlumniHome");
+
+                holder.append("Please request your photo to be upload by email request");
+            </script>
+
+        }
+        else
+        {
+
+            @foreach (var item in Model)
+            {
+
+
+                @if (item.School_Year_End >= 1950 && item.School_Year_End <= 1960)
+                {
+<script>
+                        createDiv("1950 - 1960", "AlumniHome", "1950 - 1960");
+                        createDiv("1950 - 1960" + "@item.School_Year_End.ToString()", "1950 - 1960", "@item.School_Year_End.ToString()");
+                        createDiv("1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade", "1950 - 1960" + "@item.School_Year_End.ToString()", "@item.Grade");
+                        createDiv("1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+
+
+
+</script>
+
+                }
+                else if (item.School_Year_End >= 1961 && item.School_Year_End <= 1970)
+                {
+<script>
+    createDiv("1961 - 1970", "AlumniHome", "1961 - 1970");
+    createDiv("1961 - 1970" + "@item.School_Year_End.ToString()", "1961 - 1970", "@item.School_Year_End.ToString()");
+    createDiv("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade", "1961 - 1970" + "@item.School_Year_End.ToString()", "@item.Grade");
+    createDiv("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+
+
+
+</script>
+
+                }
+                else if (item.School_Year_End >= 1971 && item.School_Year_End <= 1980)
+                {
+<script>
+    createDiv("1971 - 1980", "AlumniHome", "1971 - 1980");
+    createDiv("1971 - 1980" + "@item.School_Year_End.ToString()", "1971 - 1980", "@item.School_Year_End.ToString()");
+    createDiv("1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade", "1971 - 1980" + "@item.School_Year_End.ToString()", "@item.Grade");
+    createDiv("1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+
+
+</script>
+
+                }
+                else if (item.School_Year_End >= 1981 && item.School_Year_End <= 1990)
+                {
+<script>
+    createDiv("1981 - 1990", "AlumniHome", "1981 - 1990");
+                        createDiv("1981 - 1990" + "@item.School_Year_End.ToString()", "1981 - 1990", "@item.School_Year_End.ToString()");
+                        createDiv("1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade", "1981 - 1990" + "@item.School_Year_End.ToString()", "@item.Grade");
+                        createDiv("1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+
+
+
+</script>
+
+                }
+                else if (item.School_Year_End >= 1991 && item.School_Year_End <= 2000)
+                {
+<script>
+    createDiv("1991 - 2000", "AlumniHome", "1991 - 2000");
+                        createDiv("1991 - 2000" + "@item.School_Year_End.ToString()", "1991 - 2000", "@item.School_Year_End.ToString()");
+                        createDiv("1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade", "1991 - 2000" + "@item.School_Year_End.ToString()", "@item.Grade");
+                        createDiv("1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+
+
+
+</script>
+
+                }
+                else if (item.School_Year_End >= 2001 && item.School_Year_End <= 2010)
+                {
+<script>
+                        createDiv("2001 - 2010", "AlumniHome", "2001 - 2010");
+                        createDiv("2001 - 2010" + "@item.School_Year_End.ToString()", "2001 - 2010", "@item.School_Year_End.ToString()");
+                        createDiv("2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade", "2001 - 2010" + "@item.School_Year_End.ToString()", "@item.Grade");
+                        createDiv("2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+
+</script>
+
+                }
+                
+
+            }
 
 
 
         }
 
 
+        <!--issue last div based on grade maybe change to include prev div -->
 
-    </div>
+
+
+
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+        </script>
+
+
+    }
+
+
+
+</div>
 

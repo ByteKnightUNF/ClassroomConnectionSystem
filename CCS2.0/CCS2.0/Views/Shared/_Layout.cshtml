@@ -18,7 +18,7 @@
             <div class="container">
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="/Images/Dinsmore-Logo.png" width="auto" height="50%" alt="Dinsmore Logo" />
                     </a>
 
@@ -45,12 +45,7 @@
 
                         <ul class="navbar-nav flex-grow-1">
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Image" asp-action="Index">Upload Image</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Image" asp-action="ViewImage">View Image</a>
-                            </li>
+                            
                         </ul>
                     }
 
