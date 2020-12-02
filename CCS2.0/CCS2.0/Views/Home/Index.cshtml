@@ -46,6 +46,9 @@
         <br />
         <br />
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
+            Monitor Tag
+        </a>
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
             Flagged Comments
         </a>
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
@@ -64,6 +67,14 @@
     }
     else
     {
+        <style>
+            #asd {
+                display: flex;
+                justify-content: flex-end;
+            }
+        </style>
+        <a id="asd" asp-area="" asp-controller="Home" asp-action="Email" >Email Us</a>
+
         <h1 class="display-4">Welcome Alumni</h1>
 
 
@@ -90,6 +101,7 @@
                 overflow: hidden;
             }
         </style>
+
 
         <div id="AlumniHome">
 
@@ -142,7 +154,7 @@
 
                 @if (item.School_Year_End >= 1950 && item.School_Year_End <= 1960)
                 {
-<script>
+                    <script>
                         createDiv("1950 - 1960", "AlumniHome", "1950 - 1960");
                         createDiv("1950 - 1960" + "@item.School_Year_End.ToString()", "1950 - 1960", "@item.School_Year_End.ToString()");
                         createDiv("1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade", "1950 - 1960" + "@item.School_Year_End.ToString()", "@item.Grade");
@@ -150,12 +162,12 @@
 
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.School_Year_End >= 1961 && item.School_Year_End <= 1970)
                 {
-<script>
+                    <script>
     createDiv("1961 - 1970", "AlumniHome", "1961 - 1970");
     createDiv("1961 - 1970" + "@item.School_Year_End.ToString()", "1961 - 1970", "@item.School_Year_End.ToString()");
     createDiv("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade", "1961 - 1970" + "@item.School_Year_End.ToString()", "@item.Grade");
@@ -163,24 +175,24 @@
 
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.School_Year_End >= 1971 && item.School_Year_End <= 1980)
                 {
-<script>
+                    <script>
     createDiv("1971 - 1980", "AlumniHome", "1971 - 1980");
     createDiv("1971 - 1980" + "@item.School_Year_End.ToString()", "1971 - 1980", "@item.School_Year_End.ToString()");
     createDiv("1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade", "1971 - 1980" + "@item.School_Year_End.ToString()", "@item.Grade");
     createDiv("1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.School_Year_End >= 1981 && item.School_Year_End <= 1990)
                 {
-<script>
+                    <script>
     createDiv("1981 - 1990", "AlumniHome", "1981 - 1990");
                         createDiv("1981 - 1990" + "@item.School_Year_End.ToString()", "1981 - 1990", "@item.School_Year_End.ToString()");
                         createDiv("1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade", "1981 - 1990" + "@item.School_Year_End.ToString()", "@item.Grade");
@@ -188,12 +200,12 @@
 
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.School_Year_End >= 1991 && item.School_Year_End <= 2000)
                 {
-<script>
+                    <script>
     createDiv("1991 - 2000", "AlumniHome", "1991 - 2000");
                         createDiv("1991 - 2000" + "@item.School_Year_End.ToString()", "1991 - 2000", "@item.School_Year_End.ToString()");
                         createDiv("1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade", "1991 - 2000" + "@item.School_Year_End.ToString()", "@item.Grade");
@@ -201,21 +213,21 @@
 
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.School_Year_End >= 2001 && item.School_Year_End <= 2010)
                 {
-<script>
+                    <script>
                         createDiv("2001 - 2010", "AlumniHome", "2001 - 2010");
                         createDiv("2001 - 2010" + "@item.School_Year_End.ToString()", "2001 - 2010", "@item.School_Year_End.ToString()");
                         createDiv("2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade", "2001 - 2010" + "@item.School_Year_End.ToString()", "@item.Grade");
                         createDiv("2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
 
-</script>
+                    </script>
 
                 }
-                
+
 
             }
 
