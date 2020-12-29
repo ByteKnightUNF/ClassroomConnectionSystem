@@ -39,10 +39,10 @@ namespace DataLibrary.BussinessLogic
 
         public static List<ImageModel> GetPhotoId(int Id)
         {
-    
+
             string sql = @"select *
                         from dbo.Image
-                        Where Id = @Id;";
+                        Where Id = "+@Id+ ";";
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
