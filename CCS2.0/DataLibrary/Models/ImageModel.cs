@@ -19,7 +19,10 @@ namespace DataLibrary.Models
 
         public string Email { get; set; }
 
-        public string School_Year { get; set; }
+        public int School_Year_Begin { get; set; }
+
+        public int School_Year_End { get; set; }
+    
 
         public string Grade { get; set; }
 

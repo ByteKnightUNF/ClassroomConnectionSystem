@@ -25,9 +25,15 @@ namespace ImageUpload.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Please enter the School Year of the photo")]
-        [Display(Name = "School Year")]
-        public string School_Year { get; set; }
+        [Required(ErrorMessage = "Please enter the beginning School Year of the photo")]
+        [Display(Name = "School Year Beginning")]
+        
+        public int School_Year_Begin { get; set; }
+
+
+        [Required(ErrorMessage = "Please enter the ending School Year of the photo")]
+        [Display(Name = "School Year Ending")]
+        public int School_Year_End { get; set; }
 
         [Required(ErrorMessage = "Please enter the Grade of the photo")]
         public string Grade { get; set; }

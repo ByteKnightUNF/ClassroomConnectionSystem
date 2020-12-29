@@ -33,8 +33,7 @@ namespace CCS2._0.Controllers
 
 
 
-       
-    public IActionResult Index()
+        public IActionResult Index(string sBase64String, ImageModel model)
         {
             List<ImageModel> Match = new List<ImageModel>();
 
@@ -49,7 +48,8 @@ namespace CCS2._0.Controllers
                     Id = row.Id,
                     Name = row.Name,
                     Email = row.Email,
-                    School_Year = row.School_Year,
+                    School_Year_Begin = row.School_Year_Begin,
+                    School_Year_End = row.School_Year_End,
                     Grade = row.Grade,
                     Teacher_Name = row.Teacher_Name,
                     src = this.ViewImage(row.ImageFile)
@@ -57,9 +57,38 @@ namespace CCS2._0.Controllers
             }
 
             return View(Match);
+ 
 
-           
         }
+
+
+
+    public IActionResult ViewPost(int ID )
+        {
+            List<ImageModel> Match = new List<ImageModel>();
+
+            var match = GetPhotoId(ID);
+            
+            foreach (var row in match)
+            {
+
+
+                Match.Add(new ImageModel
+                {
+                    Id = row.Id,
+                    Name = row.Name,
+                    Email = row.Email,
+                    School_Year_Begin = row.School_Year_Begin,
+                    School_Year_End = row.School_Year_End,
+                    Grade = row.Grade,
+                    Teacher_Name = row.Teacher_Name,
+                    src = this.ViewImage(row.ImageFile)
+                });
+            }
+
+            return View(Match);
+        }
+
         private string ViewImage(byte[] arrayImage)
 
         {
@@ -70,7 +99,14 @@ namespace CCS2._0.Controllers
 
         }
 
+        
+
+
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Email()
         {
             return View();
         }

@@ -30,7 +30,7 @@ namespace CCS2._0.Controllers
         }
     
 
-        public IActionResult index()
+        public IActionResult Photo_Upload()
         {
             ViewBag.image = null;
             return View();
@@ -38,7 +38,7 @@ namespace CCS2._0.Controllers
 
 
         [HttpPost]
-        public IActionResult index(ImageModel model)
+        public IActionResult Photo_Upload(ImageModel model)
         {
             Byte[] bytes = null;
 
@@ -54,7 +54,7 @@ namespace CCS2._0.Controllers
                     }
 
 
-                    int recordCreated = CreatePhoto(model.Name,model.Email,model.School_Year,model.Grade,model.Teacher_Name, bytes);
+                    int recordCreated = CreatePhoto(model.Name,model.Email,model.School_Year_Begin, model.School_Year_End, model.Grade,model.Teacher_Name, bytes);
 
                     ViewBag.image = ViewImage(bytes);
 
@@ -97,7 +97,8 @@ namespace CCS2._0.Controllers
                     Id = row.Id,
                     Name = row.Name,
                     Email =row.Email,
-                    School_Year =row.School_Year,
+                    School_Year_Begin = row.School_Year_Begin,
+                    School_Year_End = row.School_Year_End,
                     Grade =row.Grade,
                     Teacher_Name = row.Teacher_Name,
                     src = this.ViewImage(row.ImageFile)

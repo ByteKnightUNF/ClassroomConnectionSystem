@@ -12,7 +12,7 @@ namespace DataLibrary.BussinessLogic
 {
     public static class PhotoProccesor
     {
-        public static int CreatePhoto(string Name, string Email, string School_Year, string Grade, string Teacher_Name, Byte[] ImageFile)
+        public static int CreatePhoto(string Name, string Email, int School_Year_Begin, int School_Year_End , string Grade, string Teacher_Name, Byte[] ImageFile)
         {
 
 
@@ -23,25 +23,34 @@ namespace DataLibrary.BussinessLogic
 
                 Name = Name,
                 Email = Email,
-                School_Year = School_Year,
+                School_Year_Begin = School_Year_Begin,
+                School_Year_End = School_Year_End,
                 Grade = Grade,
                 Teacher_Name = Teacher_Name,
                 ImageFile = ImageFile
 
-
             };
 
-            string sql = @"insert into dbo.Image (Name, Email, School_Year, Grade, Teacher_Name, ImageFile)
-                          values (@Name, @Email, @School_Year, @Grade, @Teacher_Name, @ImageFile );";
+            string sql = @"insert into dbo.Image (Name, Email, School_Year_Begin, School_Year_End, Grade, Teacher_Name, ImageFile)
+                          values (@Name, @Email, @School_Year_Begin, @School_Year_End, @Grade, @Teacher_Name, @ImageFile );";
 
             return SqlDataAccess.SaveData(sql, data);
         }
 
+        public static List<ImageModel> GetPhotoId(int Id)
+        {
+
+            string sql = @"select *
+                        from dbo.Image
+                        Where Id = "+@Id+ ";";
+
+            return SqlDataAccess.LoadData<ImageModel>(sql);
+        }
 
         public static List<ImageModel> LoadPhoto()
         {
 
-            string sql = @"select id, Name, Email, School_Year, Grade, Teacher_Name, ImageFile
+            string sql = @"select id, Name, Email, School_Year_Begin, School_Year_End, Grade, Teacher_Name, ImageFile
                         from dbo.Image;";
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
