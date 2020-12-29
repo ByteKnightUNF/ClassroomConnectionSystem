@@ -13,7 +13,7 @@ namespace DataLibrary.DataAccess
 {
     class SqlDataAccess
     {
-        public static string GetConnectionString(string connectionName = "CCSDB")
+        public static string GetConnectionString(string connectionName = "DefaultConnection")
         {
             return ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
 
