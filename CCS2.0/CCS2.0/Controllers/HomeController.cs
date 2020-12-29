@@ -63,11 +63,11 @@ namespace CCS2._0.Controllers
 
 
 
-    public IActionResult ViewPost(int id)
+    public IActionResult ViewPost(int ID )
         {
             List<ImageModel> Match = new List<ImageModel>();
 
-            var match = GetPhotoId(id);
+            var match = GetPhotoId(ID);
             
             foreach (var row in match)
             {

@@ -73,7 +73,7 @@
                 justify-content: flex-end;
             }
         </style>
-        <a id="asd" asp-area="" asp-controller="Home" asp-action="Email" >Email Us</a>
+        <a id="asd" asp-area="" asp-controller="Home" asp-action="Email">Email Us</a>
 
         <h1 class="display-4">Welcome Alumni</h1>
 
@@ -104,9 +104,36 @@
 
 
         <div id="AlumniHome">
+            <button type="button" class="collapsible" id="1950" style="display: none;">1950 - 1961</button>
+            <div class="content" id="1950 - 1960" style="display: none;">
+
+            </div>
+
+            <button type="button" class="collapsible" id="1961" style="        display: none;">1961 - 1970</button>
+            <div class="content" id="1961 - 1970" style="display: none;">
+
+            </div>
+            <button type="button" class="collapsible" id="1971" style="        display: none;">1971 - 1980</button>
+            <div class="content" id="1971 - 1980" style="display: none;">
+
+            </div>
+            <button type="button" class="collapsible" id="1981" style="        display: none;">1981 - 1990</button>
+            <div class="content" id="1981 - 1990" style="display: none;">
+
+            </div>
+            <button type="button" class="collapsible" id="1991" style="        display: none;">1991 - 2000</button>
+            <div class="content" id="1991 - 2000" style="display: none;">
+
+            </div>
+            <button type="button" class="collapsible" id="2001" style="        display: none;">2001 - 2010</button>
+            <div class="content" id="2001 - 2010" style="display: none;">
+
+            </div>
 
 
         </div>
+
+
 
         <script>
             function createDiv() {
@@ -118,6 +145,7 @@
                     add2 = document.createElement("button");
                     add2.setAttribute("type", "button");
                     add2.setAttribute("class", "collapsible");
+                    add2.setAttribute("Id", arguments[0] + "1");
 
 
                     add5 = document.createTextNode(arguments[2]);
@@ -133,6 +161,11 @@
                 } else {
 
                 }
+              
+            }
+            function newpage(id) {
+
+                window.location.href = "/Home/ViewPost/" + id;
             }
         </script>
 
@@ -154,80 +187,99 @@
 
                 @if (item.School_Year_End >= 1950 && item.School_Year_End <= 1960)
                 {
-                    <script>
-                        createDiv("1950 - 1960", "AlumniHome", "1950 - 1960");
+
+                
+
+<script>
+                        document.getElementById('1950').style.display = "block";
+
                         createDiv("1950 - 1960" + "@item.School_Year_End.ToString()", "1950 - 1960", "@item.School_Year_End.ToString()");
                         createDiv("1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade", "1950 - 1960" + "@item.School_Year_End.ToString()", "@item.Grade");
-                        createDiv("1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
 
+                        createDiv("1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()", "@item.Teacher_Name.ToString()");
 
+                a = document.getElementById("1950 - 1960" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()" + "1");
+                a.setAttribute("onclick", "return newpage(@item.Id);");
 
-                    </script>
+</script> 
+
 
                 }
                 else if (item.School_Year_End >= 1961 && item.School_Year_End <= 1970)
                 {
-                    <script>
-    createDiv("1961 - 1970", "AlumniHome", "1961 - 1970");
-    createDiv("1961 - 1970" + "@item.School_Year_End.ToString()", "1961 - 1970", "@item.School_Year_End.ToString()");
-    createDiv("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade", "1961 - 1970" + "@item.School_Year_End.ToString()", "@item.Grade");
-    createDiv("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+<script>
+                        document.getElementById('1961').style.display = "block";
+
+                        createDiv("1961 - 1970" + "@item.School_Year_End.ToString()", "1961 - 1970", "@item.School_Year_End.ToString()");
+                        createDiv("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade", "1961 - 1970" + "@item.School_Year_End.ToString()", "@item.Grade");
+
+                        createDiv("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+    a = document.getElementById("1961 - 1970" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()" + "1");
+                a.setAttribute("onclick", "return newpage(@item.Id);");
 
 
-
-                    </script>
+</script>
 
                 }
                 else if (item.School_Year_End >= 1971 && item.School_Year_End <= 1980)
                 {
-                    <script>
-    createDiv("1971 - 1980", "AlumniHome", "1971 - 1980");
+<script>
+                        document.getElementById('1971').style.display = "block";
+
     createDiv("1971 - 1980" + "@item.School_Year_End.ToString()", "1971 - 1980", "@item.School_Year_End.ToString()");
     createDiv("1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade", "1971 - 1980" + "@item.School_Year_End.ToString()", "@item.Grade");
     createDiv("1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1971 - 1980" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+    a = document.getElementById("1971 - 1980"" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()" + "1");
+                a.setAttribute("onclick", "return newpage(@item.Id);");
 
-
-                    </script>
+</script>
 
                 }
                 else if (item.School_Year_End >= 1981 && item.School_Year_End <= 1990)
                 {
-                    <script>
-    createDiv("1981 - 1990", "AlumniHome", "1981 - 1990");
+<script>
+                        document.getElementById('1981').style.display = "block";
+
                         createDiv("1981 - 1990" + "@item.School_Year_End.ToString()", "1981 - 1990", "@item.School_Year_End.ToString()");
                         createDiv("1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade", "1981 - 1990" + "@item.School_Year_End.ToString()", "@item.Grade");
                         createDiv("1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+    a = document.getElementById("1981 - 1990" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()" + "1");
+                a.setAttribute("onclick", "return newpage(@item.Id);");
 
 
-
-                    </script>
+</script>
 
                 }
                 else if (item.School_Year_End >= 1991 && item.School_Year_End <= 2000)
                 {
-                    <script>
-    createDiv("1991 - 2000", "AlumniHome", "1991 - 2000");
+<script>
+                        document.getElementById('1991').style.display = "block";
+
                         createDiv("1991 - 2000" + "@item.School_Year_End.ToString()", "1991 - 2000", "@item.School_Year_End.ToString()");
                         createDiv("1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade", "1991 - 2000" + "@item.School_Year_End.ToString()", "@item.Grade");
                         createDiv("1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
+    a = document.getElementById("1991 - 2000" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()" + "1");
+                a.setAttribute("onclick", "return newpage(@item.Id);");
 
 
-
-                    </script>
+</script>
 
                 }
                 else if (item.School_Year_End >= 2001 && item.School_Year_End <= 2010)
                 {
-                    <script>
-                        createDiv("2001 - 2010", "AlumniHome", "2001 - 2010");
+<script>
+                        document.getElementById('2001').style.display = "block";
+
                         createDiv("2001 - 2010" + "@item.School_Year_End.ToString()", "2001 - 2010", "@item.School_Year_End.ToString()");
                         createDiv("2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade", "2001 - 2010" + "@item.School_Year_End.ToString()", "@item.Grade");
                         createDiv("2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()", "2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade.ToString()","@item.Teacher_Name.ToString()");
-
-                    </script>
+    a = document.getElementById("2001 - 2010" + "@item.School_Year_End.ToString()" + "@item.Grade" + "@item.Teacher_Name.ToString()" + "1");
+                a.setAttribute("onclick", "return newpage(@item.Id);");
+</script>
 
                 }
 
+               
 
             }
 
