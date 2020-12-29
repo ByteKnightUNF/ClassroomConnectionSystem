@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'classroomconnectionsystem'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e5ee7ed05ad04faaaadacf5b5deeb1eb }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_b75372b99017415f93ffa74045e5857b }}
         package: ${{env.DOTNET_ROOT}}/myapp 
