@@ -20,17 +20,24 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <img src="@item.src" width="auto"  alt="Unknown Image" class="center"/>
+                <img src="@item.src" width="auto" alt="Unknown Image" class="center" />
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-4">
+                @Html.DisplayFor(modelItem => item.CommentModel)
             </div>
+
             <div class="col-md-4">
             </div>
+
             <div class="col-md-4">
             </div>
         </div>
     </div>
+
 }
+
+
 

@@ -47,6 +47,16 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
+        public static List<CommentModel> GetCommentId(int Id)
+        {
+
+            string sql = @"select *
+                        from dbo.Comment
+                        Where ImageId = " + @Id + ";";
+
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+        }
+
         public static List<ImageModel> LoadPhoto()
         {
 

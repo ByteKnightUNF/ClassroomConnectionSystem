@@ -7,12 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CCS2._0.Models
+namespace ImageUpload.Models
 {
     public class CommentModel
     {
         [Key]
-        public int Id { get; set; }
+        public int CommentId { get; set; }
 
         [Required(ErrorMessage = "Please enter your Comment.")]
         [StringLength(256, ErrorMessage = "The Comment cannot exceed 256 characters.")]
@@ -24,7 +24,9 @@ namespace CCS2._0.Models
 
         public Boolean Flag { get; set; }
 
-        [ForeignKey]
+
+
         public int ImageId { get; set; }
+        public ImageModel ImageModel { get; set; }
     }
 }
