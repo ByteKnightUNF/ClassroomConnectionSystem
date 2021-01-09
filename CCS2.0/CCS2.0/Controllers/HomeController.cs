@@ -133,5 +133,19 @@ namespace CCS2._0.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult NewComment(int Id)
+        {
+            ViewBag.ImageId = Id;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewComment(ImageUpload.Models.CommentModel model)
+        {
+            int recordCreated = CreateComment(model.Comment, model.Name, model.Flag, model.ImageId);
+
+            return View();
+        }
     }
 }

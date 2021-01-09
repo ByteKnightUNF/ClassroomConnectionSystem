@@ -23,14 +23,17 @@
                 <img src="@item.src" width="auto" alt="Unknown Image" class="center" />
             </div>
         </div>
-
+        <div class="col-md-4">
+            </div>
         <div class="row">
+            <div class="col-md-4">
+                <a asp-action="NewComment">New Comment</a>
+            </div>
             <div class="col-md-4">
                 @Html.DisplayFor(modelItem => item.CommentModel)
             </div>
 
-            <div class="col-md-4">
-            </div>
+
 
             <div class="col-md-4">
             </div>

@@ -37,6 +37,27 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.SaveData(sql, data);
         }
 
+        public static int CreateComment(string Comment, string Name, Boolean Flag, int ImageId)
+        {
+
+
+
+
+            CommentModel data = new CommentModel
+            {
+                Comment = Comment,
+                Names = Name,
+                Flag = Flag,
+                ImageId = ImageId
+
+            };
+
+            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId)
+                          values (@Comment, @Names, @Flag, @ImageId);";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
         public static List<ImageModel> GetPhotoId(int Id)
         {
 
@@ -66,6 +87,15 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
+        public static List<CommentModel> LoadComment()
+        {
+
+            string sql = @"select Comment_Id, Comment, Names, Flag, ImageId
+                        from dbo.Comment;";
+
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+        }
+
         public static int Deleteimage(int Id)
         {
             ImageModel data = new ImageModel
@@ -75,6 +105,20 @@ namespace DataLibrary.BussinessLogic
             };
 
             string sql = @"DELETE FROM dbo.Image WHERE Id= @Id;";
+
+            return SqlDataAccess.SaveData(sql, data);
+
+        }
+
+        public static int DeleteComment(int Id)
+        {
+            CommentModel data = new CommentModel
+            {
+                Comment_Id = Id
+
+            };
+
+            string sql = @"DELETE FROM dbo.Comment WHERE Comment_Id= @Comment_Id;";
 
             return SqlDataAccess.SaveData(sql, data);
 
