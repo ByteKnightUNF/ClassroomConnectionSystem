@@ -22,25 +22,21 @@
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Flag" /> @Html.DisplayNameFor(model => model.Flag)
-                    </label>
+                <div class="form-group">
+                    <input type="number" name="Flag" hidden value="0">
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageId" class="control-label"></label>
-                    <input asp-for="ImageId" class="form-control" />
-                    <span asp-validation-for="ImageId" class="text-danger"></span>
+                    <input type="number" name="ImageId" hidden value="@ViewBag.ImageId">
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Post Comment" class="btn btn-primary" />
                 </div>
             </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Cancel", "ViewPost", new { Id = @ViewBag.ImageId })
 </div>
 
 @section Scripts {

@@ -10,36 +10,40 @@
 
 @foreach (var item in Model)
 {
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="text-center">
-                    @Html.DisplayFor(modelItem => item.School_Year_Begin) - @Html.DisplayFor(modelItem => item.School_Year_End)
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <img src="@item.src" width="auto" alt="Unknown Image" class="center" />
-            </div>
-        </div>
-        <div class="col-md-4">
-            </div>
-        <div class="row">
-            <div class="col-md-4">
-                <a asp-action="NewComment">New Comment</a>
-            </div>
-            <div class="col-md-4">
-                @Html.DisplayFor(modelItem => item.CommentModel)
-            </div>
-
-
-
-            <div class="col-md-4">
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">
+                @Html.DisplayFor(modelItem => item.School_Year_Begin) - @Html.DisplayFor(modelItem => item.School_Year_End)
+            </h3>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <img src="@item.src" width="auto" alt="Unknown Image" class="center" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("New Comment", "NewComment", new { Id = item.Id })
+        </div>
+    </div>
+</div>
+    
+        @foreach (var com in item.CommentModel)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.DisplayFor(modelItem => com.Comment)
+                </div>
 
+                <div class="col-md-4">
+                    @Html.DisplayFor(modelItem => com.Name)
+                </div>
+
+
+            </div>
+        }
 }
 
 

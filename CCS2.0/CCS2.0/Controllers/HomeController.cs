@@ -141,11 +141,11 @@ namespace CCS2._0.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewComment(ImageUpload.Models.CommentModel model)
+        public IActionResult NewComment(ImageUpload.Models.CommentModel model, int Id)
         {
             int recordCreated = CreateComment(model.Comment, model.Name, model.Flag, model.ImageId);
 
-            return View();
+            return RedirectToAction("ViewPost", new { ID = Id });
         }
     }
 }
