@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
 using ImageModel = ImageUpload.Models.ImageModel;
+using CommentModel = ImageUpload.Models.CommentModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 
@@ -122,6 +123,44 @@ namespace CCS2._0.Controllers
 
         }
 
-        
+        public IActionResult ViewComment()
+        {
+            List<CommentModel> Com = new List<CommentModel>();
+            var com = LoadComment();
+
+            foreach(var row in com)
+            {
+                Com.Add(new CommentModel
+                {
+                    CommentId = row.Comment_Id,
+                    Comment = row.Comment,
+                    Name = row.Names,
+                    Flag = row.Flag,
+                    ImageId = row.ImageId
+                });
+            }
+
+            return View(Com);
+        }
+
+        public IActionResult Delete_Comment(int ID)
+        {
+            try
+            {
+                int recordCreated = DeleteComment(ID);
+                return RedirectToAction("ViewComment");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
+        public IActionResult EditComment(int Id)
+        {
+            return View();
+        }
+
     }
 }
