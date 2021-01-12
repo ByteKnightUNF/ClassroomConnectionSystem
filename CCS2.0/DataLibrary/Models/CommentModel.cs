@@ -14,7 +14,7 @@ namespace DataLibrary.Models
 
         public string Names { get; set; }
 
-        public Boolean Flag { get; set; }
+        public bool Flag { get; set; }
 
         public int ImageId { get; set; }
     }

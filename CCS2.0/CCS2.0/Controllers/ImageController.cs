@@ -159,7 +159,30 @@ namespace CCS2._0.Controllers
 
         public IActionResult EditComment(int Id)
         {
-            return View();
+            CommentModel Com = new CommentModel();
+            var com = GetComment(Id);
+
+            foreach (var row in com)
+            {
+                Com = (new CommentModel
+                {
+                    CommentId = row.Comment_Id,
+                    Comment = row.Comment,
+                    Name = row.Names,
+                    Flag = row.Flag,
+                    ImageId = row.ImageId
+                });
+            }
+
+            return View(Com);
+        }
+
+        [HttpPost]
+        public IActionResult EditComment(ImageUpload.Models.CommentModel model)
+        {
+            int recordCreated = Edit_Comment(model.CommentId, model.Comment, model.Name, model.Flag, model.ImageId);
+
+            return RedirectToAction("ViewComment");
         }
 
     }

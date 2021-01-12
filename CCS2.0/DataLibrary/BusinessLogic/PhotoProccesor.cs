@@ -78,6 +78,16 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<CommentModel>(sql);
         }
 
+        public static List<CommentModel> GetComment(int Id)
+        {
+
+            string sql = @"select *
+                        from dbo.Comment
+                        Where Comment_Id = " + @Id + ";";
+
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+        }
+
         public static List<ImageModel> LoadPhoto()
         {
 
@@ -122,6 +132,22 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
 
+        }
+
+        public static int Edit_Comment(int Id, string Comment, string Name, bool Flag, int ImageId)
+        {
+            CommentModel data = new CommentModel
+            {
+                Comment_Id = Id,
+                Comment = Comment,
+                Names = Name,
+                Flag = Flag,
+                ImageId = ImageId
+            };
+
+            string sql = @"UPDATE dbo.Comment SET Comment = @Comment, Names = @Names, Flag = @Flag WHERE Comment_Id = @Comment_Id;";
+
+            return SqlDataAccess.SaveData(sql, data);
         }
     }
 }
