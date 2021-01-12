@@ -3,11 +3,64 @@
 }
 <h1>@ViewData["Title"]</h1>
 
+<style>
+    .back {
+        position: relative;
+        height: 100vh;
+        width: 100%;       
+        align-items: center;
+        justify-content: center;
+    }
 
+        .back::before {
+            content: "";
+            background-image: url("/Images/Dinsmore-Logo.png");
+            background-size: 300px 300px;
+            background-repeat: no-repeat;
+            background-position: center top ;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            opacity: 0.2;
+        }
+
+    p {
+        position: relative;
+        text-align: left ;
+        font-size: large;
+    }
+
+    h1, b1 {
+        position: relative;
+        overflow: hidden;
+        font-weight: bold;
+        background: linear-gradient(90deg, orange, blue, orange);
+        background-repeat: repeat;
+        background-size: 80%;
+        animation: animate 5s linear;
+        animation-iteration-count: 1;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0);
+    }
+
+    @@keyframes animate {
+        0% {
+            background-position: -500%;
+        }
+
+        100% {
+            background-position: 500%;
+        }
+    }
+</style>
 <br />
+<br />
+<div class="back">
+<p><b>Please email us if you would like to upload a photo to our site or request to delete a photo.</b></p>
+<p><b1>For Photo Upload:</b1> <b>Please include your name, email, the Beginning school year, the ending of the school year, the grade of the class in the photo, the teacher name, and the image itself.</b></p>
+<p><b1>For Photo Deletion:</b1> <b>Please include your Name, Email, and the image itself.</b></p>
 
-<p>Please email us if you would like to upload a photo to our site or request to delete a photo.</p>
-<p>For Photo Upload: Please include your name, email, the Beginning school year, the ending of the school year, the grade of the class in the photo, the teacher name, and the image itself.</p>
-<p>For Photo Deletion: Please include your Name, Email, and the image itself.</p>
-
-<p>Email: FriendsOfDinsmoreElementary@gmail.com</p>
+<p><b1>Email:</b1> <b>FriendsOfDinsmoreElementary@gmail.com</b></p>
+ </div>
