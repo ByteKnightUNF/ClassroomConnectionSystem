@@ -3,11 +3,44 @@
 }
 <h1>@ViewData["Title"]</h1>
 
+<style>
+    .back {
+        position: relative;
+        height: 100vh;
+        width: 100%;       
+        align-items: center;
+        justify-content: center;
+    }
 
+        .back::before {
+            content: "";
+            background-image: url("/Images/Dinsmore-Logo.png");
+            background-size: 300px 300px;
+            background-repeat: no-repeat;
+            background-position: center top ;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            opacity: 0.2;
+        }
+
+    p {
+        position: relative;
+        text-align: left ;
+        font-size: large;
+    }
+
+   
+    }
+</style>
 <br />
-
+<br />
+<div class="back">
 <p>Please email us if you would like to upload a photo to our site or request to delete a photo.</p>
-<p>For Photo Upload: Please include your name, email, the Beginning school year, the ending of the school year, the grade of the class in the photo, the teacher name, and the image itself.</p>
-<p>For Photo Deletion: Please include your Name, Email, and the image itself.</p>
+<p><b>For Photo Upload:</b> Please include your name, email, the Beginning school year, the ending of the school year, the grade of the class in the photo, the teacher name, and the image itself.</p>
+<p><b>For Photo Deletion:</b> Please include your Name, Email, and the image itself.</p>
 
-<p>Email: FriendsOfDinsmoreElementary@gmail.com</p>
+<p><b>Email:</b> FriendsOfDinsmoreElementary@gmail.com</p>
+ </div>
