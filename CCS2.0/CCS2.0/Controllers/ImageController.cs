@@ -17,6 +17,8 @@ using Newtonsoft.Json;
 using ImageModel = ImageUpload.Models.ImageModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
+using CCS2._0.Models;
+using TagModel = CCS2._0.Models.TagModel;
 
 namespace CCS2._0.Controllers
 {
@@ -121,5 +123,44 @@ namespace CCS2._0.Controllers
             }
 
         }
+
+        public IActionResult Tag()
+        {
+            ViewBag.image = null;
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Tag(int ID, TagModel model)
+        {
+            Byte[] bytes = null;
+
+            if (model.TagFile != null)
+            {
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    {
+                        model.TagFile.OpenReadStream().CopyTo(ms);
+
+                        bytes = ms.ToArray();
+                    }
+
+
+                    int recordCreated = recordTag(ID, bytes, model.Tag);
+
+                    ViewBag.image = ViewImage(bytes);
+
+                }
+                return RedirectToAction("ViewImage");
+
+
+            }
+
+            return View();
+        }
+
+
     }
 }
