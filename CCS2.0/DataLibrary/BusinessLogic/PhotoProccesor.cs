@@ -47,6 +47,17 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
+        public static List<ImageModel> FindImg(string imgId)
+        {
+
+            string sql = @"select *
+                        from dbo.Image
+
+                        Where Grade Like '%" + @imgId + "%';";
+
+            return SqlDataAccess.LoadData<ImageModel>(sql);
+        }
+
         public static List<ImageModel> LoadPhoto()
         {
 

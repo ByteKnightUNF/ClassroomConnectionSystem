@@ -81,12 +81,20 @@ namespace CCS2._0.Controllers
 
 
 
-        public IActionResult ViewImage(string sBase64String, ImageModel model)
+        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString)
         {
+            ViewBag.CurrentSearch = searchString;
 
             List<ImageModel> Match = new List<ImageModel>();
 
             var match = LoadPhoto();
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                match = FindImg(searchString);
+
+            }
 
             foreach (var row in match)
             {
