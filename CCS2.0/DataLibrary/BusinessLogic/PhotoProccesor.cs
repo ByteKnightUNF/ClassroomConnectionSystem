@@ -36,6 +36,31 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
         }
+        
+        public static int recordTag(int Photo_id, Byte[] TagFile, int Tag)
+        {
+
+
+
+
+            TagModel data = new TagModel
+            {
+
+                TagFile = TagFile,
+                Tag = Tag
+               
+
+            };
+
+            string sql = @"update dbo.Image " +
+                          "SET Number_Of_People = @Tag, Tagged_Photo = @TagFile " +
+                          "where Id =" + Photo_id + ";";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        //"insert into dbo.Tag (Photo_Id, Tag)
+        // values(" + Photo_id + ", @Tag);" +
 
         public static List<ImageModel> GetPhotoId(int Id)
         {
