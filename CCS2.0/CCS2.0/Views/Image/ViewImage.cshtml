@@ -2,73 +2,55 @@
 
 @{
     ViewData["Title"] = "ViewImage";
-  
+
 }
 
-<h1>ViewImage</h1>
+<h1>Manage Images</h1>
+
 
 <p>
-    <a asp-action="Photo_Upload">Create New</a>
+    <a asp-action="Photo_Upload">Upload New Image</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.School_Year_Begin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.School_Year_End)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Teacher_Name)
-            </th>
-            <th>
-                Image
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
+<p>
+    <a asp-action=" ">Search Images</a>
+</p>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.School_Year_Begin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.School_Year_End)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Grade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Teacher_Name)
-            </td>
-            <td>
-                <img src="@item.src" width="auto" height="50%" alt="Unknown Image" />
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { ID = item.Id }) |
-                @Html.ActionLink("Delete", "DeleteImage", new { ID = item.Id }, new { onclick = "return confirm ( 'Are you sure?');" })
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+
+<form asp-action="ViewImage" method="get">
+
+
+    Search Images By Grade: <input type="text" name="searchString" value="@ViewBag.CurrentSearch" />
+    <input type="submit" value="Search" />
+
+    <a asp-action="ViewImage">Remove Filter</a>
+</form>
+
+
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+
+            <div class="card" style="width: 20rem; margin:10px 10px 10px 10px;">
+                <img class="card-img-top" style="height:180px; width:277px" src="@item.src" alt="Unknown Image" />
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Name:</b> @Html.DisplayFor(modelItem => item.Name)</li>
+                        <li class="list-group-item"><b>Email:</b> @Html.DisplayFor(modelItem => item.Email)</li>
+                        <li class="list-group-item"><b>Beginning School Year:</b> @Html.DisplayFor(modelItem => item.School_Year_Begin)</li>
+                        <li class="list-group-item"><b>Ending School Year:</b> @Html.DisplayFor(modelItem => item.School_Year_End)</li>
+                        <li class="list-group-item"><b>Grade:</b> @Html.DisplayFor(modelItem => item.Grade)</li>
+                        <li class="list-group-item"><b>Teacher Name</b>@Html.DisplayFor(modelItem => item.Teacher_Name)</li>
+
+                    </ul>
+                    <div class="card-body">
+                        @Html.ActionLink("Edit", "Edit", new { ID = item.Id })
+                        @Html.ActionLink("Delete", "DeleteImage", new { ID = item.Id }, new { onclick = "return confirm ( 'Are you sure?');" })
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+ 

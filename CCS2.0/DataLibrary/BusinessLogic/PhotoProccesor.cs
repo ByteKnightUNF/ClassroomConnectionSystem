@@ -36,6 +36,31 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
         }
+        
+        public static int recordTag(int Photo_id, Byte[] TagFile, int Tag)
+        {
+
+
+
+
+            TagModel data = new TagModel
+            {
+
+                TagFile = TagFile,
+                Tag = Tag
+               
+
+            };
+
+            string sql = @"update dbo.Image " +
+                          "SET Number_Of_People = @Tag, Tagged_Photo = @TagFile " +
+                          "where Id =" + Photo_id + ";";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        //"insert into dbo.Tag (Photo_Id, Tag)
+        // values(" + Photo_id + ", @Tag);" +
 
         public static int CreateComment(string Comment, string Name, Boolean Flag, int ImageId)
         {
@@ -68,6 +93,7 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
+
         public static List<CommentModel> GetCommentId(int Id)
         {
 
@@ -86,6 +112,17 @@ namespace DataLibrary.BussinessLogic
                         Where Comment_Id = " + @Id + ";";
 
             return SqlDataAccess.LoadData<CommentModel>(sql);
+        }
+        public static List<ImageModel> FindImg(string imgId)
+        {
+
+            string sql = @"select *
+                        from dbo.Image
+
+                        Where Grade Like '%" + @imgId + "%';";
+
+            return SqlDataAccess.LoadData<ImageModel>(sql);
+
         }
 
         public static List<ImageModel> LoadPhoto()
