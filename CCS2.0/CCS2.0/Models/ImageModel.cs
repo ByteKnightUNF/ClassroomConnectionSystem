@@ -53,6 +53,9 @@ namespace ImageUpload.Models
         [NotMapped]
         public string src { get; set; }
 
+        public ICollection<CommentModel> CommentModel { get; set; }
+
+
     }
 
 

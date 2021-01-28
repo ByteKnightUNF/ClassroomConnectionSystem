@@ -67,8 +67,23 @@ namespace CCS2._0.Controllers
     public IActionResult ViewPost(int ID )
         {
             List<ImageModel> Match = new List<ImageModel>();
+            List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
 
             var match = GetPhotoId(ID);
+
+            var com = GetCommentId(ID);
+
+            foreach (var entry in com)
+            {
+                Com.Add(new ImageUpload.Models.CommentModel
+                {
+                    CommentId = entry.Comment_Id,
+                    Comment = entry.Comment,
+                    Name = entry.Names,
+                    Flag = entry.Flag,
+                    ImageId = entry.ImageId
+                });
+            }
             
             foreach (var row in match)
             {
@@ -83,9 +98,11 @@ namespace CCS2._0.Controllers
                     School_Year_End = row.School_Year_End,
                     Grade = row.Grade,
                     Teacher_Name = row.Teacher_Name,
-                    src = this.ViewImage(row.ImageFile)
+                    src = this.ViewImage(row.ImageFile),
+                    CommentModel = Com
                 });
             }
+
 
             return View(Match);
         }
@@ -116,6 +133,20 @@ namespace CCS2._0.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult NewComment(int Id)
+        {
+            ViewBag.ImageId = Id;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewComment(ImageUpload.Models.CommentModel model, int Id)
+        {
+            int recordCreated = CreateComment(model.Comment, model.Name, model.Flag, model.ImageId);
+
+            return RedirectToAction("ViewPost", new { ID = Id });
         }
     }
 }
