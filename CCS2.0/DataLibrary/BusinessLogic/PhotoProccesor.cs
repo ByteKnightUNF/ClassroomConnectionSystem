@@ -151,7 +151,7 @@ namespace DataLibrary.BussinessLogic
 
             };
 
-            string sql = @"DELETE FROM dbo.Image WHERE Id= @Id;";
+            string sql = @"DELETE FROM dbo.Image WHERE Id= @Id; DELETE FROM dbo.Comment WHERE ImageId= @Id;";
 
             return SqlDataAccess.SaveData(sql, data);
 
