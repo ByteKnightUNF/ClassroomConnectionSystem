@@ -3,7 +3,14 @@
 @{
     ViewData["Title"] = "Photo";
 }
-
+<style>
+#hid1, #hid2, #hid3 {
+    display: none;
+}
+#hid4 {
+    display: block;
+}
+</style>
 
 <div class="container-fluid">
     <div class="row">
@@ -130,37 +137,57 @@
                 </table>
 
 
+                <form asp-action="ViewPost">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="display:grid; grid-template-columns:auto auto;">
+                        <div id="hid1" class="form-group">
+                            <label asp-for="Comments.Comment" class="control-label">Comment</label>
+                            <input asp-for="Comments.Comment" class="form-control" required />
+                            <span asp-validation-for="Comments.Comment" class="text-danger"></span>
+                        </div>
+                        <div id="hid2" class="form-group">
+                            <label asp-for="Comments.Name" class="control-label">Name</label>
+                            <input asp-for="Comments.Name" class="form-control" required />
+                            <span asp-validation-for="Comments.Name" class="text-danger"></span>
+                        </div>
+                        <input type="number" name="Comments.Flag" hidden value="0">
+                        <input type="number" name="Comments.ImageId" hidden value="@Model.Id">
 
-                <button type="button" class="btn btn-primary">
-                    @Html.ActionLink("New Comment", "NewComment", new { Id = Model.Id})
-                </button>
-
-                
-                <div class="row">
-                    
-                        <form asp-action="ViewPost">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div style="display:grid; grid-template-columns:auto auto;">
-                                <div class="form-group">
-                                    <label asp-for="Comments.Comment" class="control-label"></label>
-                                    <input asp-for="Comments.Comment" class="form-control" />
-                                    <span asp-validation-for="Comments.Comment" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Comments.Name" class="control-label"></label>
-                                    <input asp-for="Comments.Name" class="form-control" />
-                                    <span asp-validation-for="Comments.Name" class="text-danger"></span>
-                                </div>
-                                <input type="number" name="Comments.Flag" hidden value="0">
-                                <input type="number" name="Comments.ImageId" hidden value="@Model.Id">
-                                <div class="form-group">
-                                    <input type="submit" value="Post Comment" class="btn btn-primary" />
-                                </div>
+                        <div class="form-group">
+                            <div id="hid3">
+                                <input type="submit" value="Post Comment" class="btn btn-primary" />
+                                <button type="button" class="btn btn-primary" onclick="cancelComment()">
+                                    Cancel
+                                </button>
                             </div>
-                        </form>
+                            <button id="hid4" type="button" class="btn btn-primary" onclick="newComment()">
+                                New Comment
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
                     
-                </div>
+                    
+                    
+                
             </div>
     </div>
 </div>
+
+<script>
+    function newComment() {
+        document.getElementById("hid1").style.display = "block";
+        document.getElementById("hid2").style.display = "block";
+        document.getElementById("hid3").style.display = "block";
+        document.getElementById("hid4").style.display = "none";
+    }
+
+    function cancelComment() {
+        document.getElementById("hid1").style.display = "none";
+        document.getElementById("hid2").style.display = "none";
+        document.getElementById("hid3").style.display = "none";
+        document.getElementById("hid4").style.display = "block";
+    }
+</script>
 
