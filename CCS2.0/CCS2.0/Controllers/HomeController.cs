@@ -64,7 +64,7 @@ namespace CCS2._0.Controllers
 
 
 
-    public IActionResult ViewPost(int ID )
+    public IActionResult ViewPost(int ID)
         {
             List<ImageModel> Match = new List<ImageModel>();
             List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
@@ -99,12 +99,37 @@ namespace CCS2._0.Controllers
                     Grade = row.Grade,
                     Teacher_Name = row.Teacher_Name,
                     src = this.ViewImage(row.ImageFile),
-                    CommentModel = Com
+                    CommentModel = Com,
+                    Comments = new ImageUpload.Models.CommentModel()
                 });
             }
 
+            ImageModel test = new ImageModel();
+            test = Match[0];
 
-            return View(Match);
+            return View(test);
+        }
+
+        [HttpPost]
+        public IActionResult ViewPost(ImageUpload.Models.ImageModel model, int Id)
+        {
+            _ = CreateComment(model.Comments.Comment, model.Comments.Name, model.Comments.Flag, model.Comments.ImageId);
+
+            return RedirectToAction("ViewPost", new { ID = Id });
+        }
+
+        public IActionResult NewComment(int Id)
+        {
+            ViewBag.ImageId = Id;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewComment(ImageUpload.Models.CommentModel model, int Id)
+        {
+            int recordCreated = CreateComment(model.Comment, model.Name, model.Flag, model.ImageId);
+
+            return RedirectToAction("ViewPost", new { ID = Id });
         }
 
         private string ViewImage(byte[] arrayImage)
@@ -135,18 +160,5 @@ namespace CCS2._0.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult NewComment(int Id)
-        {
-            ViewBag.ImageId = Id;
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult NewComment(ImageUpload.Models.CommentModel model, int Id)
-        {
-            int recordCreated = CreateComment(model.Comment, model.Name, model.Flag, model.ImageId);
-
-            return RedirectToAction("ViewPost", new { ID = Id });
-        }
     }
 }
