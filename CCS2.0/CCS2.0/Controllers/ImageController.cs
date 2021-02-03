@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
 using ImageModel = ImageUpload.Models.ImageModel;
+using CommentModel = ImageUpload.Models.CommentModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 using CCS2._0.Models;
@@ -83,12 +84,20 @@ namespace CCS2._0.Controllers
 
 
 
-        public IActionResult ViewImage(string sBase64String, ImageModel model)
+        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString)
         {
+            ViewBag.CurrentSearch = searchString;
 
             List<ImageModel> Match = new List<ImageModel>();
 
             var match = LoadPhoto();
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                match = FindImg(searchString);
+
+            }
 
             foreach (var row in match)
             {
@@ -123,6 +132,70 @@ namespace CCS2._0.Controllers
             }
 
         }
+
+
+        public IActionResult ViewComment()
+        {
+            List<CommentModel> Com = new List<CommentModel>();
+            var com = LoadComment();
+
+            foreach(var row in com)
+            {
+                Com.Add(new CommentModel
+                {
+                    CommentId = row.Comment_Id,
+                    Comment = row.Comment,
+                    Name = row.Names,
+                    Flag = row.Flag,
+                    ImageId = row.ImageId
+                });
+            }
+
+            return View(Com);
+        }
+
+        public IActionResult Delete_Comment(int ID)
+        {
+            try
+            {
+                int recordCreated = DeleteComment(ID);
+                return RedirectToAction("ViewComment");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
+        public IActionResult EditComment(int Id)
+        {
+            CommentModel Com = new CommentModel();
+            var com = GetComment(Id);
+
+            foreach (var row in com)
+            {
+                Com = (new CommentModel
+                {
+                    CommentId = row.Comment_Id,
+                    Comment = row.Comment,
+                    Name = row.Names,
+                    Flag = row.Flag,
+                    ImageId = row.ImageId
+                });
+            }
+
+            return View(Com);
+        }
+
+        [HttpPost]
+        public IActionResult EditComment(ImageUpload.Models.CommentModel model)
+        {
+            int recordCreated = Edit_Comment(model.CommentId, model.Comment, model.Name, model.Flag, model.ImageId);
+
+            return RedirectToAction("ViewComment");
+        }
+
 
         public IActionResult Tag()
         {
@@ -160,6 +233,7 @@ namespace CCS2._0.Controllers
 
             return View();
         }
+
 
 
     }

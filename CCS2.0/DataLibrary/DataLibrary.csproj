@@ -70,6 +70,7 @@
     <Compile Include="BusinessLogic\PhotoProccesor.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DataAccess\SqlDataAccess.cs" />
+    <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\TagModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

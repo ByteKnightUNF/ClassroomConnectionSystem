@@ -41,18 +41,15 @@
             Delete Photo
         </a>
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
-            View Images
+            Manage Images
         </a>
         <br />
         <br />
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
             Monitor Tag
         </a>
-        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
-            Flagged Comments
-        </a>
-        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
-            New Comments
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewComment">
+            Monitor Comments
         </a>
 
 
@@ -73,25 +70,31 @@
                 justify-content: flex-end;
             }
         </style>
-        <a id="asd" asp-area="" asp-controller="Home" asp-action="Email">Email Us</a>
+
+
+        <a id="asd" asp-area="" asp-controller="Home" asp-action="Email">Want to Upload A Photo? Email Us</a>
 
         <h1 class="display-4">Welcome Alumni</h1>
 
 
         <style>
+
+
+
             .collapsible {
                 background-color: darkblue;
                 color: white;
                 cursor: pointer;
-                padding: 18px;
-                width: 100%;
-                border: none;
-                text-align: left;
+                padding: 10px;
+                width: 65%;
+                border: 10px unset white;
+                border-radius: 5px;
+                text-align: center;
                 outline: none;
                 font-size: 15px;
             }
 
-                .collapsible:hover {
+                .active, .collapsible:hover {
                     background-color: darkorange;
                 }
 
@@ -99,39 +102,55 @@
                 padding: 0 18px;
                 display: none;
                 overflow: hidden;
+                transition: max-height 0.2s ease-out;
+            }
+
+            .collapsible:after {
+                content: "\25BC"; /* Unicode character for downward arrowhead */
+                font-size: 13px;
+                color: white;
+                float: right;
+                margin-left: 5px;
+            }
+
+            .active:after {
+                content: "\25B2"; /* Unicode character for upward arrowhead) */
             }
         </style>
 
 
         <div id="AlumniHome">
-            <button type="button" class="collapsible" id="1950" style="display: none;">1950 - 1961</button>
-            <div class="content" id="1950 - 1960" style="display: none;">
+            <center>
+                <div class="text-left">
+                    <p>Start by selecting the decade attended:</p>
+                </div>
+                <button type="button" class="collapsible" id="1950" style="        display: none;">1950 - 1961</button>
+                <div class="content" id="1950 - 1960" style="display: none;">
+                </div>
+
+                <button type="button" class="collapsible" id="1961" style="        display: none;">1961 - 1970</button>
+                <div class="content" id="1961 - 1970" style="display: none;">
+
+                </div>
+                <button type="button" class="collapsible" id="1971" style="        display: none;">1971 - 1980</button>
+                <div class="content" id="1971 - 1980" style="display: none;">
+
+                </div>
+                <button type="button" class="collapsible" id="1981" style="        display: none;">1981 - 1990</button>
+                <div class="content" id="1981 - 1990" style="display: none;">
+
+                </div>
+                <button type="button" class="collapsible" id="1991" style="        display: none;">1991 - 2000</button>
+                <div class="content" id="1991 - 2000" style="display: none;">
+
+                </div>
+                <button type="button" class="collapsible" id="2001" style="        display: none;">2001 - 2010</button>
+                <div class="content" id="2001 - 2010" style="display: none;">
+
+                </div>
+            </center>
 
             </div>
-
-            <button type="button" class="collapsible" id="1961" style="        display: none;">1961 - 1970</button>
-            <div class="content" id="1961 - 1970" style="display: none;">
-
-            </div>
-            <button type="button" class="collapsible" id="1971" style="        display: none;">1971 - 1980</button>
-            <div class="content" id="1971 - 1980" style="display: none;">
-
-            </div>
-            <button type="button" class="collapsible" id="1981" style="        display: none;">1981 - 1990</button>
-            <div class="content" id="1981 - 1990" style="display: none;">
-
-            </div>
-            <button type="button" class="collapsible" id="1991" style="        display: none;">1991 - 2000</button>
-            <div class="content" id="1991 - 2000" style="display: none;">
-
-            </div>
-            <button type="button" class="collapsible" id="2001" style="        display: none;">2001 - 2010</button>
-            <div class="content" id="2001 - 2010" style="display: none;">
-
-            </div>
-
-
-        </div>
 
 
 
