@@ -6,6 +6,10 @@
 
 <h1>View Comments</h1>
 
+@Html.ActionLink("Sort by Flag", "ViewComment", new { filter = "flag" })
+@Html.ActionLink("Sort by Name (Ascending)", "ViewComment", new { filter = "ascending" })
+@Html.ActionLink("Sort by Name (Descending)", "ViewComment", new { filter = "descending" })
+@Html.ActionLink("Remove Filter", "ViewComment", new { filter = "" })
 
 <table class="table">
     <thead>
@@ -26,26 +30,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Flag)
-            </td>
-            <td>
-                @Html.ActionLink("View", "ViewPost", "Home", new { Id = item.ImageId }, new { target = "_blank" })
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditComment", new { id=item.CommentId }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete_Comment", new { ID = item.CommentId }, new { onclick = "return confirm ( 'Are you sure?');" })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Flag)
+                </td>
+                <td>
+                    @Html.ActionLink("View", "ViewPost", "Home", new { Id = item.ImageId }, new { target = "_blank" })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditComment", new { id = item.CommentId }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete_Comment", new { ID = item.CommentId }, new { onclick = "return confirm ( 'Are you sure?');" })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -118,20 +118,6 @@ namespace CCS2._0.Controllers
             return RedirectToAction("ViewPost", new { ID = Id });
         }
 
-        public IActionResult NewComment(int Id)
-        {
-            ViewBag.ImageId = Id;
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult NewComment(ImageUpload.Models.CommentModel model, int Id)
-        {
-            int recordCreated = CreateComment(model.Comment, model.Name, model.Flag, model.ImageId);
-
-            return RedirectToAction("ViewPost", new { ID = Id });
-        }
-
         private string ViewImage(byte[] arrayImage)
 
         {
