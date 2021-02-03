@@ -134,12 +134,25 @@ namespace CCS2._0.Controllers
         }
 
 
-        public IActionResult ViewComment()
+        public IActionResult ViewComment(string filter)
         {
             List<CommentModel> Com = new List<CommentModel>();
             var com = LoadComment();
-
-            foreach(var row in com)
+            switch (filter)
+            {
+                case "flag":
+                    com = FlaggedComment();
+                    break;
+                case "ascending":
+                    com = SortName("a");
+                    break;
+                case "descending":
+                    com = SortName("d");
+                    break;
+                default:
+                    break;
+            }
+            foreach (var row in com)
             {
                 Com.Add(new CommentModel
                 {
@@ -170,12 +183,12 @@ namespace CCS2._0.Controllers
 
         public IActionResult EditComment(int Id)
         {
-            CommentModel Com = new CommentModel();
+            List<CommentModel> Com = new List<CommentModel>();
             var com = GetComment(Id);
 
             foreach (var row in com)
             {
-                Com = (new CommentModel
+                Com.Add(new CommentModel
                 {
                     CommentId = row.Comment_Id,
                     Comment = row.Comment,
@@ -184,8 +197,10 @@ namespace CCS2._0.Controllers
                     ImageId = row.ImageId
                 });
             }
+            CommentModel test = new CommentModel();
+            test = Com[0];
 
-            return View(Com);
+            return View(test);
         }
 
         [HttpPost]

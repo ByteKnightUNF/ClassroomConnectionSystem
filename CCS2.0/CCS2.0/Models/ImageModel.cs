@@ -55,6 +55,7 @@ namespace ImageUpload.Models
 
         public ICollection<CommentModel> CommentModel { get; set; }
 
+        public CommentModel Comments { get; set; }
 
     }
 

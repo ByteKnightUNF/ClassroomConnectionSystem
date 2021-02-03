@@ -27,6 +27,8 @@
                     <input class="form-check-input" asp-for="Flag" /> @Html.DisplayNameFor(model => model.Flag)
                 </label>
             </div>
+            <input type="number" name="CommentId" hidden value="@Model.CommentId">
+            <input type="number" name="ImageId" hidden value="@Model.ImageId">
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

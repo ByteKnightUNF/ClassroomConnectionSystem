@@ -1,26 +1,31 @@
-﻿@model IEnumerable<ImageUpload.Models.ImageModel>
+﻿@model ImageUpload.Models.ImageModel
 
 @{
     ViewData["Title"] = "Photo";
 }
-
+<style>
+#hid1, #hid2, #hid3 {
+    display: none;
+}
+#hid4 {
+    display: block;
+}
+</style>
 
 <div class="container-fluid">
     <div class="row">
-        @foreach (var item in Model)
-        {
             <div class="col-md-6">
                 <div class="card">
                     <h5 class="card-header" style="text-align:center">
-                        @Html.DisplayFor(modelItem => item.School_Year_Begin) - @Html.DisplayFor(modelItem => item.School_Year_End)
+                        @Html.DisplayFor(model => model.School_Year_Begin) - @Html.DisplayFor(model => model.School_Year_End)
                     </h5>
                     <div class="card-body">
                         <p class="card-text">
-                            <img src="@item.src" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
+                            <img src="@Model.src" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
                         </p>
                     </div>
                     <div class="card-footer" style="text-align:center">
-                        @Html.DisplayFor(modelItem => item.Teacher_Name)
+                        @Html.DisplayFor(model => model.Teacher_Name)
                     </div>
                 </div>
 
@@ -28,7 +33,7 @@
 
 
             <div class="col-md-6">
-                <h3>
+                <h3 style="padding:10px;padding-bottom:0px;text-align:center;">
                     Comments
                 </h3>
 
@@ -79,7 +84,7 @@
                     </nav>
                 }
                 <table class="table table-striped">
-                    @if (true)
+                    @if (Model.CommentModel.Count() != 0)
                     {
                         <thead>
                             <tr>
@@ -109,32 +114,80 @@
 
 
                     <tbody>
-                        @foreach (var com in item.CommentModel)
-                        {
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => com.Comment)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => com.Name)
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                            </tr>
+                        @{var i = 1;
+                            foreach (var com in Model.CommentModel)
+                            {
+                                <tr>
+                                    <td>
+                                        @(i++)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => com.Comment)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => com.Name)
+                                    </td>
+                                    <td>
+                                        01/04/2012
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
 
 
-                <button type="button" class="btn btn-outline-primary">
-                    @Html.ActionLink("New Comment", "NewComment", new { Id = item.Id })
-                </button>
+                <form asp-action="ViewPost">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div style="display:grid; grid-template-columns:auto auto;">
+                        <div id="hid1" class="form-group">
+                            <label asp-for="Comments.Comment" class="control-label">Comment</label>
+                            <input asp-for="Comments.Comment" class="form-control" required />
+                            <span asp-validation-for="Comments.Comment" class="text-danger"></span>
+                        </div>
+                        <div id="hid2" class="form-group">
+                            <label asp-for="Comments.Name" class="control-label">Name</label>
+                            <input asp-for="Comments.Name" class="form-control" required />
+                            <span asp-validation-for="Comments.Name" class="text-danger"></span>
+                        </div>
+                        <input type="number" name="Comments.Flag" hidden value="0">
+                        <input type="number" name="Comments.ImageId" hidden value="@Model.Id">
+
+                        <div class="form-group">
+                            <div id="hid3">
+                                <input type="submit" value="Post Comment" class="btn btn-primary" />
+                                <button type="button" class="btn btn-primary" onclick="cancelComment()">
+                                    Cancel
+                                </button>
+                            </div>
+                            <button id="hid4" type="button" class="btn btn-primary" onclick="newComment()">
+                                New Comment
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                    
+                    
+                    
+                
             </div>
-        }
     </div>
 </div>
+
+<script>
+    function newComment() {
+        document.getElementById("hid1").style.display = "block";
+        document.getElementById("hid2").style.display = "block";
+        document.getElementById("hid3").style.display = "block";
+        document.getElementById("hid4").style.display = "none";
+    }
+
+    function cancelComment() {
+        document.getElementById("hid1").style.display = "none";
+        document.getElementById("hid2").style.display = "none";
+        document.getElementById("hid3").style.display = "none";
+        document.getElementById("hid4").style.display = "block";
+    }
+</script>
 
