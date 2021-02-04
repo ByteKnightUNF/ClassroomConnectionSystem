@@ -207,9 +207,35 @@ namespace DataLibrary.BussinessLogic
                 ImageId = ImageId
             };
 
-            string sql = @"UPDATE dbo.Comment SET Comment = @Comment, Names = @Names, Flag = @Flag WHERE Comment_Id = @Comment_Id;";
+            string sql = @"UPDATE dbo.Comment SET Comment = @Comment, Names = @Names, Flag = @Flag WHERE Comment_Id= @Comment_Id;";
 
             return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static List<CommentModel> FlaggedComment()
+        {
+            string sql = @"select *
+                        from dbo.Comment
+                        Where Flag = 1;";
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+
+        }
+
+        public static List<CommentModel> SortName(string option)
+        {
+            string sql;
+            if (option == "a") {
+                sql = @"select *
+                            from dbo.Comment
+                            ORDER BY Names ASC;";
+            } 
+            else
+            {
+                sql = @"select *
+                            from dbo.Comment
+                            ORDER BY Names DESC;";
+            }
+            return SqlDataAccess.LoadData<CommentModel>(sql);
         }
     }
 }
