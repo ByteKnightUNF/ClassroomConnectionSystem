@@ -19,7 +19,7 @@ using CommentModel = ImageUpload.Models.CommentModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 using CCS2._0.Models;
-using TagModel = CCS2._0.Models.TagModel;
+using TagModel = ImageUpload.Models.TagModel;
 
 namespace CCS2._0.Controllers
 {

@@ -68,10 +68,13 @@ namespace CCS2._0.Controllers
         {
             List<ImageModel> Match = new List<ImageModel>();
             List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
+            List<ImageUpload.Models.AddingTagModel> Tag = new List<ImageUpload.Models.AddingTagModel>();
 
             var match = GetPhotoId(ID);
 
             var com = GetCommentId(ID);
+
+            var tag = getTagId(ID);
 
             foreach (var entry in com)
             {
@@ -84,7 +87,20 @@ namespace CCS2._0.Controllers
                     ImageId = entry.ImageId
                 });
             }
-            
+
+            foreach (var tags in tag)
+            {
+                Tag.Add(new ImageUpload.Models.AddingTagModel
+                {
+
+                    Photo_id = tags.Photo_id,
+                    Tag = tags.Tag,
+                    Name = tags.Name
+
+                });
+            }
+           
+
             foreach (var row in match)
             {
 
@@ -99,7 +115,11 @@ namespace CCS2._0.Controllers
                     Grade = row.Grade,
                     Teacher_Name = row.Teacher_Name,
                     src = this.ViewImage(row.ImageFile),
-                    CommentModel = Com
+                    Number_Of_People = row.Number_Of_People,
+                    Tagged_src = this.ViewImage(row.Tagged_Photo),
+                    CommentModel = Com,
+                    AddingTagModel =Tag
+
                 });
             }
 
@@ -110,10 +130,18 @@ namespace CCS2._0.Controllers
         private string ViewImage(byte[] arrayImage)
 
         {
+            try
+            {
+                string base64String = Convert.ToBase64String(arrayImage, 0, arrayImage.Length);
 
-            string base64String = Convert.ToBase64String(arrayImage, 0, arrayImage.Length);
+                return "data:image/png;base64," + base64String;
+            }
+            catch
+            {
+                return null;
+            }
 
-            return "data:image/png;base64," + base64String;
+           
 
         }
 
@@ -148,5 +176,22 @@ namespace CCS2._0.Controllers
 
             return RedirectToAction("ViewPost", new { ID = Id });
         }
+
+        public IActionResult NewTag(int Id, int Tag)
+        {
+            ViewBag.Photo_id = Id;
+            ViewBag.Tag = Tag;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewTag(int Id, int Tag, ImageUpload.Models.AddingTagModel model)
+        {
+            int recordCreated = CreateTag(Id, Tag, model.Name);
+
+            return RedirectToAction("ViewPost", new { ID = Id });
+        }
+
+
     }
 }

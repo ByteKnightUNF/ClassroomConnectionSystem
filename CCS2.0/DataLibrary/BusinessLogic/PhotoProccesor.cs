@@ -82,6 +82,22 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
         }
+        public static int CreateTag(int Photo_id, int Tag, string Name )
+        {
+
+            AddingTagModel data = new AddingTagModel
+            {
+                Photo_id = Photo_id,
+                Tag = Tag,
+                Name = Name
+
+            };
+
+            string sql = @"insert into dbo.Tag (Photo_Id, Tag, Name)
+                          values ("+@Photo_id+", "+@Tag+", @Name);";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
 
         public static List<ImageModel> GetPhotoId(int Id)
         {
@@ -92,7 +108,16 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
+        
+        public static List<AddingTagModel> getTagId(int Id)
+        {
 
+            string sql = @"select *
+                        from dbo.Tag
+                        Where Photo_Id = " + @Id + ";";
+
+            return SqlDataAccess.LoadData<AddingTagModel>(sql);
+        }
 
         public static List<CommentModel> GetCommentId(int Id)
         {

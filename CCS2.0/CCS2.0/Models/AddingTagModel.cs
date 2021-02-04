@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace ImageUpload.Models
 {
-    public class TagModel
+    public class AddingTagModel
     {
-        [Required(ErrorMessage = "Please upload a file")]
-        public IFormFile TagFile { get; set; }
+
+        public int Photo_id { get; set; }
 
         public int Tag { get; set; }
 
 
-        [NotMapped]
-        public string src { get; set; }
+       
+        public string Name { get; set; }
 
     }
 }

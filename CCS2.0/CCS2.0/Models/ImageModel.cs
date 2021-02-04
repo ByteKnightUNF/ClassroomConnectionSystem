@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CCS2._0.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,14 +48,18 @@ namespace ImageUpload.Models
 
         [Required(ErrorMessage = "Please upload a file")]
         public IFormFile File { get; set; }
-
-
+        
+        public int Number_Of_People { get; set; }
+        public byte[] Tagged_Photo { get; set; }
 
         [NotMapped]
         public string src { get; set; }
+        [NotMapped]
+        public string Tagged_src { get; set; }
 
         public ICollection<CommentModel> CommentModel { get; set; }
 
+        public ICollection<AddingTagModel> AddingTagModel { get; set; }
 
     }
 
