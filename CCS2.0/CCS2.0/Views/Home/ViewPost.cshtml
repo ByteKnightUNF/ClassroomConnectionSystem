@@ -10,6 +10,10 @@
 #hid4 {
     display: block;
 }
+
+
+    
+
 </style>
 
 <div class="container-fluid">
@@ -21,7 +25,12 @@
                     </h5>
                     <div class="card-body">
                         <p class="card-text">
-                            <img src="@Model.src" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
+                            <div class="container">
+                                <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
+                                <div class="overlay">
+                                    <img src="@Model.Tagged_src" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" class="center" />
+                                </div>
+                            </div>
                         </p>
                     </div>
                     <div class="card-footer" style="text-align:center">
@@ -33,45 +42,92 @@
 
 
             <div class="col-md-6">
-
+                <button type="button" class="btn btn-secondary" onclick="showPhoto()">Show Tagged Photo</button>
                 <h3>
                     Tags
                 </h3>
                 @if (Model.Number_Of_People > 0)
                 {
-            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                
-                    @for (int i = 1; i < Model.Number_Of_People + 1; i++)
-                    {
-                        int a = i;
+                    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
 
-                        @foreach (var tags in Model.AddingTagModel)
+                        @for (int i = 1; i < Model.Number_Of_People + 1; i++)
                         {
+                            int a = i;
 
-                            @if (tags.Tag == @i)
+                            @foreach (var tags in Model.AddingTagModel)
                             {
-                                <button type="button" class="btn btn-secondary">@tags.Name</button>
-                                i++;
-                                break;
+
+                                @if (tags.Tag == @i)
+                                {
+                                    <button type="button" id="photobutton" class="btn btn-secondary">@i - @tags.Name</button>
+                                    i++;
+                                    break;
+                                }
+
                             }
 
+                            @if (a == @i)
+                            {
+                                <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.Id,@i)">@i</button>
+                            }
+                            
+                            else
+                            {
+                                i--;
+                            }
                         }
 
-                        @if (a == @i) {
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href = '/Home/NewTag/@Model.Id?Tag=@i';">@i</button>
-                        }
-                        else
-                        {
-                            i--;
-                        }
-                    }
-              
-                </div>
+
+                    </div>
+
+                 
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">What is this person's name?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form asp-action="NewTag">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div style="display:grid; grid-template-columns:auto auto;">
+                                            <div id="Tag_Photo_id" class="form-group">
+
+                                            </div>
+                                            <div id="Tag_id" class="form-group">
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <input asp-for="Name" value="" class="form-control" />
+                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" value="Submit" class="btn btn-primary" />
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                              
+                                
+
+                            </div>
+                        </div>
+                    </div>
+
+
                 }
+
                 else
                 {
 
-                <div>Currently working on the tags for this photo. Thank you for your patient!</div>
+                    <div>Currently working on the tags for this photo. Thank you for your patience!</div>
 
                 }
 
@@ -212,17 +268,54 @@
                         </div>
                     </div>
                 </form>
-                
-                    
-                    
-                    
-                
+
+
+
+
+
             </div>
     </div>
 
 </div>
 
 <script>
+    function showPhoto() {
+        if (document.getElementById("TagImage").style.display == "none") {
+            document.getElementById("TagImage").style.display = "block";
+            document.getElementById("Image").style.display = "none";
+        } else {
+            document.getElementById("TagImage").style.display = "none";
+            document.getElementById("Image").style.display = "block";
+        }
+    }
+    var elements = document.querySelectorAll("#photobutton")
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('mouseover', function (e) {
+            showPhoto();
+        })
+        elements[i].addEventListener('mouseout', function (e) {
+            showPhoto();
+        })
+    }
+
+    function newTag(id, tag) {
+        holder = document.getElementById("Tag_Photo_id");
+        add1 = document.createElement("input");
+        add1.setAttribute("type", "hidden");
+        add1.setAttribute("name", "Id");
+        add1.setAttribute("value", id);
+        holder.append(add1);
+
+        holder1 = document.getElementById("Tag_id");
+        add2 = document.createElement("input");
+        add2.setAttribute("type", "hidden");
+        add2.setAttribute("name", "Tag");
+        add2.setAttribute("value", tag);
+        holder1.append(add2);
+    }
+
+
+
     function newComment() {
         document.getElementById("hid1").style.display = "block";
         document.getElementById("hid2").style.display = "block";
@@ -236,5 +329,8 @@
         document.getElementById("hid3").style.display = "none";
         document.getElementById("hid4").style.display = "block";
     }
+
+
+
 </script>
 
