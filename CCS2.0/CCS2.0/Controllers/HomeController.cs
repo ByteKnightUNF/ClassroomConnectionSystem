@@ -134,10 +134,21 @@ namespace CCS2._0.Controllers
         [HttpPost]
         public IActionResult ViewPost(ImageUpload.Models.ImageModel model, int Id)
         {
+          
             _ = CreateComment(model.Comments.Comment, model.Comments.Name, model.Comments.Flag, model.Comments.ImageId);
 
             return RedirectToAction("ViewPost", new { ID = Id });
         }
+
+        public IActionResult NewTag(int Id, int Tag, string Name)
+        {
+                CreateTag(Id, Tag, Name);
+            
+
+            return RedirectToAction("ViewPost", new { ID = Id });
+        }
+
+
 
         private string ViewImage(byte[] arrayImage)
 
