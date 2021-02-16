@@ -134,10 +134,11 @@ namespace CCS2._0.Controllers
         }
 
 
-        public IActionResult ViewComment(string filter)
+        public IActionResult ViewComment(string filter, string cla)
         {
             List<CommentModel> Com = new List<CommentModel>();
             var com = LoadComment();
+            bool ss = false;
             switch (filter)
             {
                 case "flag":
@@ -149,20 +150,57 @@ namespace CCS2._0.Controllers
                 case "descending":
                     com = SortName("d");
                     break;
+                case "new":
+                    break;
+                case "old":
+                    break;
+                case "class":
+                    ss = true;
+                    break;
                 default:
                     break;
             }
             foreach (var row in com)
             {
+                List<ImageModel> Match = new List<ImageModel>();
+                var match = GetPhotoId(row.ImageId);
+                foreach (var side in match)
+                {
+                    Match.Add(new ImageModel
+                    {
+                        School_Year_End = side.School_Year_End,
+                        Grade = side.Grade,
+                        Teacher_Name = side.Teacher_Name
+                    });
+                }
                 Com.Add(new CommentModel
                 {
                     CommentId = row.Comment_Id,
                     Comment = row.Comment,
                     Name = row.Names,
                     Flag = row.Flag,
-                    ImageId = row.ImageId
+                    Class = Match[0].Grade+" | "+Match[0].Teacher_Name+" | "+Match[0].School_Year_End
                 });
             }
+            if (ss)
+            {
+                List<CommentModel> sea = new List<CommentModel>();
+                foreach (var item in Com)
+                {
+                    if (item.Class == cla)
+                    {
+                        sea.Add(new CommentModel{
+                            CommentId = item.CommentId,
+                            Comment = item.Comment,
+                            Name = item.Name,
+                            Flag = item.Flag,
+                            Class = item.Class
+                        });
+                    }
+                }
+                return View(sea);
+            }
+
 
             return View(Com);
         }

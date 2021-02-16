@@ -24,7 +24,7 @@ namespace ImageUpload.Models
 
         public Boolean Flag { get; set; }
 
-
+        public string Class { get; set; }
 
         public int ImageId { get; set; }
         public ImageModel ImageModel { get; set; }

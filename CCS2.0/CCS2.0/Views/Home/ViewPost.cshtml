@@ -14,33 +14,28 @@
 
 <div class="container-fluid">
     <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <h5 class="card-header" style="text-align:center">
-                        @Html.DisplayFor(model => model.School_Year_Begin) - @Html.DisplayFor(model => model.School_Year_End)
-                    </h5>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <img src="@Model.src" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
-                        </p>
-                    </div>
-                    <div class="card-footer" style="text-align:center">
-                        @Html.DisplayFor(model => model.Teacher_Name)
-                    </div>
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header" style="text-align:center">
+                    @Html.DisplayFor(model => model.School_Year_Begin) - @Html.DisplayFor(model => model.School_Year_End)
+                </h5>
+                <div class="card-body">
+                    <p class="card-text">
+                        <img src="@Model.src" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
+                    </p>
                 </div>
-
+                <div class="card-footer" style="text-align:center">
+                    @Html.DisplayFor(model => model.Teacher_Name)
+                </div>
             </div>
+            <br />
+            <h3 style="text-align: center;">
+                Tags
+            </h3>
+            @if (Model.Number_Of_People > 0)
+            {
+                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups" style="display: flex; justify-content: center; align-items: center;">
 
-
-            <div class="col-md-6">
-
-                <h3>
-                    Tags
-                </h3>
-                @if (Model.Number_Of_People > 0)
-                {
-            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                
                     @for (int i = 1; i < Model.Number_Of_People + 1; i++)
                     {
                         int a = i;
@@ -57,167 +52,144 @@
 
                         }
 
-                        @if (a == @i) {
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href = '/Home/NewTag/@Model.Id?Tag=@i';">@i</button>
+                        @if (a == @i)
+                        {
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href = '/Home/NewTag/@Model.Id?Tag=@i';">@i</button>
                         }
                         else
                         {
                             i--;
                         }
                     }
-              
+
                 </div>
-                }
-                else
-                {
+            }
+            else
+            {
 
                 <div>Currently working on the tags for this photo. Thank you for your patient!</div>
 
-                }
+            }
+        </div>
 
 
+        <div class="col-md-6">
 
-                <h3 style="padding:10px;padding-bottom:0px;text-align:center;">
+            <h3 style="padding: 5px 0px 4px 10px;
+">
+                Comments
+            </h3>
 
-                    Comments
-                </h3>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-                @if (false)
-                {
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="navbar-nav">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider">
-                                        </div> <a class="dropdown-item" href="#">Separated link</a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <form class="form-inline">
-                                <input class="form-control mr-sm-2" type="text" />
-                                <button class="btn btn-primary my-2 my-sm-0" type="submit">
-                                    Search
-                                </button>
-                            </form>
-                            <ul class="navbar-nav ml-md-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider">
-                                        </div> <a class="dropdown-item" href="#">Separated link</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                }
-                <table class="table table-striped">
-                    @if (Model.CommentModel.Count() != 0)
-                    {
-                        <thead>
-                            <tr>
-                                <th>
-                                    #
-                                </th>
-                                <th>
-                                    Comment
-                                </th>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Date
-                                </th>
-                            </tr>
-                        </thead>
-                    }
-                    else
-                    {
-                        <tr>
-                            <td>
-                                There aren't any comments yet... Be the first to comment!
-                            </td>
-                        </tr>
-                    }
-
-
-                    <tbody>
-                        @{var k = 1;
-                            foreach (var com in Model.CommentModel)
-                            {
-                                <tr>
-                                    <td>
-                                        @(k++)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => com.Comment)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => com.Name)
-                                    </td>
-                                    <td>
-                                        01/04/2012
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-
-
-
-                <form asp-action="ViewPost">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div style="display:grid; grid-template-columns:auto auto;">
-                        <div id="hid1" class="form-group">
-                            <label asp-for="Comments.Comment" class="control-label">Comment</label>
-                            <input asp-for="Comments.Comment" class="form-control" required />
-                            <span asp-validation-for="Comments.Comment" class="text-danger"></span>
-                        </div>
-                        <div id="hid2" class="form-group">
-                            <label asp-for="Comments.Name" class="control-label">Name</label>
-                            <input asp-for="Comments.Name" class="form-control" required />
-                            <span asp-validation-for="Comments.Name" class="text-danger"></span>
-                        </div>
-                        <input type="number" name="Comments.Flag" hidden value="0">
-                        <input type="number" name="Comments.ImageId" hidden value="@Model.Id">
-
-                        <div class="form-group">
-                            <div id="hid3">
-                                <input type="submit" value="Post Comment" class="btn btn-primary" />
-                                <button type="button" class="btn btn-primary" onclick="cancelComment()">
-                                    Cancel
-                                </button>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider">
+                                </div> <a class="dropdown-item" href="#">Separated link</a>
                             </div>
-                            <button id="hid4" type="button" class="btn btn-primary" onclick="newComment()">
-                                New Comment
+                        </li>
+                    </ul>
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" />
+                        <button class="btn btn-primary my-2 my-sm-0" type="submit">
+                            Search
+                        </button>
+                    </form>
+                    <ul class="navbar-nav ml-md-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider">
+                                </div> <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <table class="table table-striped">
+                @if (Model.CommentModel.Count() == 0)
+                {
+                    <tr>
+                        <td>
+                            There aren't any comments yet... Be the first to comment!
+                        </td>
+                    </tr>
+                }
+
+
+                <tbody>
+
+                    @foreach (var com in Model.CommentModel)
+                    {
+                        if (com.Flag != true)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="grid-container1">
+                                        <div class="Comment"><h5>@Html.DisplayFor(modelItem => com.Comment)</h5></div>
+                                        <div class="Name">@Html.DisplayFor(modelItem => com.Name)</div>
+                                        <div class="Date">01/04/2012</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+
+
+
+            <form asp-action="ViewPost">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div style="display:grid; grid-template-columns:auto auto;">
+                    <div id="hid1" class="form-group">
+                        <label asp-for="Comments.Comment" class="control-label">Comment</label>
+                        <input asp-for="Comments.Comment" class="form-control" required />
+                        <span asp-validation-for="Comments.Comment" class="text-danger"></span>
+                    </div>
+                    <div id="hid2" class="form-group">
+                        <label asp-for="Comments.Name" class="control-label">Name</label>
+                        <input asp-for="Comments.Name" class="form-control" required />
+                        <span asp-validation-for="Comments.Name" class="text-danger"></span>
+                    </div>
+                    <input type="number" name="Comments.Flag" hidden value="0">
+                    <input type="number" name="Comments.ImageId" hidden value="@Model.Id">
+
+                    <div class="form-group">
+                        <div id="hid3">
+                            <input type="submit" value="Post Comment" class="btn btn-primary" />
+                            <button type="button" class="btn btn-primary" onclick="cancelComment()">
+                                Cancel
                             </button>
                         </div>
+                        <button id="hid4" type="button" class="btn btn-primary" onclick="newComment()">
+                            New Comment
+                        </button>
                     </div>
-                </form>
-                
-                    
-                    
-                    
-                
-            </div>
+                </div>
+            </form>
+
+
+
+
+
+        </div>
     </div>
 
 </div>
