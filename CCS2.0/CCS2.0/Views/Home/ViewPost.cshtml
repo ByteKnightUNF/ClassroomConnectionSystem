@@ -4,10 +4,10 @@
     ViewData["Title"] = "Photo";
 }
 <style>
-#hid1, #hid2, #hid3 {
+#hid1, #hid2, #hid3, #hid5, #hid6 {
     display: none;
 }
-#hid4 {
+#hid4, #hid7 {
     display: block;
 }
 </style>
@@ -23,53 +23,50 @@
                     <p class="card-text">
                         <img src="@Model.src" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
                     </p>
+                    @if (Model.Number_Of_People > 0)
+                    {
+                        <button id="hid7" class="btn btn-secondary" onclick="viewTags()">View Tags</button>
+                        <div id="hid5" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            
+                            <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
+                            @for (int i = 1; i < Model.Number_Of_People + 1; i++)
+                            {
+                                int a = i;
+
+                                @foreach (var tags in Model.AddingTagModel)
+                                {
+
+                                    @if (tags.Tag == @i)
+                                    {
+                                        <button type="button" class="btn btn-secondary">@tags.Name</button>
+                                        i++;
+                                        break;
+                                    }
+
+                                }
+
+                                @if (a == @i)
+                                {
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href = '/Home/NewTag/@Model.Id?Tag=@i';">@i</button>
+                                }
+                                else
+                                {
+                                    i--;
+                                }
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+
+                        <div>Currently working on the tags for this photo. Thank you for your patient!</div>
+                    }
                 </div>
                 <div class="card-footer" style="text-align:center">
                     @Html.DisplayFor(model => model.Teacher_Name)
                 </div>
-            </div>
-            <br />
-            <h3 style="text-align: center;">
-                Tags
-            </h3>
-            @if (Model.Number_Of_People > 0)
-            {
-                <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups" style="display: flex; justify-content: center; align-items: center;">
-
-                    @for (int i = 1; i < Model.Number_Of_People + 1; i++)
-                    {
-                        int a = i;
-
-                        @foreach (var tags in Model.AddingTagModel)
-                        {
-
-                            @if (tags.Tag == @i)
-                            {
-                                <button type="button" class="btn btn-secondary">@tags.Name</button>
-                                i++;
-                                break;
-                            }
-
-                        }
-
-                        @if (a == @i)
-                        {
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href = '/Home/NewTag/@Model.Id?Tag=@i';">@i</button>
-                        }
-                        else
-                        {
-                            i--;
-                        }
-                    }
-
-                </div>
-            }
-            else
-            {
-
-                <div>Currently working on the tags for this photo. Thank you for your patient!</div>
-
-            }
+            </div>            
         </div>
 
 
@@ -207,6 +204,20 @@
         document.getElementById("hid2").style.display = "none";
         document.getElementById("hid3").style.display = "none";
         document.getElementById("hid4").style.display = "block";
+    }
+
+    function viewTags() {
+        document.getElementById("hid5").style.display = "flex";
+        document.getElementById("hid5").style.justifyContent = "center";
+        document.getElementById("hid5").style.alignItems = "center";
+        document.getElementById("hid6").style.display = "block";
+        document.getElementById("hid7").style.display = "none";
+    }
+
+    function hideTags() {
+        document.getElementById("hid5").style.display = "none";
+        document.getElementById("hid6").style.display = "none";
+        document.getElementById("hid7").style.display = "block";
     }
 </script>
 
