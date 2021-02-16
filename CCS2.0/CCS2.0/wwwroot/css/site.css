@@ -69,3 +69,25 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.grid-container1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 0px 0px;
+    grid-template-areas: "Comment Comment Comment" "Name Name Date";
+}
+
+.Comment {
+    grid-area: Comment;
+}
+
+.Name {
+    grid-area: Name;
+    
+}
+
+.Date {
+    grid-area: Date;
+}
+

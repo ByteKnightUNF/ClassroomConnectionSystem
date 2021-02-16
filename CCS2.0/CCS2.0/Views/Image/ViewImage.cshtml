@@ -45,10 +45,12 @@
                         <li class="list-group-item"><b>Teacher Name</b>@Html.DisplayFor(modelItem => item.Teacher_Name)</li>
 
                     </ul>
-                    <div class="card-body">
-                        @Html.ActionLink("Edit", "Edit", new { ID = item.Id}) | 
-                        @Html.ActionLink("Tag", "Tag", new { ID = item.Id }) | 
+                    <div class="card-body" style="text-align: center;">
+                        @Html.ActionLink("Edit", "Edit", new { ID = item.Id }) |
+                        @Html.ActionLink("Tag", "Tag", new { ID = item.Id }) |
                         @Html.ActionLink("Delete", "DeleteImage", new { ID = item.Id }, new { onclick = "return confirm ( 'Are you sure?');" })
+                        <br />
+                        @Html.ActionLink("View Image", "ViewPost", "Home", new { Id = item.Id }, new { target = "_blank" })
                     </div>
                 </div>
             </div>
