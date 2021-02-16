@@ -20,8 +20,23 @@
 <form asp-action="ViewImage" method="get">
 
 
-    Search Images By Grade: <input type="text" name="searchString" value="@ViewBag.CurrentSearch" />
+    Search Images By Name: <input type="text" name="searchString" value="@ViewBag.CurrentSearch" />
     <input type="submit" value="Search" />
+
+
+
+
+
+
+
+    <!-- <label for="criteria">Search Images By:</label>
+
+     <select name="criteria" id="criteria">
+         <option value="Name">Name</option>
+         <option value="Email">Email</option>
+         <option value="School_Year_Begin">Beginning School Year</option>
+         <option value="School_Year_End">Ending School Year</option>
+     </select> -->
 
     <a asp-action="ViewImage">Remove Filter</a>
 </form>
@@ -42,7 +57,7 @@
                         <li class="list-group-item"><b>Beginning School Year:</b> @Html.DisplayFor(modelItem => item.School_Year_Begin)</li>
                         <li class="list-group-item"><b>Ending School Year:</b> @Html.DisplayFor(modelItem => item.School_Year_End)</li>
                         <li class="list-group-item"><b>Grade:</b> @Html.DisplayFor(modelItem => item.Grade)</li>
-                        <li class="list-group-item"><b>Teacher Name</b>@Html.DisplayFor(modelItem => item.Teacher_Name)</li>
+                        <li class="list-group-item"><b>Teacher Name: </b>@Html.DisplayFor(modelItem => item.Teacher_Name)</li>
 
                     </ul>
                     <div class="card-body">

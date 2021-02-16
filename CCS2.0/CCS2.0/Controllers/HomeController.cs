@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 using ImageModel = ImageUpload.Models.ImageModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CCS2._0.Controllers
 {
@@ -69,7 +69,20 @@ namespace CCS2._0.Controllers
             List<ImageModel> Match = new List<ImageModel>();
 
             var match = GetPhotoId(ID);
-            
+
+            #region ViewBag
+            List<SelectListItem> mySkills = new List<SelectListItem>() {
+        new SelectListItem {
+            Text = "Name", Value = "1"
+        },
+        new SelectListItem {
+            Text = "Email", Value = "2"
+        },
+  
+    };
+            ViewBag.MySkills = mySkills;
+            #endregion
+
             foreach (var row in match)
             {
 
