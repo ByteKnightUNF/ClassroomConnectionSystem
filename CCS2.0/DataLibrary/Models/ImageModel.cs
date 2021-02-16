@@ -29,6 +29,9 @@ namespace DataLibrary.Models
         public string Teacher_Name { get; set; }
 
         public byte[] ImageFile { get; set; }
+        public int Number_Of_People { get; set; }
+        public byte[] Tagged_Photo { get; set; }
+
 
 
     }

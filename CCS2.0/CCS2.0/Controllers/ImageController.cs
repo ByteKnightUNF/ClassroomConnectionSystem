@@ -15,10 +15,11 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
 using ImageModel = ImageUpload.Models.ImageModel;
+using CommentModel = ImageUpload.Models.CommentModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 using CCS2._0.Models;
-using TagModel = CCS2._0.Models.TagModel;
+using TagModel = ImageUpload.Models.TagModel;
 
 namespace CCS2._0.Controllers
 {
@@ -134,6 +135,123 @@ namespace CCS2._0.Controllers
 
         }
 
+
+        public IActionResult ViewComment(string filter, string cla)
+        {
+            List<CommentModel> Com = new List<CommentModel>();
+            var com = LoadComment();
+            bool ss = false;
+            switch (filter)
+            {
+                case "flag":
+                    com = FlaggedComment();
+                    break;
+                case "ascending":
+                    com = SortName("a");
+                    break;
+                case "descending":
+                    com = SortName("d");
+                    break;
+                case "new":
+                    break;
+                case "old":
+                    break;
+                case "class":
+                    ss = true;
+                    break;
+                default:
+                    break;
+            }
+            foreach (var row in com)
+            {
+                List<ImageModel> Match = new List<ImageModel>();
+                var match = GetPhotoId(row.ImageId);
+                foreach (var side in match)
+                {
+                    Match.Add(new ImageModel
+                    {
+                        School_Year_End = side.School_Year_End,
+                        Grade = side.Grade,
+                        Teacher_Name = side.Teacher_Name
+                    });
+                }
+                Com.Add(new CommentModel
+                {
+                    CommentId = row.Comment_Id,
+                    Comment = row.Comment,
+                    Name = row.Names,
+                    Flag = row.Flag,
+                    Class = Match[0].Grade+" | "+Match[0].Teacher_Name+" | "+Match[0].School_Year_End
+                });
+            }
+            if (ss)
+            {
+                List<CommentModel> sea = new List<CommentModel>();
+                foreach (var item in Com)
+                {
+                    if (item.Class == cla)
+                    {
+                        sea.Add(new CommentModel{
+                            CommentId = item.CommentId,
+                            Comment = item.Comment,
+                            Name = item.Name,
+                            Flag = item.Flag,
+                            Class = item.Class
+                        });
+                    }
+                }
+                return View(sea);
+            }
+
+
+            return View(Com);
+        }
+
+        public IActionResult Delete_Comment(int ID)
+        {
+            try
+            {
+                int recordCreated = DeleteComment(ID);
+                return RedirectToAction("ViewComment");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
+        public IActionResult EditComment(int Id)
+        {
+            List<CommentModel> Com = new List<CommentModel>();
+            var com = GetComment(Id);
+
+            foreach (var row in com)
+            {
+                Com.Add(new CommentModel
+                {
+                    CommentId = row.Comment_Id,
+                    Comment = row.Comment,
+                    Name = row.Names,
+                    Flag = row.Flag,
+                    ImageId = row.ImageId
+                });
+            }
+            CommentModel test = new CommentModel();
+            test = Com[0];
+
+            return View(test);
+        }
+
+        [HttpPost]
+        public IActionResult EditComment(ImageUpload.Models.CommentModel model)
+        {
+            int recordCreated = Edit_Comment(model.CommentId, model.Comment, model.Name, model.Flag, model.ImageId);
+
+            return RedirectToAction("ViewComment");
+        }
+
+
         public IActionResult Tag()
         {
             ViewBag.image = null;
@@ -170,6 +288,7 @@ namespace CCS2._0.Controllers
 
             return View();
         }
+
 
 
     }

@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CCS2._0</title>
+    <title>@ViewData["Title"] - Friends of Dinsmore Elementary CCS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -30,12 +30,12 @@
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="/Images/Dinsmore-Logo.png" width="auto" height="50%" alt="Dinsmore Logo" />
                     </a>
-                   
 
-                        
+                    <a href="/identity/account/login">login</a>
 
-                  
-                   
+
+
+
                 }
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -61,17 +61,16 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-bottom:80px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <!--<div class="container">
-            &copy; 2020 - CCS2._0 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div> -->
-        Classroom Connection System
+        <div class="container">
+            &copy; 2020 - Classroom Connection System
+        </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

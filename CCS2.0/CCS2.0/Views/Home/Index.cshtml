@@ -4,7 +4,7 @@
 @model IEnumerable<ImageUpload.Models.ImageModel>
 
 @{
-    ViewData["Title"] = "Admin Home Page";
+    ViewData["Title"] = "Welcome";
 }
 <head>
 
@@ -32,27 +32,20 @@
         </style>
 
 
-
+        <br />
 
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="Photo_Upload">
             Upload Photo
         </a>
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
-            Delete Photo
-        </a>
-        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
             Manage Images
         </a>
-        <br />
-        <br />
+   
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
             Monitor Tag
         </a>
-        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
-            Flagged Comments
-        </a>
-        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
-            New Comments
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewComment">
+            Monitor Comments
         </a>
 
 
@@ -310,7 +303,7 @@
         }
 
 
-        <!--issue last div based on grade maybe change to include prev div -->
+        <!--fix to model design not html-->
 
 
 

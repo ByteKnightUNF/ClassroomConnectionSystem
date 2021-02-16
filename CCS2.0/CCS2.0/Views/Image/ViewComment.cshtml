@@ -1,0 +1,120 @@
+﻿@model IEnumerable<ImageUpload.Models.CommentModel>
+
+@{
+    ViewData["Title"] = "Manage Comment";
+}
+
+<h1>Manage Comments</h1>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="navbar-toggler-icon"></span>
+    </button> <a class="navbar-brand">Apply Filter</a>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <form class="form-inline">
+                      <input class="form-control mr-sm-2" type="text" />
+                      <button class="btn btn-primary my-2 my-sm-0" type="submit">
+                          Search
+                      </button>
+                  </form>
+                  <span style="padding: 0px 10px 0px 10px"></span>
+                  <ul class="navbar-nav">
+                      <li class="nav-item dropdown">
+                          <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Sort by Name</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              @Html.ActionLink("Ascending", "ViewComment", new { filter = "ascending" })<br />
+                              @Html.ActionLink("Descending", "ViewComment", new { filter = "descending" })
+                          </div>
+                      </li>
+                      <span style="padding: 0px 10px 0px 10px"></span>
+                      <li class="nav-item dropdown">
+                          <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Sort by Date</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              @Html.ActionLink("Newest", "ViewComment", new { filter = "new" })<br />
+                              @Html.ActionLink("Oldest", "ViewComment", new { filter = "old" })
+                          </div>
+                      </li>
+                      <span style="padding: 0px 10px 0px 10px"></span>
+                      <li class="nav-item dropdown">
+                          <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Class</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              @{string classes = "class";
+                                  foreach (var item in Model)
+                                  {
+                                      if (!classes.Contains(item.Class))
+                                      {
+                                          classes += item.Class;
+                                          @Html.ActionLink(item.Class, "ViewComment", new { filter = "class", cla = item.Class })<br />
+                                      }
+                                  }
+                              }
+                          </div>
+                      </li>
+                      <span style="padding: 0px 10px 0px 10px"></span>
+                      <li class="nav-item">
+                          @Html.ActionLink("Flagged Comments", "ViewComment", new { filter = "flag" })
+                      </li>
+                  </ul>
+                  <ul class="navbar-nav ml-md-auto">
+                      <li class="nav-item">
+                          @Html.ActionLink("Remove Filter", "ViewComment", new { filter = "" })
+                      </li>
+                  </ul>
+              </div>
+</nav>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <div class="grid-container1">
+                    
+                    <div class="Name">@Html.DisplayNameFor(model => model.Comment) | @Html.DisplayNameFor(model => model.Name)</div>
+                    <div class="Date">Date</div>
+                </div>
+
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flag)
+            </th>
+            <th>
+                Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="grid-container1">
+                        <div class="Comment">@Html.DisplayFor(modelItem => item.Comment)</div>
+                        <div class="Name">@Html.DisplayFor(modelItem => item.Name)</div>
+                        <div class="Date">1/1/2021</div>
+                    </div>
+ 
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Flag)
+                </td>
+                <td>
+                    @Html.ActionLink("View", "ViewPost", "Home", new { Id = item.ImageId }, new { target = "_blank" })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditComment", new { id = item.CommentId }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete_Comment", new { ID = item.CommentId }, new { onclick = "return confirm ( 'Are you sure?');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

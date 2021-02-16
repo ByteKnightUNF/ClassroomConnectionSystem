@@ -62,6 +62,43 @@ namespace DataLibrary.BussinessLogic
         //"insert into dbo.Tag (Photo_Id, Tag)
         // values(" + Photo_id + ", @Tag);" +
 
+        public static int CreateComment(string Comment, string Name, Boolean Flag, int ImageId)
+        {
+
+
+
+
+            CommentModel data = new CommentModel
+            {
+                Comment = Comment,
+                Names = Name,
+                Flag = Flag,
+                ImageId = ImageId
+
+            };
+
+            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId)
+                          values (@Comment, @Names, @Flag, @ImageId);";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+        public static int CreateTag(int Photo_id, int Tag, string Name )
+        {
+
+            AddingTagModel data = new AddingTagModel
+            {
+                Photo_id = Photo_id,
+                Tag = Tag,
+                Name = Name
+
+            };
+
+            string sql = @"insert into dbo.Tag (Photo_Id, Tag, Name)
+                          values ("+@Photo_id+", "+@Tag+", @Name);";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
         public static List<ImageModel> GetPhotoId(int Id)
         {
 
@@ -71,7 +108,36 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
+        
+        public static List<AddingTagModel> getTagId(int Id)
+        {
 
+            string sql = @"select *
+                        from dbo.Tag
+                        Where Photo_Id = " + @Id + ";";
+
+            return SqlDataAccess.LoadData<AddingTagModel>(sql);
+        }
+
+        public static List<CommentModel> GetCommentId(int Id)
+        {
+
+            string sql = @"select *
+                        from dbo.Comment
+                        Where ImageId = " + @Id + ";";
+
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+        }
+
+        public static List<CommentModel> GetComment(int Id)
+        {
+
+            string sql = @"select *
+                        from dbo.Comment
+                        Where Comment_Id = " + @Id + ";";
+
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+        }
         public static List<ImageModel> FindImg(string imgId)
         {
 
@@ -81,6 +147,7 @@ namespace DataLibrary.BussinessLogic
                         Where Grade Like '%" + @imgId + "%';";
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
+
         }
 
         public static List<ImageModel> FindFindByBegYear(string imgId)
@@ -103,6 +170,15 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
+        public static List<CommentModel> LoadComment()
+        {
+
+            string sql = @"select Comment_Id, Comment, Names, Flag, ImageId
+                        from dbo.Comment;";
+
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+        }
+
         public static int Deleteimage(int Id)
         {
             ImageModel data = new ImageModel
@@ -111,10 +187,66 @@ namespace DataLibrary.BussinessLogic
 
             };
 
-            string sql = @"DELETE FROM dbo.Image WHERE Id= @Id;";
+            string sql = @"DELETE FROM dbo.Image WHERE Id= @Id; DELETE FROM dbo.Comment WHERE ImageId= @Id;";
 
             return SqlDataAccess.SaveData(sql, data);
 
+        }
+
+        public static int DeleteComment(int Id)
+        {
+            CommentModel data = new CommentModel
+            {
+                Comment_Id = Id
+
+            };
+
+            string sql = @"DELETE FROM dbo.Comment WHERE Comment_Id= @Comment_Id;";
+
+            return SqlDataAccess.SaveData(sql, data);
+
+        }
+
+        public static int Edit_Comment(int Id, string Comment, string Name, bool Flag, int ImageId)
+        {
+            CommentModel data = new CommentModel
+            {
+                Comment_Id = Id,
+                Comment = Comment,
+                Names = Name,
+                Flag = Flag,
+                ImageId = ImageId
+            };
+
+            string sql = @"UPDATE dbo.Comment SET Comment = @Comment, Names = @Names, Flag = @Flag WHERE Comment_Id= @Comment_Id;";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static List<CommentModel> FlaggedComment()
+        {
+            string sql = @"select *
+                        from dbo.Comment
+                        Where Flag = 1;";
+            return SqlDataAccess.LoadData<CommentModel>(sql);
+
+        }
+
+        public static List<CommentModel> SortName(string option)
+        {
+            string sql;
+            if (option == "a") {
+                sql = @"select *
+                            from dbo.Comment
+                            ORDER BY Names ASC;";
+            } 
+            else
+            {
+                sql = @"select *
+                            from dbo.Comment
+                            ORDER BY Names DESC;";
+            }
+            return SqlDataAccess.LoadData<CommentModel>(sql);
         }
     }
 }
