@@ -19,7 +19,7 @@ using Newtonsoft.Json;
 using ImageModel = ImageUpload.Models.ImageModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CCS2._0.Controllers
 {
@@ -72,6 +72,7 @@ namespace CCS2._0.Controllers
 
             var match = GetPhotoId(ID);
 
+
             var com = GetCommentId(ID);
 
             var tag = getTagId(ID);
@@ -100,6 +101,7 @@ namespace CCS2._0.Controllers
                 });
             }
            
+
 
             foreach (var row in match)
             {

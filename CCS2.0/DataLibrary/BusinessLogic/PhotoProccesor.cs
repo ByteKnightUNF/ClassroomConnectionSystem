@@ -150,6 +150,17 @@ namespace DataLibrary.BussinessLogic
 
         }
 
+        public static List<ImageModel> FindFindByBegYear(string imgId)
+        {
+
+            string sql = @"select *
+                        from dbo.Image
+
+                        Where School_Year_Begin Like '%" + @imgId + "%';";
+
+            return SqlDataAccess.LoadData<ImageModel>(sql);
+        }
+
         public static List<ImageModel> LoadPhoto()
         {
 
