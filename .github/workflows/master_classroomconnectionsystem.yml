@@ -21,7 +21,7 @@ jobs:
         dotnet-version: '3.1.102'
 
     - name: Build with dotnet
-      run: dotnet build --source c:\CCS2.0\CCS2.0\CCS2.0.csproj
+      run: dotnet --project ./CCS2.0/CCS2.0/CCS2.0.csproj
 
     - name: dotnet publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
