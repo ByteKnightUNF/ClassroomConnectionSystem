@@ -33,8 +33,9 @@
                                 </div>
                             </div>
                         </p>
-                  
-                  <button id="hid7" type="button" class="btn btn-secondary" onclick="viewTags()" >Show Tags</button>
+                    <div id="hid7">
+                        <button type="button" class="btn btn-secondary" onclick="viewTags()" >Show Tags</button>
+                    </div>
                 
                 @if (Model.Number_Of_People > 0)
                 {
@@ -201,6 +202,7 @@
                                         <div class="Comment"><h5>@Html.DisplayFor(modelItem => com.Comment)</h5></div>
                                         <div class="Name">@Html.DisplayFor(modelItem => com.Name)</div>
                                         <div class="Date">01/04/2012</div>
+                                        <div class="Flag"><button class="btn btn-outline-secondary">Flag</button></div>
                                     </div>
                                 </td>
                             </tr>

@@ -72,10 +72,10 @@ body {
 
 .grid-container1 {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr auto;
     grid-template-rows: auto auto;
     grid-gap: 0px 0px;
-    grid-template-areas: "Comment Comment Comment" "Name Name Date";
+    grid-template-areas: "Comment Comment Comment Flag" "Name Name Date Flag";
 }
 
 .Comment {
@@ -89,5 +89,9 @@ body {
 
 .Date {
     grid-area: Date;
+}
+
+.Flag {
+    grid-area: Flag;
 }
 
