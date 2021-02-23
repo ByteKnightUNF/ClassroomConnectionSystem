@@ -84,10 +84,10 @@ namespace CCS2._0.Controllers
 
 
 
-        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString)
+        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString, string searchInput)
         {
             ViewBag.CurrentSearch = searchString;
-
+            ViewBag.CurrentSearch2 = searchInput;
             List<ImageModel> Match = new List<ImageModel>();
 
             var match = LoadPhoto();
@@ -98,6 +98,8 @@ namespace CCS2._0.Controllers
                 match = FindImg(searchString);
 
             }
+
+
 
             foreach (var row in match)
             {
