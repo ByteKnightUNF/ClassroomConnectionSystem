@@ -12,15 +12,13 @@
     <a asp-action="Photo_Upload">Upload New Image</a>
 </p>
 
-<p>
-    <a asp-action=" ">Search Images</a>
-</p>
+
 
 
 <form asp-action="ViewImage" method="get">
 
 
-    Search Images By Name: <input type="text" name="searchString" value="@ViewBag.CurrentSearch" />
+    Search: <input type="text" name="searchString" value="@ViewBag.CurrentSearch" />
     <input type="submit" value="Search" />
 
 
