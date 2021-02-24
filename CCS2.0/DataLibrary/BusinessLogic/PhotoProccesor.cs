@@ -144,7 +144,9 @@ namespace DataLibrary.BussinessLogic
             string sql = @"select *
                         from dbo.Image
 
+
                         Where Name Like '%" + @imgId + "%' OR Email Like '%" +  @imgId + "%'" +
+
                         "OR School_Year_Begin Like '%" + @imgId + "%' OR School_Year_End Like '%" + @imgId + "%'" +
                         "OR Grade Like '%" + @imgId + "%' OR Teacher_Name Like '%" + @imgId + "%';";
 

@@ -181,7 +181,8 @@ namespace CCS2._0.Controllers
                     Comment = row.Comment,
                     Name = row.Names,
                     Flag = row.Flag,
-                    Class = Match[0].Grade+" | "+Match[0].Teacher_Name+" | "+Match[0].School_Year_End
+                    ImageId = row.ImageId,
+                    Class = Match[0].Grade+" Grade | "+Match[0].School_Year_End+" | "+Match[0].Teacher_Name
                 });
             }
             if (ss)
@@ -196,6 +197,7 @@ namespace CCS2._0.Controllers
                             Comment = item.Comment,
                             Name = item.Name,
                             Flag = item.Flag,
+                            ImageId = item.ImageId,
                             Class = item.Class
                         });
                     }

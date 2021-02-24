@@ -105,26 +105,45 @@ namespace CCS2._0.Controllers
 
             foreach (var row in match)
             {
-
-
-                Match.Add(new ImageModel
+                if (row.Number_Of_People > 0)
                 {
-                    Id = row.Id,
-                    Name = row.Name,
-                    Email = row.Email,
-                    School_Year_Begin = row.School_Year_Begin,
-                    School_Year_End = row.School_Year_End,
-                    Grade = row.Grade,
-                    Teacher_Name = row.Teacher_Name,
-                    src = this.ViewImage(row.ImageFile),
 
-                    Number_Of_People = row.Number_Of_People,
-                    Tagged_src = this.ViewImage(row.Tagged_Photo),
-                    CommentModel = Com,
-                    AddingTagModel =Tag,
-                    Comments = new ImageUpload.Models.CommentModel()
+                    Match.Add(new ImageModel
+                    {
+                        Id = row.Id,
+                        Name = row.Name,
+                        Email = row.Email,
+                        School_Year_Begin = row.School_Year_Begin,
+                        School_Year_End = row.School_Year_End,
+                        Grade = row.Grade,
+                        Teacher_Name = row.Teacher_Name,
+                        src = this.ViewImage(row.ImageFile),
+                        Number_Of_People = row.Number_Of_People,
+                        Tagged_src = this.ViewImage(row.Tagged_Photo),
+                        AddingTagModel = Tag,
+                        CommentModel = Com,
+                        Comments = new ImageUpload.Models.CommentModel()
 
-                });
+                    });
+                }
+                else
+                {
+                    Match.Add(new ImageModel
+                    {
+                        Id = row.Id,
+                        Name = row.Name,
+                        Email = row.Email,
+                        School_Year_Begin = row.School_Year_Begin,
+                        School_Year_End = row.School_Year_End,
+                        Grade = row.Grade,
+                        Teacher_Name = row.Teacher_Name,
+                        src = this.ViewImage(row.ImageFile),
+                        Number_Of_People = row.Number_Of_People,
+                        CommentModel = Com,
+                        Comments = new ImageUpload.Models.CommentModel()
+
+                    });
+                }
             }
 
             ImageModel test = new ImageModel();

@@ -33,94 +33,95 @@
                                 </div>
                             </div>
                         </p>
-                  
-                  <button type="button" class="btn btn-secondary" onclick="viewTags()">Show Tags</button>
-                
-                @if (Model.Number_Of_People > 0)
-                {
-                    
-                        <div id="hid5" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                            
-                            <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
 
-                        @for (int i = 1; i < Model.Number_Of_People + 1; i++)
+
+
+                        @if (Model.Number_Of_People > 0)
                         {
-                            int a = i;
+                            <button id="hid7" type="button" class="btn btn-secondary" onclick="viewTags()">Show Tags</button>
 
-                            @foreach (var tags in Model.AddingTagModel)
-                            {
+                            <div id="hid5" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
-                                @if (tags.Tag == @i)
+                                <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
+
+                                @for (int i = 1; i < Model.Number_Of_People + 1; i++)
                                 {
-                                    <button type="button" id="photobutton" class="btn btn-secondary">@i - @tags.Name</button>
-                                    i++;
-                                    break;
+                                    int a = i;
+
+                                    @foreach (var tags in Model.AddingTagModel)
+                                    {
+
+                                        @if (tags.Tag == @i)
+                                        {
+                                            <button type="button" id="photobutton" class="btn btn-secondary">@i - @tags.Name</button>
+                                            i++;
+                                            break;
+                                        }
+
+                                    }
+
+                                    @if (a == @i)
+                                    {
+                                        <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.Id,@i)">@i</button>
+                                    }
+
+                                    else
+                                    {
+                                        i--;
+                                    }
                                 }
 
-                            }
-
-                            @if (a == @i)
-                            {
-                                <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.Id,@i)">@i</button>
-                            }
-                            
-                            else
-                            {
-                                i--;
-                            }
-                        }
-
-
-                    </div>
-
-                 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">What is this person's name?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form asp-action="NewTag">
-                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        <div style="display:grid; grid-template-columns:auto auto;">
-                                            <div id="Tag_Photo_id" class="form-group">
-
-                                            </div>
-                                            <div id="Tag_id" class="form-group">
-
-                                            </div>
-                                            <div class="form-group">
-
-                                                <input asp-for="Name" value="" class="form-control" />
-                                                <span asp-validation-for="Name" class="text-danger"></span>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="submit" value="Submit" class="btn btn-primary" />
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        </div>
-                                    </form>
-                                </div>
-                              
-                                
 
                             </div>
-                        </div>
-                    </div>
 
 
-                }
-                else
-                {
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">What is this person's name?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form asp-action="NewTag">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                <div style="display:grid; grid-template-columns:auto auto;">
+                                                    <div id="Tag_Photo_id" class="form-group">
 
-                        <div>Currently working on the tags for this photo. Thank you for your patient!</div>
-                    }
+                                                    </div>
+                                                    <div id="Tag_id" class="form-group">
+
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <input asp-for="Name" value="" class="form-control" />
+                                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        }
+                        else
+                        {
+
+                            <div>Currently working on the tags for this photo. Thank you for your patience!</div>
+                        }
                     </div>
       
                     <div class="card-footer" style="text-align:center">
@@ -201,6 +202,7 @@
                                         <div class="Comment"><h5>@Html.DisplayFor(modelItem => com.Comment)</h5></div>
                                         <div class="Name">@Html.DisplayFor(modelItem => com.Name)</div>
                                         <div class="Date">01/04/2012</div>
+                                        <div class="Flag"><button class="btn btn-outline-secondary">Flag</button></div>
                                     </div>
                                 </td>
                             </tr>
@@ -255,24 +257,7 @@
 </div>
 
 <script>
-    function showPhoto() {
-        if (document.getElementById("TagImage").style.display == "none") {
-            document.getElementById("TagImage").style.display = "block";
-            document.getElementById("Image").style.display = "none";
-        } else {
-            document.getElementById("TagImage").style.display = "none";
-            document.getElementById("Image").style.display = "block";
-        }
-    }
-    var elements = document.querySelectorAll("#photobutton")
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('mouseover', function (e) {
-            showPhoto();
-        })
-        elements[i].addEventListener('mouseout', function (e) {
-            showPhoto();
-        })
-    }
+   
 
     function newTag(id, tag) {
         holder = document.getElementById("Tag_Photo_id");
@@ -308,7 +293,9 @@
 
 
     function viewTags() {
-        showPhoto();
+     
+        document.getElementById("TagImage").style.display = "block";
+        document.getElementById("Image").style.display = "none";
         document.getElementById("hid5").style.display = "flex";
         document.getElementById("hid5").style.justifyContent = "center";
         document.getElementById("hid5").style.alignItems = "center";
@@ -317,6 +304,8 @@
     }
 
     function hideTags() {
+        document.getElementById("TagImage").style.display = "none";
+        document.getElementById("Image").style.display = "block";
         document.getElementById("hid5").style.display = "none";
         document.getElementById("hid6").style.display = "none";
         document.getElementById("hid7").style.display = "block";
