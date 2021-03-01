@@ -250,5 +250,57 @@ namespace DataLibrary.BussinessLogic
             }
             return SqlDataAccess.LoadData<CommentModel>(sql);
         }
+
+        public static int CreateFlag(int Id, string Rea)
+        {
+            FlagModel data = new FlagModel
+            {
+                comment_id = Id,
+                reason = Rea
+            };
+
+            string sql = @"insert into dbo.FlaggedComments (comment_id, reason)
+                          values (@comment_id, @reason);";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static int Flag(int Id, bool flag)
+        {
+            CommentModel data = new CommentModel
+            {
+                Comment_Id = Id,
+                Flag = flag
+            };
+
+            string sql = @"UPDATE dbo.Comment SET Flag = @Flag WHERE Comment_Id= @Comment_Id;";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+        public static List<FlagModel> GetReason(int Id)
+        {
+
+            string sql = @"select *
+                        from dbo.FlaggedComments
+                        Where comment_id = " + @Id + ";";
+
+            return SqlDataAccess.LoadData<FlagModel>(sql);
+        }
+
+        public static int DeleteFlag(int Id)
+        {
+            FlagModel data = new FlagModel
+            {
+                comment_id = Id
+
+            };
+
+            string sql = @"DELETE FROM dbo.FlaggedComments WHERE comment_id= @comment_id;";
+
+            return SqlDataAccess.SaveData(sql, data);
+
+        }
+
     }
 }

@@ -7,6 +7,15 @@
 <h1>EditComment</h1>
 
 <h4>CommentModel</h4>
+@if (Model.Flag == true)
+{
+    <hr />
+    <h2 style="color:red">This comment has been Flagged</h2>
+    <h5>Reason:</h5>
+    @Html.DisplayFor(model => model.FlagModel.Reason)
+    <button class="btn btn-outline-primary" onclick="window.location.href = '/Image/RemoveFlag/@Model.CommentId';">Remove Flag</button>
+
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -22,11 +31,7 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Flag" /> @Html.DisplayNameFor(model => model.Flag)
-                </label>
-            </div>
+            <input type="number" name="Flag" hidden value="@Model.Flag" />
             <input type="number" name="CommentId" hidden value="@Model.CommentId">
             <input type="number" name="ImageId" hidden value="@Model.ImageId">
             <div class="form-group">
@@ -35,6 +40,7 @@
         </form>
     </div>
 </div>
+
 
 <div>
     <a asp-action="ViewComment">Back to List</a>

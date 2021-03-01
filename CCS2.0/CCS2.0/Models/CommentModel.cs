@@ -28,5 +28,7 @@ namespace ImageUpload.Models
 
         public int ImageId { get; set; }
         public ImageModel ImageModel { get; set; }
+
+        public FlagModel FlagModel { get; set; }
     }
 }

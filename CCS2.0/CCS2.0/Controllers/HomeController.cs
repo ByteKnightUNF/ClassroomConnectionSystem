@@ -146,10 +146,7 @@ namespace CCS2._0.Controllers
                 }
             }
 
-            ImageModel test = new ImageModel();
-            test = Match[0];
-
-            return View(test);
+            return View(Match[0]);
         }
 
         [HttpPost]
@@ -189,7 +186,34 @@ namespace CCS2._0.Controllers
 
         }
 
-        
+        public IActionResult FlagComment(int Id)
+        {
+            List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
+            var com = GetComment(Id);
+
+            foreach (var row in com)
+            {
+                Com.Add(new ImageUpload.Models.CommentModel
+                {
+                    CommentId = row.Comment_Id,
+                    Comment = row.Comment,
+                    Name = row.Names,
+                    Flag = row.Flag,
+                    ImageId = row.ImageId
+                });
+            }
+
+            return View(Com[0]);
+        }
+        [HttpPost]
+        public IActionResult FlagComment(ImageUpload.Models.CommentModel model)
+        {
+            CreateFlag(model.FlagModel.CommentId, model.FlagModel.Reason);
+            Flag(model.FlagModel.CommentId, true);
+            return RedirectToAction("ViewPost", new { Id = model.ImageId });
+        }
+
+
 
 
         public IActionResult Privacy()

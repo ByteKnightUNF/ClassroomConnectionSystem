@@ -78,6 +78,14 @@ body {
     grid-template-areas: "Comment Comment Comment Flag" "Name Name Date Flag";
 }
 
+.grid-container-flag {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 0px 0px;
+    grid-template-areas: "Comment Comment Comment" "Name Name Date";
+}
+
 .Comment {
     grid-area: Comment;
 }
