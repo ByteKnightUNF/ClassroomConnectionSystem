@@ -197,7 +197,7 @@ namespace CCS2._0.Controllers
             {
                 Com.Add(new ImageUpload.Models.CommentModel
                 {
-                    CommentId = row.Comment_Id,
+                    CommentId = row.CommentId,
                     Comment = row.Comment,
                     Name = row.Names,
                     Flag = row.Flag,

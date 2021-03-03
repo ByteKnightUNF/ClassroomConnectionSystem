@@ -251,12 +251,12 @@ namespace DataLibrary.BussinessLogic
         {
             FlagModel data = new FlagModel
             {
-                comment_id = Id,
-                reason = Rea
+                CommentId = Id,
+                Reason = Rea
             };
 
-            string sql = @"insert into dbo.FlaggedComments (comment_id, reason)
-                          values (@comment_id, @reason);";
+            string sql = @"insert into dbo.FlaggedComments (CommentId, Reason)
+                          values (@CommentId, @Reason);";
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -265,11 +265,11 @@ namespace DataLibrary.BussinessLogic
         {
             CommentModel data = new CommentModel
             {
-                Comment_Id = Id,
+                CommentId = Id,
                 Flag = flag
             };
 
-            string sql = @"UPDATE dbo.Comment SET Flag = @Flag WHERE Comment_Id= @Comment_Id;";
+            string sql = @"UPDATE dbo.Comment SET Flag = @Flag WHERE CommentId= @CommentId;";
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -288,11 +288,11 @@ namespace DataLibrary.BussinessLogic
         {
             FlagModel data = new FlagModel
             {
-                comment_id = Id
+                CommentId = Id
 
             };
 
-            string sql = @"DELETE FROM dbo.FlaggedComments WHERE comment_id= @comment_id;";
+            string sql = @"DELETE FROM dbo.FlaggedComments WHERE CommentId= @CommentId;";
 
             return SqlDataAccess.SaveData(sql, data);
 

@@ -8,7 +8,7 @@ namespace DataLibrary.Models
 {
     public class FlagModel
     {
-        public int comment_id { get; set; }
-        public string reason { get; set; }
+        public int CommentId { get; set; }
+        public string Reason { get; set; }
     }
 }
