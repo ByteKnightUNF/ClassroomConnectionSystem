@@ -22,21 +22,21 @@
             <div class="col-md-6">
                 <div class="card">
                     <h5 class="card-header" style="text-align:center">
-                        @Html.DisplayFor(model => model.School_Year_Begin) - @Html.DisplayFor(model => model.School_Year_End)
+                        @Html.DisplayFor(model => model.SchoolYearBegin) - @Html.DisplayFor(model => model.SchoolYearEnd)
                     </h5>
                     <div class="card-body">
                         <p class="card-text">
                             <div class="container">
                                 <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
                                 <div class="overlay">
-                                    <img src="@Model.Tagged_src" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" class="center" />
+                                    <img src="@Model.TaggedSrc" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" class="center" />
                                 </div>
                             </div>
                         </p>
 
 
 
-                        @if (Model.Number_Of_People > 0)
+                        @if (Model.NumberOfPeople > 0)
                         {
                             <button id="hid7" type="button" class="btn btn-secondary" onclick="viewTags()">Show Tags</button>
 
@@ -44,7 +44,7 @@
 
                                 <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
 
-                                @for (int i = 1; i < Model.Number_Of_People + 1; i++)
+                                @for (int i = 1; i < Model.NumberOfPeople + 1; i++)
                                 {
                                     int a = i;
 
@@ -62,7 +62,7 @@
 
                                     @if (a == @i)
                                     {
-                                        <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.Id,@i)">@i</button>
+                                        <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.ImageId,@i)">@i</button>
                                     }
 
                                     else
@@ -125,7 +125,7 @@
                     </div>
       
                     <div class="card-footer" style="text-align:center">
-                        @Html.DisplayFor(model => model.Teacher_Name)
+                        @Html.DisplayFor(model => model.TeacherName)
                     </div>
                 </div>
 
@@ -228,7 +228,7 @@
                         <span asp-validation-for="Comments.Name" class="text-danger"></span>
                     </div>
                     <input type="number" name="Comments.Flag" hidden value="0">
-                    <input type="number" name="Comments.ImageId" hidden value="@Model.Id">
+                    <input type="number" name="Comments.ImageId" hidden value="@Model.ImageId">
 
                     <div class="form-group">
                         <div id="hid3">

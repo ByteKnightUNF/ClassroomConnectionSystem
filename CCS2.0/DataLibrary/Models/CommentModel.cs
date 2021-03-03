@@ -8,7 +8,7 @@ namespace DataLibrary.Models
 {
     public class CommentModel
     {
-        public int Comment_Id { get; set; }
+        public int CommentId { get; set; }
 
         public string Comment { get; set; }
 

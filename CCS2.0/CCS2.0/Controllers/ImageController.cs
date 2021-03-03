@@ -57,7 +57,7 @@ namespace CCS2._0.Controllers
                     }
 
 
-                    int recordCreated = CreatePhoto(model.Name,model.Email,model.School_Year_Begin, model.School_Year_End, model.Grade,model.Teacher_Name, bytes);
+                    int recordCreated = CreatePhoto(model.Name,model.Email,model.SchoolYearBegin, model.SchoolYearEnd, model.Grade,model.TeacherName, bytes);
 
                     ViewBag.image = ViewImage(bytes);
 
@@ -107,14 +107,15 @@ namespace CCS2._0.Controllers
 
                 Match.Add(new ImageModel
                 {
-                    Id = row.Id,
+                    ImageId = row.ImageId,
                     Name = row.Name,
-                    Email =row.Email,
-                    School_Year_Begin = row.School_Year_Begin,
-                    School_Year_End = row.School_Year_End,
-                    Grade =row.Grade,
-                    Teacher_Name = row.Teacher_Name,
+                    Email = row.Email,
+                    SchoolYearBegin = row.SchoolYearBegin,
+                    SchoolYearEnd = row.SchoolYearEnd,
+                    Grade = row.Grade,
+                    TeacherName = row.TeacherName,
                     src = this.ViewImage(row.ImageFile)
+
                 });
             }
 
@@ -170,19 +171,19 @@ namespace CCS2._0.Controllers
                 {
                     Match.Add(new ImageModel
                     {
-                        School_Year_End = side.School_Year_End,
+                        SchoolYearEnd = side.SchoolYearEnd,
                         Grade = side.Grade,
-                        Teacher_Name = side.Teacher_Name
+                        TeacherName = side.TeacherName
                     });
                 }
                 Com.Add(new CommentModel
                 {
-                    CommentId = row.Comment_Id,
+                    CommentId = row.CommentId,
                     Comment = row.Comment,
                     Name = row.Names,
                     Flag = row.Flag,
                     ImageId = row.ImageId,
-                    Class = Match[0].Grade+" Grade | "+Match[0].School_Year_End+" | "+Match[0].Teacher_Name
+                    Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName
                 });
             }
             if (ss)
@@ -232,7 +233,7 @@ namespace CCS2._0.Controllers
             {
                 Com.Add(new CommentModel
                 {
-                    CommentId = row.Comment_Id,
+                    CommentId = row.CommentId,
                     Comment = row.Comment,
                     Name = row.Names,
                     Flag = row.Flag,

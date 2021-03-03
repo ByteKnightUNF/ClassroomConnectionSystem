@@ -8,7 +8,7 @@ namespace DataLibrary.Models
 {
    public class AddingTagModel
     {
-        public int Photo_id { get; set; }
+        public int ImageId { get; set; }
 
         public int Tag { get; set; }
 
