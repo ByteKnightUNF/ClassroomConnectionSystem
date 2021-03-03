@@ -19,11 +19,11 @@ namespace DataLibrary.DataAccess
 
         }
 
-        public static List<T> LoadData<T>(string sql)
+        public static List<T> LoadData<T>(string sql, object parameters)
         {
             using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
             {
-                return cnn.Query<T>(sql).ToList();
+                return cnn.Query<T>(sql, parameters).ToList();
             }
         }
 
@@ -32,6 +32,14 @@ namespace DataLibrary.DataAccess
             using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
             {
                 return cnn.Execute(sql, data);
+            }
+        }
+
+        internal static List<T> LoadData<T>(string sql)
+        {
+            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
+            {
+                return cnn.Query<T>(sql).ToList();
             }
         }
     }

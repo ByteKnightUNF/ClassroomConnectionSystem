@@ -13,24 +13,24 @@ namespace DataLibrary.Models
     public class ImageModel
     {
 
-        public int Id { get; set; }
+        public int ImageId { get; set; }
 
         public string Name { get; set; }
 
         public string Email { get; set; }
 
-        public int School_Year_Begin { get; set; }
+        public int SchoolYearBegin { get; set; }
 
-        public int School_Year_End { get; set; }
+        public int SchoolYearEnd { get; set; }
     
 
         public string Grade { get; set; }
 
-        public string Teacher_Name { get; set; }
+        public string TeacherName { get; set; }
 
         public byte[] ImageFile { get; set; }
-        public int Number_Of_People { get; set; }
-        public byte[] Tagged_Photo { get; set; }
+        public int NumberOfPeople { get; set; }
+        public byte[] TaggedPhoto { get; set; }
 
 
 

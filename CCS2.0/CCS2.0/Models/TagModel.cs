@@ -11,6 +11,7 @@ namespace ImageUpload.Models
 {
     public class TagModel
     {
+
         [Required(ErrorMessage = "Please upload a file")]
         public IFormFile TagFile { get; set; }
 
@@ -19,6 +20,7 @@ namespace ImageUpload.Models
 
         [NotMapped]
         public string src { get; set; }
-
+        [NotMapped]
+        public int ImageId { get; set; }
     }
 }

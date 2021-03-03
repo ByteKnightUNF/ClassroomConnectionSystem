@@ -46,13 +46,13 @@ namespace CCS2._0.Controllers
 
                 Match.Add(new ImageModel
                 {
-                    Id = row.Id,
+                    ImageId = row.ImageId,
                     Name = row.Name,
                     Email = row.Email,
-                    School_Year_Begin = row.School_Year_Begin,
-                    School_Year_End = row.School_Year_End,
+                    SchoolYearBegin  = row.SchoolYearBegin,
+                    SchoolYearEnd = row.SchoolYearEnd,
                     Grade = row.Grade,
-                    Teacher_Name = row.Teacher_Name,
+                    TeacherName = row.TeacherName,
                     src = this.ViewImage(row.ImageFile)
                 });
             }
@@ -81,7 +81,7 @@ namespace CCS2._0.Controllers
             {
                 Com.Add(new ImageUpload.Models.CommentModel
                 {
-                    CommentId = entry.Comment_Id,
+                    CommentId = entry.CommentId,
                     Comment = entry.Comment,
                     Name = entry.Names,
                     Flag = entry.Flag,
@@ -94,7 +94,7 @@ namespace CCS2._0.Controllers
                 Tag.Add(new ImageUpload.Models.AddingTagModel
                 {
 
-                    Photo_id = tags.Photo_id,
+                    ImageId = tags.ImageId,
                     Tag = tags.Tag,
                     Name = tags.Name
 
@@ -105,21 +105,21 @@ namespace CCS2._0.Controllers
 
             foreach (var row in match)
             {
-                if (row.Number_Of_People > 0)
+                if (row.NumberOfPeople > 0)
                 {
 
                     Match.Add(new ImageModel
                     {
-                        Id = row.Id,
+                        ImageId = row.ImageId,
                         Name = row.Name,
                         Email = row.Email,
-                        School_Year_Begin = row.School_Year_Begin,
-                        School_Year_End = row.School_Year_End,
+                        SchoolYearBegin = row.SchoolYearBegin,
+                        SchoolYearEnd = row.SchoolYearEnd,
                         Grade = row.Grade,
-                        Teacher_Name = row.Teacher_Name,
+                        TeacherName = row.TeacherName,
                         src = this.ViewImage(row.ImageFile),
-                        Number_Of_People = row.Number_Of_People,
-                        Tagged_src = this.ViewImage(row.Tagged_Photo),
+                        NumberOfPeople = row.NumberOfPeople,
+                        TaggedSrc = this.ViewImage(row.TaggedPhoto),
                         AddingTagModel = Tag,
                         CommentModel = Com,
                         Comments = new ImageUpload.Models.CommentModel()
@@ -130,17 +130,19 @@ namespace CCS2._0.Controllers
                 {
                     Match.Add(new ImageModel
                     {
-                        Id = row.Id,
+                        ImageId = row.ImageId,
                         Name = row.Name,
                         Email = row.Email,
-                        School_Year_Begin = row.School_Year_Begin,
-                        School_Year_End = row.School_Year_End,
+                        SchoolYearBegin = row.SchoolYearBegin,
+                        SchoolYearEnd = row.SchoolYearEnd,
                         Grade = row.Grade,
-                        Teacher_Name = row.Teacher_Name,
+                        TeacherName = row.TeacherName,
                         src = this.ViewImage(row.ImageFile),
-                        Number_Of_People = row.Number_Of_People,
+                        NumberOfPeople = row.NumberOfPeople,
                         CommentModel = Com,
                         Comments = new ImageUpload.Models.CommentModel()
+
+                  
 
                     });
                 }
