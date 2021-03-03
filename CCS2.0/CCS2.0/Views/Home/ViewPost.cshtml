@@ -202,7 +202,7 @@
                                         <div class="Comment"><h5>@Html.DisplayFor(modelItem => com.Comment)</h5></div>
                                         <div class="Name">@Html.DisplayFor(modelItem => com.Name)</div>
                                         <div class="Date">01/04/2012</div>
-                                        <div class="Flag"><button class="btn btn-outline-secondary">Flag</button></div>
+                                        <div class="Flag"><button class="btn btn-outline-secondary" onclick="window.location.href = '/Home/FlagComment/@com.CommentId';">Flag</button></div>
                                     </div>
                                 </td>
                             </tr>

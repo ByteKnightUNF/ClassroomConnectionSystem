@@ -16,6 +16,7 @@ using System.IO;
 using Newtonsoft.Json;
 using ImageModel = ImageUpload.Models.ImageModel;
 using CommentModel = ImageUpload.Models.CommentModel;
+using FlagModel = ImageUpload.Models.FlagModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 using CCS2._0.Models;
@@ -227,18 +228,46 @@ namespace CCS2._0.Controllers
         public IActionResult EditComment(int Id)
         {
             List<CommentModel> Com = new List<CommentModel>();
+            List<FlagModel> List = new List<FlagModel>();
             var com = GetComment(Id);
+            var list = GetReason(Id);
+  
+            foreach (var item in list)
+            {
+                List.Add(new FlagModel
+                {
+                    CommentId = item.comment_id,
+                    Reason = item.reason
+                });
+            }
 
             foreach (var row in com)
             {
-                Com.Add(new CommentModel
+                if (row.Flag == true)
                 {
-                    CommentId = row.CommentId,
-                    Comment = row.Comment,
-                    Name = row.Names,
-                    Flag = row.Flag,
-                    ImageId = row.ImageId
-                });
+
+                    Com.Add(new CommentModel
+                    {
+                        CommentId = row.CommentId,
+                        Comment = row.Comment,
+                        Name = row.Names,
+                        Flag = row.Flag,
+                        ImageId = row.ImageId,
+                        FlagModel = List[0]
+                    });
+                }
+                else
+                {
+                    Com.Add(new CommentModel
+                    {
+                        CommentId = row.CommentId,
+                        Comment = row.Comment,
+                        Name = row.Names,
+                        Flag = row.Flag,
+                        ImageId = row.ImageId
+                    });
+                }
+
             }
             CommentModel test = new CommentModel();
             test = Com[0];
@@ -292,7 +321,12 @@ namespace CCS2._0.Controllers
             return View();
         }
 
-
+        public IActionResult RemoveFlag(int id)
+        {
+            Flag(id, false);
+            DeleteFlag(id);
+            return RedirectToAction("EditComment", new { Id = id});
+        }
 
     }
 }
