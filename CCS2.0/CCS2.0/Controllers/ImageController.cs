@@ -236,8 +236,8 @@ namespace CCS2._0.Controllers
             {
                 List.Add(new FlagModel
                 {
-                    CommentId = item.comment_id,
-                    Reason = item.reason
+                    CommentId = item.CommentId,
+                    Reason = item.Reason
                 });
             }
 
