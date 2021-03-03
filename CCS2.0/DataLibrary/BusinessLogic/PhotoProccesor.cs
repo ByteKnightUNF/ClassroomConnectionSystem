@@ -144,14 +144,16 @@ namespace DataLibrary.BussinessLogic
         public static List<ImageModel> FindImg(string ImageId)
         {
             var parameters = new { ImageId = ImageId };
+
+
             string sql = @"select *
                         from dbo.Image
 
 
-                        Where Name Like '%@ImageId%' OR Email Like '%@ImageId%'" +
+                        Where Name Like '%'+@ImageId+'%' OR Email Like '%'+@ImageId+'%'" +
 
-                        "OR SchoolYearBegin Like '%@ImageId%' OR SchoolYearEnd Like '%@ImageId%'" +
-                        "OR Grade Like '%@ImageId%' OR TeacherName Like '%@ImageId%';";
+                        "OR SchoolYearBegin Like '%'+@ImageId+'%' OR SchoolYearEnd Like '%'+@ImageId+'%'" +
+                        "OR Grade Like '%'+@ImageId+'%' OR TeacherName Like '%'+@ImageId+'%';";
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
 
