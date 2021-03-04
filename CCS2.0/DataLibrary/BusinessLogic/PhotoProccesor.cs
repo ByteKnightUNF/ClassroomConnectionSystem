@@ -137,7 +137,7 @@ namespace DataLibrary.BussinessLogic
 
             string sql = @"select *
                         from dbo.Comment
-                        Where Comment_Id = @ImageId ;";
+                        Where CommentId = @ImageId ;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
@@ -281,7 +281,7 @@ namespace DataLibrary.BussinessLogic
 
             string sql = @"select *
                         from dbo.FlaggedComments
-                        Where comment_id = " + @Id + ";";
+                        Where CommentId = " + @Id + ";";
 
             return SqlDataAccess.LoadData<FlagModel>(sql);
         }
