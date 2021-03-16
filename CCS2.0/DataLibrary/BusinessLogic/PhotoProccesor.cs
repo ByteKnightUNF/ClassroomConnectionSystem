@@ -108,7 +108,16 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
         }
-        
+        public static List<AddingTagModel> getTag()
+        {
+         
+            string sql = @"select *
+                        from dbo.Tag;";
+
+            return SqlDataAccess.LoadData<AddingTagModel>(sql);
+
+        }
+
         public static List<AddingTagModel> getTagId(int ImageId)
         {
             var parameters = new { ImageId = ImageId };
@@ -137,7 +146,7 @@ namespace DataLibrary.BussinessLogic
 
             string sql = @"select *
                         from dbo.Comment
-                        Where Comment_Id = @ImageId ;";
+                        Where CommentId = @ImageId ;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
@@ -145,13 +154,26 @@ namespace DataLibrary.BussinessLogic
         {
             var parameters = new { ImageId = ImageId };
             string sql = @"select *
+
                         from dbo.Image
 
+                        Where Name Like '%'+@ImageId+'%' OR Email Like '%'+@ImageId+'%'" +
+                        "OR SchoolYearBegin Like '%'+@ImageId+'%' OR SchoolYearEnd Like '%'+@ImageId+'%'" +
+                        "OR Grade Like '%'+@ImageId+'%' OR TeacherName Like '%'+@ImageId+'%';";
 
-                        Where Name Like '%@ImageId%' OR Email Like '%@ImageId%'" +
+            return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
 
-                        "OR SchoolYearBegin Like '%@ImageId%' OR SchoolYearEnd Like '%@ImageId%'" +
-                        "OR Grade Like '%@ImageId%' OR TeacherName Like '%@ImageId%';";
+        }
+        public static List<ImageModel> FindTag(string ImageId)
+        {
+            var parameters = new { ImageId = ImageId };
+            string sql = @"select *
+
+                        from dbo.Image
+
+                        Where Name Like '%'+@ImageId+'%' OR Email Like '%'+@ImageId+'%'" +
+                        "OR SchoolYearBegin Like '%'+@ImageId+'%' OR SchoolYearEnd Like '%'+@ImageId+'%'" +
+                        "OR Grade Like '%'+@ImageId+'%' OR NumberOfPeople Like '%'+@ImageId+'%' OR TeacherName Like '%'+@ImageId+'%';";
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
 
@@ -161,7 +183,7 @@ namespace DataLibrary.BussinessLogic
         public static List<ImageModel> LoadPhoto()
         {
 
-            string sql = @"select ImageId, Name, Email, SchoolYearBegin, SchoolYearEnd, Grade, TeacherName, ImageFile
+            string sql = @"select *
                         from dbo.Image;";
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
@@ -176,7 +198,7 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<CommentModel>(sql);
         }
 
-        public static int Deleteimage(int ImageId)
+        public static int RemoveImage(int ImageId)
         {
 
             ImageModel data = new ImageModel
@@ -186,6 +208,24 @@ namespace DataLibrary.BussinessLogic
             };
 
             string sql = @"DELETE FROM dbo.Image WHERE ImageId= @ImageId; DELETE FROM dbo.Comment WHERE ImageId= @ImageId;";
+
+            return SqlDataAccess.SaveData(sql, data);
+
+        }
+        public static int RemoveTag(int ImageId)
+        {
+
+            ImageModel data = new ImageModel
+            {
+                ImageId = ImageId
+
+            };
+
+            string sql = @"Update dbo.Image
+                           set NumberOfPeople = NULL , TaggedPhoto = NULL
+                           WHERE ImageId= @ImageId;
+                           Delete From dbo.Tag
+                           WHERE ImageId= @ImageId; ";
 
             return SqlDataAccess.SaveData(sql, data);
 
@@ -217,6 +257,20 @@ namespace DataLibrary.BussinessLogic
             };
 
             string sql = @"UPDATE dbo.Comment SET Comment = @Comment, Names = @Names, Flag = @Flag WHERE CommentId= @CommentId;";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+        public static int Edit_Tag(int ImageId, int Tag, string Name)
+        {
+            AddingTagModel data = new AddingTagModel
+            {
+                ImageId = ImageId,
+                Tag = Tag,
+                Name = Name
+               
+            };
+
+            string sql = @"UPDATE dbo.Tag SET Name = @Name WHERE ImageId = @ImageId AND Tag = @Tag;";
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -277,11 +331,13 @@ namespace DataLibrary.BussinessLogic
         public static List<FlagModel> GetReason(int Id)
         {
 
+            var parameters = new { Id = Id };
+
             string sql = @"select *
                         from dbo.FlaggedComments
-                        Where comment_id = " + @Id + ";";
+                        Where CommentId = @Id;";
 
-            return SqlDataAccess.LoadData<FlagModel>(sql);
+            return SqlDataAccess.LoadData<FlagModel>(sql, parameters);
         }
 
         public static int DeleteFlag(int Id)
