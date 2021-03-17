@@ -85,10 +85,10 @@ namespace CCS2._0.Controllers
 
 
 
-        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString, string searchInput)
+        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString)
         {
             ViewBag.CurrentSearch = searchString;
-            ViewBag.CurrentSearch2 = searchInput;
+         
             List<ImageModel> Match = new List<ImageModel>();
 
             var match = LoadPhoto();
@@ -115,19 +115,78 @@ namespace CCS2._0.Controllers
                     SchoolYearEnd = row.SchoolYearEnd,
                     Grade = row.Grade,
                     TeacherName = row.TeacherName,
-                    src = this.ViewImage(row.ImageFile)
+                    src = this.ViewImage(row.ImageFile),
+                    NumberOfPeople = row.NumberOfPeople
 
                 });
             }
 
             return View(Match);
         }
+        public IActionResult ManageTag(string sBase64String, ImageModel model, string searchString)
+        {
+            ViewBag.CurrentSearch = searchString;
+            List<ImageModel> Match = new List<ImageModel>();
+            List<ImageUpload.Models.AddingTagModel> Tag = new List<ImageUpload.Models.AddingTagModel>();
+
+            var match = LoadPhoto();
+            var tag = new List<DataLibrary.Models.AddingTagModel>();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                match = FindTag(searchString); 
+            }
+
+
+
+            foreach (var row in match)
+            {
+                if (row.NumberOfPeople > 0)
+                {
+                    tag = getTagId(row.ImageId);
+
+                    foreach (var tags in tag)
+                    {
+                        Tag.Add(new ImageUpload.Models.AddingTagModel
+                        {
+
+                            ImageId = tags.ImageId,
+                            Tag = tags.Tag,
+                            Name = tags.Name
+
+                        });
+                    }
+
+                    Match.Add(new ImageModel
+                    {
+
+                        ImageId = row.ImageId,
+                        SchoolYearBegin = row.SchoolYearBegin,
+                        SchoolYearEnd = row.SchoolYearEnd,
+                        Grade = row.Grade,
+                        TeacherName = row.TeacherName,
+                        Name = row.Name,
+                        NumberOfPeople = row.NumberOfPeople,
+                        TaggedSrc = this.ViewImage(row.TaggedPhoto),
+                        AddingTagModel = Tag
+
+                    });  ;
+
+                    Tag = new List<ImageUpload.Models.AddingTagModel>();
+                }
+
+            }
+
+            return View(Match);
+        }
+
+
 
         public IActionResult DeleteImage(int ID, ImageModel model)
         {
             try
             {
-                int recordCreated = Deleteimage(ID);
+                int recordCreated = RemoveImage(ID);
                 return RedirectToAction("ViewImage");
             }
             catch
@@ -320,6 +379,30 @@ namespace CCS2._0.Controllers
 
             return View();
         }
+        public IActionResult DeleteTag(int ID, ImageModel model)
+        {
+            try
+            {
+                int recordCreated = RemoveTag(ID);
+
+                return RedirectToAction("ManageTag");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
+        public IActionResult EditTag(int Id, int Tag, string Name)
+        {
+
+            int recordCreated = Edit_Tag(Id, Tag, Name);
+
+            return RedirectToAction("ManageTag");
+        }
+
+
 
         public IActionResult RemoveFlag(int id)
         {

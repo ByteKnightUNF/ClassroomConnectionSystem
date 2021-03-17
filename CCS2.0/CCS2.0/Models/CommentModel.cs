@@ -15,7 +15,7 @@ namespace ImageUpload.Models
         public int CommentId { get; set; }
 
         [Required(ErrorMessage = "Please enter your Comment.")]
-        [StringLength(256, ErrorMessage = "The Comment cannot exceed 256 characters.")]
+        [StringLength(144, ErrorMessage = "The Comment cannot exceed 144 characters.")]
         public string Comment { get; set; }
 
         [Required(ErrorMessage = "Please enter your name.")]

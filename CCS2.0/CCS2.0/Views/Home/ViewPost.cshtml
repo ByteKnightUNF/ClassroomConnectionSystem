@@ -17,119 +17,124 @@
 </style>
 
 <div class="container-fluid">
+    <button href="/index"> @Html.ActionLink("Back", "index") </button>
+    
     <div class="row">
 
-            <div class="col-md-6">
-                <div class="card">
-                    <h5 class="card-header" style="text-align:center">
-                        @Html.DisplayFor(model => model.SchoolYearBegin) - @Html.DisplayFor(model => model.SchoolYearEnd)
-                    </h5>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <div class="container">
-                                <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
-                                <div class="overlay">
-                                    <img src="@Model.TaggedSrc" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" class="center" />
-                                </div>
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header" style="text-align:center">
+                    @Html.DisplayFor(model => model.SchoolYearBegin) - @Html.DisplayFor(model => model.SchoolYearEnd) <br />
+                    @Html.DisplayFor(model => model.Grade) Grade <br />
+                    @Html.DisplayFor(model => model.TeacherName)
+                </h5>
+
+
+
+                <div class="card-body">
+                    <p class="card-text">
+                        <div class="container">
+                            <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
+                            <div class="overlay">
+                                <img src="@Model.TaggedSrc" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" class="center" />
                             </div>
-                        </p>
+                        </div>
+                    </p>
 
 
 
-                        @if (Model.NumberOfPeople > 0)
-                        {
-                            <button id="hid7" type="button" class="btn btn-secondary" onclick="viewTags()">Show Tags</button>
+                    @if (Model.NumberOfPeople > 0)
+                    {
+                        <button id="hid7" type="button" class="btn btn-secondary" onclick="viewTags()">Show Tags</button>
 
-                            <div id="hid5" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div id="hid5" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
-                                <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
+                            <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
 
-                                @for (int i = 1; i < Model.NumberOfPeople + 1; i++)
+                            @for (int i = 1; i < Model.NumberOfPeople + 1; i++)
+                            {
+                                int a = i;
+
+                                @foreach (var tags in Model.AddingTagModel)
                                 {
-                                    int a = i;
 
-                                    @foreach (var tags in Model.AddingTagModel)
+                                    @if (tags.Tag == @i)
                                     {
-
-                                        @if (tags.Tag == @i)
-                                        {
-                                            <button type="button" id="photobutton" class="btn btn-secondary">@i - @tags.Name</button>
-                                            i++;
-                                            break;
-                                        }
-
+                                        <button type="button" id="photobutton" class="btn btn-secondary">@i - @tags.Name</button>
+                                        i++;
+                                        break;
                                     }
 
-                                    @if (a == @i)
-                                    {
-                                        <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.ImageId,@i)">@i</button>
-                                    }
-
-                                    else
-                                    {
-                                        i--;
-                                    }
                                 }
 
+                                @if (a == @i)
+                                {
+                                    <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.ImageId,@i)">@i</button>
+                                }
 
-                            </div>
-
-
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">What is this person's name?</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form asp-action="NewTag">
-                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                                <div style="display:grid; grid-template-columns:auto auto;">
-                                                    <div id="Tag_Photo_id" class="form-group">
-
-                                                    </div>
-                                                    <div id="Tag_id" class="form-group">
-
-                                                    </div>
-                                                    <div class="form-group">
-
-                                                        <input asp-for="Name" value="" class="form-control" />
-                                                        <span asp-validation-for="Name" class="text-danger"></span>
-                                                    </div>
+                                else
+                                {
+                                    i--;
+                                }
+                            }
 
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <input type="submit" value="Submit" class="btn btn-primary" />
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                        </div>
 
 
-
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">What is this person's name?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
+                                    <div class="modal-body">
+                                        <form asp-action="NewTag">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div style="display:grid; grid-template-columns:auto auto;">
+                                                <div id="Tag_Photo_id" class="form-group">
+
+                                                </div>
+                                                <div id="Tag_id" class="form-group">
+
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <input asp-for="Name" value="" class="form-control" />
+                                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+
                                 </div>
                             </div>
+                        </div>
 
 
-                        }
-                        else
-                        {
+                    }
+                    else
+                    {
 
-                            <div>Currently working on the tags for this photo. Thank you for your patience!</div>
-                        }
-                    </div>
-      
-                    <div class="card-footer" style="text-align:center">
-                        @Html.DisplayFor(model => model.TeacherName)
-                    </div>
+                        <div>Currently working on the tags for this photo. Thank you for your patience!</div>
+                    }
                 </div>
 
+
             </div>
+
+        </div>
 
         <div class="col-md-6">
 
@@ -256,6 +261,7 @@
 
 </div>
 
+
 <script>
    
 
@@ -273,6 +279,7 @@
         add2.setAttribute("name", "Tag");
         add2.setAttribute("value", tag);
         holder1.append(add2);
+        
     }
 
 
