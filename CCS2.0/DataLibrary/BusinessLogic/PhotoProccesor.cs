@@ -153,6 +153,8 @@ namespace DataLibrary.BussinessLogic
         public static List<ImageModel> FindImg(string ImageId)
         {
             var parameters = new { ImageId = ImageId };
+
+
             string sql = @"select *
 
                         from dbo.Image
@@ -160,6 +162,7 @@ namespace DataLibrary.BussinessLogic
                         Where Name Like '%'+@ImageId+'%' OR Email Like '%'+@ImageId+'%'" +
                         "OR SchoolYearBegin Like '%'+@ImageId+'%' OR SchoolYearEnd Like '%'+@ImageId+'%'" +
                         "OR Grade Like '%'+@ImageId+'%' OR TeacherName Like '%'+@ImageId+'%';";
+
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
 
@@ -174,6 +177,7 @@ namespace DataLibrary.BussinessLogic
                         Where Name Like '%'+@ImageId+'%' OR Email Like '%'+@ImageId+'%'" +
                         "OR SchoolYearBegin Like '%'+@ImageId+'%' OR SchoolYearEnd Like '%'+@ImageId+'%'" +
                         "OR Grade Like '%'+@ImageId+'%' OR NumberOfPeople Like '%'+@ImageId+'%' OR TeacherName Like '%'+@ImageId+'%';";
+
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
 
@@ -335,7 +339,9 @@ namespace DataLibrary.BussinessLogic
 
             string sql = @"select *
                         from dbo.FlaggedComments
+
                         Where CommentId = @Id;";
+
 
             return SqlDataAccess.LoadData<FlagModel>(sql, parameters);
         }
