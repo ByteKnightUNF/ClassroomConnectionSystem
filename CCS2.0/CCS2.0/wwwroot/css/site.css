@@ -103,3 +103,7 @@ body {
     grid-area: Flag;
 }
 
+.g {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
