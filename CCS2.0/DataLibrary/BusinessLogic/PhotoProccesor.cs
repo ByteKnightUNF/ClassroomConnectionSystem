@@ -135,7 +135,8 @@ namespace DataLibrary.BussinessLogic
             var parameters = new { ImageId = ImageId };
             string sql = @"select *
                         from dbo.Comment
-                        Where ImageId = @ImageId ;";
+                        Where ImageId = @ImageId 
+                        ORDER BY CommentId DESC;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
@@ -197,7 +198,8 @@ namespace DataLibrary.BussinessLogic
         {
 
             string sql = @"select CommentId, Comment, Names, Flag, ImageId
-                        from dbo.Comment;";
+                        from dbo.Comment
+                        ORDER BY CommentId DESC;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql);
         }
