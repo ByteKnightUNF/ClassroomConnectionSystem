@@ -64,7 +64,7 @@ namespace CCS2._0.Controllers
 
 
 
-    public IActionResult ViewPost(int ID)
+    public IActionResult ViewPost(int ID, int page = 1)
         {
             List<ImageModel> Match = new List<ImageModel>();
             List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
@@ -72,10 +72,11 @@ namespace CCS2._0.Controllers
 
             var match = GetPhotoId(ID);
 
-
-            var com = GetCommentId(ID);
+            var com = GetCommentId(ID, page);
 
             var tag = getTagId(ID);
+
+            var Pages = (int)Math.Ceiling((decimal)GetPages(ID)/5);
 
             foreach (var entry in com)
             {
@@ -122,8 +123,9 @@ namespace CCS2._0.Controllers
                         TaggedSrc = this.ViewImage(row.TaggedPhoto),
                         AddingTagModel = Tag,
                         CommentModel = Com,
-                        Comments = new ImageUpload.Models.CommentModel()
-
+                        Comments = new ImageUpload.Models.CommentModel(),
+                        Pages = Pages,
+                        CurrentPage = page
                     });
                 }
                 else
@@ -140,9 +142,9 @@ namespace CCS2._0.Controllers
                         src = this.ViewImage(row.ImageFile),
                         NumberOfPeople = row.NumberOfPeople,
                         CommentModel = Com,
-                        Comments = new ImageUpload.Models.CommentModel()
-
-                  
+                        Comments = new ImageUpload.Models.CommentModel(),
+                        Pages = Pages,
+                        CurrentPage = page
 
                     });
                 }

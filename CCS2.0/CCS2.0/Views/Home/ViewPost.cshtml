@@ -153,7 +153,7 @@
                         <label asp-for="Comments.Comment" class="control-label">Comment</label>
                         <input asp-for="Comments.Comment" class="form-control" maxlength="144" required />
                         <span asp-validation-for="Comments.Comment" class="text-danger"></span>
-                    </div> 
+                    </div>
                     <div id="hid2" class="form-group">
                         <label asp-for="Comments.Name" class="control-label">Name</label>
                         <input asp-for="Comments.Name" class="form-control" required />
@@ -184,7 +184,7 @@
                             To search for information on a specific person, enter the first name in the search. Then,
                             you can further narrow your search results, if needed.
                         </p>
-                        <input class="form-control mr-sm-2" type="text" maxlength="35" size="35" placeholder="Search..."/>
+                        <input class="form-control mr-sm-2" type="text" maxlength="35" size="35" placeholder="Search..." />
                         <button class="btn btn-primary my-2 my-sm-0" type="submit">
                             Search
                         </button>
@@ -214,7 +214,7 @@
                             <tr>
                                 <td>
                                     <div class="grid-container1">
-                                        <div class="Comment"><h5>@Html.DisplayFor(modelItem => com.Comment)</h5></div>
+                                        <div class="Comment"><p style="font-weight:bold">@Html.DisplayFor(modelItem => com.Comment)</p></div>
                                         <div class="Name">@Html.DisplayFor(modelItem => com.Name)</div>
                                         <div class="Date">01/04/2012</div>
                                         <div class="Flag"><button class="btn btn-outline-secondary" onclick="window.location.href = '/Home/FlagComment/@com.CommentId';">Flag</button></div>
@@ -227,9 +227,24 @@
                 </tbody>
             </table>
 
-
-
-
+            <p style="text-align:center">
+                Pages:&nbsp;
+                @for (int i = 1; i <= Model.Pages; i++)
+                {
+                    if (i != Model.CurrentPage)
+                    {
+                        @Html.ActionLink(i.ToString(), "ViewPost", "Home", new { Id = Model.ImageId, page = i })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(Model => Model.CurrentPage)
+                    }
+                    if (i < Model.Pages)
+                    {
+                        @:&nbsp;|&nbsp;
+                    }
+                }
+            </p>
 
 
 
@@ -244,60 +259,60 @@
 
 
 <script>
-   
+
 
     function newTag(id, tag) {
-        holder = document.getElementById("Tag_Photo_id");
-        add1 = document.createElement("input");
-        add1.setAttribute("type", "hidden");
-        add1.setAttribute("name", "Id");
-        add1.setAttribute("value", id);
-        holder.append(add1);
+                    holder = document.getElementById("Tag_Photo_id");
+                    add1 = document.createElement("input");
+                    add1.setAttribute("type", "hidden");
+                    add1.setAttribute("name", "Id");
+                    add1.setAttribute("value", id);
+                    holder.append(add1);
 
-        holder1 = document.getElementById("Tag_id");
-        add2 = document.createElement("input");
-        add2.setAttribute("type", "hidden");
-        add2.setAttribute("name", "Tag");
-        add2.setAttribute("value", tag);
-        holder1.append(add2);
-        
-    }
+                    holder1 = document.getElementById("Tag_id");
+                    add2 = document.createElement("input");
+                    add2.setAttribute("type", "hidden");
+                    add2.setAttribute("name", "Tag");
+                    add2.setAttribute("value", tag);
+                    holder1.append(add2);
 
-
-
-    function newComment() {
-        document.getElementById("hid1").style.display = "block";
-        document.getElementById("hid2").style.display = "block";
-        document.getElementById("hid3").style.display = "block";
-        document.getElementById("hid4").style.display = "none";
-    }
-
-    function cancelComment() {
-        document.getElementById("hid1").style.display = "none";
-        document.getElementById("hid2").style.display = "none";
-        document.getElementById("hid3").style.display = "none";
-        document.getElementById("hid4").style.display = "block";
-    }
+                }
 
 
-    function viewTags() {
-     
-        document.getElementById("TagImage").style.display = "block";
-        document.getElementById("Image").style.display = "none";
-        document.getElementById("hid5").style.display = "flex";
-        document.getElementById("hid5").style.justifyContent = "center";
-        document.getElementById("hid5").style.alignItems = "center";
-        document.getElementById("hid6").style.display = "block";
-        document.getElementById("hid7").style.display = "none";
-    }
 
-    function hideTags() {
-        document.getElementById("TagImage").style.display = "none";
-        document.getElementById("Image").style.display = "block";
-        document.getElementById("hid5").style.display = "none";
-        document.getElementById("hid6").style.display = "none";
-        document.getElementById("hid7").style.display = "block";
-    }
+                function newComment() {
+                    document.getElementById("hid1").style.display = "block";
+                    document.getElementById("hid2").style.display = "block";
+                    document.getElementById("hid3").style.display = "block";
+                    document.getElementById("hid4").style.display = "none";
+                }
+
+                function cancelComment() {
+                    document.getElementById("hid1").style.display = "none";
+                    document.getElementById("hid2").style.display = "none";
+                    document.getElementById("hid3").style.display = "none";
+                    document.getElementById("hid4").style.display = "block";
+                }
+
+
+                function viewTags() {
+
+                    document.getElementById("TagImage").style.display = "block";
+                    document.getElementById("Image").style.display = "none";
+                    document.getElementById("hid5").style.display = "flex";
+                    document.getElementById("hid5").style.justifyContent = "center";
+                    document.getElementById("hid5").style.alignItems = "center";
+                    document.getElementById("hid6").style.display = "block";
+                    document.getElementById("hid7").style.display = "none";
+                }
+
+                function hideTags() {
+                    document.getElementById("TagImage").style.display = "none";
+                    document.getElementById("Image").style.display = "block";
+                    document.getElementById("hid5").style.display = "none";
+                    document.getElementById("hid6").style.display = "none";
+                    document.getElementById("hid7").style.display = "block";
+                }
 
 </script>
 

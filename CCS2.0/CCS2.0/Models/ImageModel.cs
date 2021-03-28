@@ -64,6 +64,9 @@ namespace ImageUpload.Models
 
         public CommentModel Comments { get; set; }
 
+        public int Pages { get; set; }
+
+        public int CurrentPage { get; set; }
 
     }
 
