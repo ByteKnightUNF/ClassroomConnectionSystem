@@ -130,12 +130,27 @@ namespace DataLibrary.BussinessLogic
 
         }
 
-        public static List<CommentModel> GetCommentId(int ImageId)
+        public static int GetPages(int ImageId)
         {
             var parameters = new { ImageId = ImageId };
+
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where ImageId = @ImageId;";
+
+            var page = SqlDataAccess.count<int>(sql, parameters)[0];
+            return page;
+        }
+
+        public static List<CommentModel> GetCommentId(int ImageId, int PageNumber)
+        {
+            var parameters = new { ImageId = ImageId,  PageNumber = PageNumber, RowOfPage = 5 };
             string sql = @"select *
                         from dbo.Comment
-                        Where ImageId = @ImageId ;";
+                        Where ImageId = @ImageId 
+                        ORDER BY CommentId DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
@@ -197,7 +212,8 @@ namespace DataLibrary.BussinessLogic
         {
 
             string sql = @"select CommentId, Comment, Names, Flag, ImageId
-                        from dbo.Comment;";
+                        from dbo.Comment
+                        ORDER BY CommentId DESC;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql);
         }

@@ -80,10 +80,10 @@ body {
 
 .grid-container-flag {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
     grid-gap: 0px 0px;
-    grid-template-areas: "Comment Comment Comment" "Name Name Date";
+    grid-template-areas: "Comment Comment" "Name Name" "Date Date";
 }
 
 .Comment {
