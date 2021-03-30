@@ -197,10 +197,11 @@ namespace CCS2._0.Controllers
         }
 
 
-        public IActionResult ViewComment(string filter, string cla)
+        public IActionResult ViewComment(string filter, string cla, int page = 1)
         {
             List<CommentModel> Com = new List<CommentModel>();
-            var com = LoadComment();
+            var com = LoadComment(page);
+
             bool ss = false;
             switch (filter)
             {
@@ -243,7 +244,9 @@ namespace CCS2._0.Controllers
                     Name = row.Names,
                     Flag = row.Flag,
                     ImageId = row.ImageId,
-                    Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName
+                    Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName,
+                    CurrentPage = page,
+                    Pages = 4
                 });
             }
             if (ss)
@@ -259,7 +262,9 @@ namespace CCS2._0.Controllers
                             Name = item.Name,
                             Flag = item.Flag,
                             ImageId = item.ImageId,
-                            Class = item.Class
+                            Class = item.Class,
+                            CurrentPage = page,
+                            Pages = 4
                         });
                     }
                 }

@@ -208,14 +208,16 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
-        public static List<CommentModel> LoadComment()
+        public static List<CommentModel> LoadComment(int page)
         {
-
+            var parameters = new { PageNumber = page, RowOfPage = 20 };
             string sql = @"select CommentId, Comment, Names, Flag, ImageId
                         from dbo.Comment
-                        ORDER BY CommentId DESC;";
+                        ORDER BY CommentId DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
 
-            return SqlDataAccess.LoadData<CommentModel>(sql);
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
 
         public static int RemoveImage(int ImageId)

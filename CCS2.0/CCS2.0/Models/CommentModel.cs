@@ -30,5 +30,9 @@ namespace ImageUpload.Models
         public ImageModel ImageModel { get; set; }
 
         public FlagModel FlagModel { get; set; }
+
+        public int Pages { get; set; }
+
+        public int CurrentPage { get; set; }
     }
 }
