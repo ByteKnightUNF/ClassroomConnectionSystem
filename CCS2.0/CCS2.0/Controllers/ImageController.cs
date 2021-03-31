@@ -197,21 +197,26 @@ namespace CCS2._0.Controllers
         }
 
 
-        public IActionResult ViewComment(string filter, string cla)
+        public IActionResult ViewComment(string filter, string cla, int page = 1, int comRow = 10)
         {
             List<CommentModel> Com = new List<CommentModel>();
-            var com = LoadComment();
+            var com = LoadComment(page, comRow);
+            var TotalPages = 0;
+            var ComRow = comRow;
             bool ss = false;
             switch (filter)
             {
                 case "flag":
                     com = FlaggedComment();
+                    TotalPages = (int)Math.Ceiling((decimal)FlagCount() / ComRow);
                     break;
                 case "ascending":
                     com = SortName("a");
+                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
                     break;
                 case "descending":
                     com = SortName("d");
+                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
                     break;
                 case "new":
                     break;
@@ -219,8 +224,10 @@ namespace CCS2._0.Controllers
                     break;
                 case "class":
                     ss = true;
+                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
                     break;
                 default:
+                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
                     break;
             }
             foreach (var row in com)
@@ -231,6 +238,7 @@ namespace CCS2._0.Controllers
                 {
                     Match.Add(new ImageModel
                     {
+                        ImageId = side.ImageId,
                         SchoolYearEnd = side.SchoolYearEnd,
                         Grade = side.Grade,
                         TeacherName = side.TeacherName
@@ -243,7 +251,10 @@ namespace CCS2._0.Controllers
                     Name = row.Names,
                     Flag = row.Flag,
                     ImageId = row.ImageId,
-                    Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName
+                    Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName,
+                    CurrentPage = page,
+                    Pages = TotalPages,
+                    Filter = filter
                 });
             }
             if (ss)
@@ -259,7 +270,10 @@ namespace CCS2._0.Controllers
                             Name = item.Name,
                             Flag = item.Flag,
                             ImageId = item.ImageId,
-                            Class = item.Class
+                            Class = item.Class,
+                            CurrentPage = page,
+                            Pages = TotalPages,
+                            Filter = filter
                         });
                     }
                 }
