@@ -35,13 +35,5 @@ namespace DataLibrary.DataAccess
             }
         }
 
-        public static List<T> count<T>(string sql, object data)
-        {
-            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
-            {
-                return cnn.Query<T>(sql, data).ToList();
-            }
-        }
-
     }
 }

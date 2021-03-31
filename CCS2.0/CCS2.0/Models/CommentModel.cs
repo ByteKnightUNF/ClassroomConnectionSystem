@@ -34,5 +34,7 @@ namespace ImageUpload.Models
         public int Pages { get; set; }
 
         public int CurrentPage { get; set; }
+
+        public string Filter { get; set; }
     }
 }

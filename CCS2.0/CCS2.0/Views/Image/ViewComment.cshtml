@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Manage Comment";
 }
-<p>@Html.ActionLink("<Back", "index") </p>
+<p>@Html.ActionLink("<Back", "index", "home") </p>
 <h1>Manage Comments</h1>
 
 
@@ -85,7 +85,14 @@
             <th>
                 Image
             </th>
-            <th></th>
+            <th>
+                <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Comments per Page</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @Html.ActionLink("10", "ViewComment", new { filter = "", ComRow = 10 })<br />
+                    @Html.ActionLink("25", "ViewComment", new { filter = "", ComRow = 25 })<br />
+                    @Html.ActionLink("50", "ViewComment", new { filter = "", ComRow = 50 })
+                </div>
+            </th>
         </tr>
     </thead>
     <tbody>

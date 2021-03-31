@@ -138,7 +138,16 @@ namespace DataLibrary.BussinessLogic
                         FROM dbo.Comment
                         Where ImageId = @ImageId;";
 
-            var page = SqlDataAccess.count<int>(sql, parameters)[0];
+            var page = SqlDataAccess.LoadData<int>(sql, parameters)[0];
+            return page;
+        }
+
+        public static int GetPages()
+        {
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment;";
+
+            var page = SqlDataAccess.LoadData<int>(sql)[0];
             return page;
         }
 
@@ -208,9 +217,9 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
-        public static List<CommentModel> LoadComment(int page)
+        public static List<CommentModel> LoadComment(int page, int row = 10)
         {
-            var parameters = new { PageNumber = page, RowOfPage = 20 };
+            var parameters = new { PageNumber = page, RowOfPage = row };
             string sql = @"select CommentId, Comment, Names, Flag, ImageId
                         from dbo.Comment
                         ORDER BY CommentId DESC
@@ -304,6 +313,16 @@ namespace DataLibrary.BussinessLogic
                         Where Flag = 1;";
             return SqlDataAccess.LoadData<CommentModel>(sql);
 
+        }
+
+        public static int FlagCount()
+        {
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where Flag = 1;";
+
+            var page = SqlDataAccess.LoadData<int>(sql)[0];
+            return page;
         }
 
         public static List<CommentModel> SortName(string option)
