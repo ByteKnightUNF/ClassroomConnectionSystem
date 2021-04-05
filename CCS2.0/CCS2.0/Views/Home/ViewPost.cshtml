@@ -3,16 +3,14 @@
 @{
     ViewData["Title"] = "Photo";
 }
+
 <style>
 #hid1, #hid2, #hid3, #hid5, #hid6 {
     display: none;
 }
 #hid4, #hid7 {
     display: block;
-}
-
-
-    
+}    
 
 </style>
 
@@ -34,9 +32,13 @@
                 <div class="card-body">
                     <p class="card-text">
                         <div class="container">
-                            <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
+
+                            <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Unknown Image; " class="center" />
+                         
+
+
                             <div class="overlay">
-                                <img src="@Model.TaggedSrc" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" class="center" />
+                                <img src="@Model.TaggedSrc" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" />
                             </div>
                         </div>
                     </p>
@@ -145,11 +147,11 @@
                 <h5 style="font-weight:normal">
                     Share some memories!
                 </h5>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">
                     Leave a Comment
                 </button>
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">

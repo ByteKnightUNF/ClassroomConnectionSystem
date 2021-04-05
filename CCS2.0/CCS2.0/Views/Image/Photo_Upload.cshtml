@@ -32,16 +32,13 @@
                     <input asp-for="SchoolYearBegin" class="form-control" />
                     <span asp-validation-for="SchoolYearBegin" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="SchoolYearEnd" class="control-label"></label>
-                    <input asp-for="SchoolYearEnd" class="form-control" />
-                    <span asp-validation-for="SchoolYearEnd" class="text-danger"></span>
-                </div>
+            
                 <div class="form-group">
                     <label asp-for="Grade" class="control-label"></label>
                     <input asp-for="Grade" class="form-control" />
                     <span asp-validation-for="Grade" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="TeacherName" class="control-label"></label>
                     <input asp-for="TeacherName" class="form-control" />
@@ -54,6 +51,7 @@
 
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='/home/index'" >Cancel</button>
                 </div>
             </form>
         }

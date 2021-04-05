@@ -58,7 +58,7 @@ namespace CCS2._0.Controllers
                     }
 
 
-                    int recordCreated = CreatePhoto(model.Name,model.Email,model.SchoolYearBegin, model.SchoolYearEnd, model.Grade,model.TeacherName, bytes);
+                    int recordCreated = CreatePhoto(model.Name,model.Email,model.SchoolYearBegin, model.SchoolYearBegin +1 , model.Grade,model.TeacherName, bytes);
 
                     ViewBag.image = ViewImage(bytes);
 

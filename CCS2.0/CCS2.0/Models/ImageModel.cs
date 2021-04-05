@@ -27,7 +27,7 @@ namespace ImageUpload.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter the beginning School Year of the photo")]
-        [Display(Name = "School Year Beginning")]
+        [Display(Name = "Beginning School Year ")]
         
         public int SchoolYearBegin { get; set; }
 
