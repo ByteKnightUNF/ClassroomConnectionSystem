@@ -86,12 +86,7 @@
                 Image
             </th>
             <th>
-                <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Comments per Page</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    @Html.ActionLink("10", "ViewComment", new { filter = "", ComRow = 10 })<br />
-                    @Html.ActionLink("25", "ViewComment", new { filter = "", ComRow = 25 })<br />
-                    @Html.ActionLink("50", "ViewComment", new { filter = "", ComRow = 50 })
-                </div>
+                
             </th>
         </tr>
     </thead>
@@ -103,7 +98,7 @@
                     <div class="grid-container1">
                         <div class="Comment">@Html.DisplayFor(modelItem => item.Comment)</div>
                         <div class="Name">@Html.DisplayFor(modelItem => item.Name)</div>
-                        <div class="Date">1/1/2021</div>
+                        <div class="Date">@Html.DisplayFor(modelItem => item.CommentDate)</div>
                     </div>
 
                 </td>
@@ -124,30 +119,39 @@
         }
     </tbody>
 </table>
-@{var t = 0; }
-@foreach (var item in Model)
-{
-    if (t == 0)
+<div style="display:grid;grid-template-columns:25% 50% 25%;">
+    <p></p>
+    @{var t = 0; }
+    @foreach (var item in Model)
     {
-        <p style="text-align:center">
-            Pages:&nbsp;
-            @for (int i = 1; i <= item.Pages; i++)
-            {
-                if (i != item.CurrentPage)
+        if (t == 0)
+        {
+            <p style="text-align:center">
+                Pages:&nbsp;
+                @for (int i = 1; i <= item.Pages; i++)
                 {
-                    @Html.ActionLink(i.ToString(), "ViewComment", "Image", new { page = i })
+                    if (i != item.CurrentPage)
+                    {
+                        @Html.ActionLink(i.ToString(), "ViewComment", "Image", new { page = i })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(Model => item.CurrentPage)
+                    }
+                    if (i < item.Pages)
+                    {
+                        @:&nbsp;|&nbsp;
+                    }
                 }
-                else
-                {
-                    @Html.DisplayFor(Model => item.CurrentPage)
-                }
-                if (i < item.Pages)
-                {
-                    @:&nbsp;|&nbsp;
-                }
-            }
 
-        </p>
-        t = 2;
+            </p>
+            t = 2;
+        }
     }
-}
+    <p style="text-align:right">
+        Comments per page:
+        @Html.ActionLink("10", "ViewComment", new { filter = "", ComRow = 10 }) |
+        @Html.ActionLink("25", "ViewComment", new { filter = "", ComRow = 25 }) |
+        @Html.ActionLink("50", "ViewComment", new { filter = "", ComRow = 50 })
+    </p>
+</div>

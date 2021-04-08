@@ -254,7 +254,8 @@ namespace CCS2._0.Controllers
                     Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName,
                     CurrentPage = page,
                     Pages = TotalPages,
-                    Filter = filter
+                    Filter = filter,
+                    CommentDate = row.CommentDate.ToShortDateString()
                 });
             }
             if (ss)
@@ -273,7 +274,8 @@ namespace CCS2._0.Controllers
                             Class = item.Class,
                             CurrentPage = page,
                             Pages = TotalPages,
-                            Filter = filter
+                            Filter = filter,
+                            CommentDate = item.CommentDate
                         });
                     }
                 }
@@ -326,7 +328,8 @@ namespace CCS2._0.Controllers
                         Name = row.Names,
                         Flag = row.Flag,
                         ImageId = row.ImageId,
-                        FlagModel = List[0]
+                        FlagModel = List[0],
+                        CommentDate = row.CommentDate.ToShortDateString()
                     });
                 }
                 else
@@ -337,7 +340,8 @@ namespace CCS2._0.Controllers
                         Comment = row.Comment,
                         Name = row.Names,
                         Flag = row.Flag,
-                        ImageId = row.ImageId
+                        ImageId = row.ImageId,
+                        CommentDate = row.CommentDate.ToShortDateString()
                     });
                 }
 

@@ -237,7 +237,7 @@
                                     <div class="grid-container1">
                                         <div class="Comment"><p style="font-weight:bold">@Html.DisplayFor(modelItem => com.Comment)</p></div>
                                         <div class="Name">@Html.DisplayFor(modelItem => com.Name)</div>
-                                        <div class="Date">01/04/2012</div>
+                                        <div class="Date">@Html.DisplayFor(modelItem => com.CommentDate)</div>
                                         <div class="Flag"><button class="btn btn-outline-secondary" onclick="window.location.href = '/Home/FlagComment/@com.CommentId';">Flag</button></div>
                                     </div>
                                 </td>

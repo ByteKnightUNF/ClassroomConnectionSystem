@@ -72,12 +72,12 @@ namespace DataLibrary.BussinessLogic
                 Comment = Comment,
                 Names = Name,
                 Flag = Flag,
-                ImageId = ImageId
-
+                ImageId = ImageId,
+                CommentDate = DateTime.Today
             };
 
-            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId)
-                          values (@Comment, @Names, @Flag, @ImageId);";
+            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId, CommentDate)
+                          values (@Comment, @Names, @Flag, @ImageId, @CommentDate);";
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -220,7 +220,7 @@ namespace DataLibrary.BussinessLogic
         public static List<CommentModel> LoadComment(int page, int row = 10)
         {
             var parameters = new { PageNumber = page, RowOfPage = row };
-            string sql = @"select CommentId, Comment, Names, Flag, ImageId
+            string sql = @"select CommentId, Comment, Names, Flag, ImageId, CommentDate
                         from dbo.Comment
                         ORDER BY CommentId DESC
                         OFFSET (@PageNumber-1)*@RowOfPage ROWS

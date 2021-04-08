@@ -86,7 +86,8 @@ namespace CCS2._0.Controllers
                     Comment = entry.Comment,
                     Name = entry.Names,
                     Flag = entry.Flag,
-                    ImageId = entry.ImageId
+                    ImageId = entry.ImageId,
+                    CommentDate = entry.CommentDate.ToShortDateString()
                 });
             }
 
@@ -203,7 +204,8 @@ namespace CCS2._0.Controllers
                     Comment = row.Comment,
                     Name = row.Names,
                     Flag = row.Flag,
-                    ImageId = row.ImageId
+                    ImageId = row.ImageId,
+                    CommentDate = row.CommentDate.ToShortDateString()
                 });
             }
 
