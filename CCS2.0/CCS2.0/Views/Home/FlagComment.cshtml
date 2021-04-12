@@ -4,24 +4,23 @@
     ViewData["Title"] = "Flag Comment";
 }
 
-<h1>Flag Comment</h1>
-
+<h2>Flag this comment</h2>
+<br />
 <div class="grid-container-flag">
-    <div class="Comment"><h5>@Html.DisplayFor(modelItem => Model.Comment)</h5></div>
+    <div class="Comment"><h4>@Html.DisplayFor(modelItem => Model.Comment)</h4></div>
     <div class="Name">@Html.DisplayFor(modelItem => Model.Name)</div>
-    <div class="Date">Date to be added</div>
+    <div class="Date">@Html.DisplayFor(modelItem => Model.CommentDate)</div>
 </div>
-
+<br />
 <form asp-action="FlagComment">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div style="display:grid; grid-template-columns:auto auto;">
         <div class="form-group">
-            <label asp-for="FlagModel.Reason" class="control-label">Comment</label>
-            <input asp-for="FlagModel.Reason" class="form-control" required />
+            <input asp-for="FlagModel.Reason" class="form-control" required placeholder="Reason for Flag..."/>
             <span asp-validation-for="FlagModel.Reason" class="text-danger"></span>
         </div>
         <input type="number" name="FlagModel.CommentId" hidden value="@Model.CommentId">
-        <input type="number" name="ImageId" value="@Model.ImageId">
+        <input type="number" name="ImageId" hidden value="@Model.ImageId">
 
 
         <div class="form-group">

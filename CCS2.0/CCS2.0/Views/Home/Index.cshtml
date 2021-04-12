@@ -40,9 +40,9 @@
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
             Manage Images
         </a>
-   
-        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewImage">
-            Monitor Tag
+
+        <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ManageTag">
+            Manage Tag
         </a>
         <a id="Admin_View" class="navbar-brand" asp-area="" asp-controller="Image" asp-action="ViewComment">
             Monitor Comments
@@ -68,9 +68,10 @@
         </style>
 
 
-        <a id="asd" asp-area="" asp-controller="Home" asp-action="Email">Want to Upload A Photo? Email Us</a>
 
-        <h1 class="display-4">Welcome Alumni</h1>
+        <p>
+            <h5 class="display-4"><b>Welcome to Classroom Connect</b></h5> <br />
+        </p>
 
 
         <style>
@@ -115,36 +116,43 @@
 
         <div id="AlumniHome">
             <center>
-                <div class="text-left">
-                    <p>Start by selecting the decade attended:</p>
+                <div class="text-center">
+                    <p>
+                        Find old Dinsmore Elementary classroom photos. Reconnect with your elementary school classmates and teachers. <br />
+                        To get started, select the decade. It is not necessary to login.
+                    </p>
                 </div>
-                <button type="button" class="collapsible" id="1950" style="        display: none;">1950 - 1961</button>
+                <button type="button" class="collapsible" id="1950" style="        display: none;">1950s</button>
                 <div class="content" id="1950 - 1960" style="display: none;">
                 </div>
 
-                <button type="button" class="collapsible" id="1961" style="        display: none;">1961 - 1970</button>
+                <button type="button" class="collapsible" id="1961" style="        display: none;">1960s</button>
                 <div class="content" id="1961 - 1970" style="display: none;">
 
                 </div>
-                <button type="button" class="collapsible" id="1971" style="        display: none;">1971 - 1980</button>
+                <button type="button" class="collapsible" id="1971" style="        display: none;">1970s</button>
                 <div class="content" id="1971 - 1980" style="display: none;">
 
                 </div>
-                <button type="button" class="collapsible" id="1981" style="        display: none;">1981 - 1990</button>
+                <button type="button" class="collapsible" id="1981" style="        display: none;">1980s</button>
                 <div class="content" id="1981 - 1990" style="display: none;">
 
                 </div>
-                <button type="button" class="collapsible" id="1991" style="        display: none;">1991 - 2000</button>
+                <button type="button" class="collapsible" id="1991" style="        display: none;">1990s</button>
                 <div class="content" id="1991 - 2000" style="display: none;">
 
                 </div>
-                <button type="button" class="collapsible" id="2001" style="        display: none;">2001 - 2010</button>
+                <button type="button" class="collapsible" id="2001" style="        display: none;">2000s</button>
                 <div class="content" id="2001 - 2010" style="display: none;">
 
                 </div>
+                <a asp-controller="Home" asp-action="Email">
+                    Do you have a classroom photo to add? Click
+                    here for details about sharing your photo!
+                </a>
             </center>
 
-            </div>
+        </div>
 
 
 
@@ -174,7 +182,7 @@
                 } else {
 
                 }
-              
+
             }
             function newpage(id) {
 
@@ -201,9 +209,9 @@
                 @if (item.SchoolYearEnd >= 1950 && item.SchoolYearEnd <= 1960)
                 {
 
-                
 
-<script>
+
+                    <script>
                         document.getElementById('1950').style.display = "block";
 
                         createDiv("1950 - 1960" + "@item.SchoolYearEnd.ToString()", "1950 - 1960", "@item.SchoolYearEnd.ToString()");
@@ -214,13 +222,16 @@
                 a = document.getElementById("1950 - 1960" + "@item.SchoolYearEnd.ToString()" + "@item.Grade" + "@item.TeacherName.ToString()" + "1");
                 a.setAttribute("onclick", "return newpage(@item.ImageId);");
 
-</script> 
+                    </script>
+
+
+
 
 
                 }
                 else if (item.SchoolYearEnd >= 1961 && item.SchoolYearEnd <= 1970)
                 {
-<script>
+                    <script>
                         document.getElementById('1961').style.display = "block";
 
                         createDiv("1961 - 1970" + "@item.SchoolYearEnd.ToString()", "1961 - 1970", "@item.SchoolYearEnd.ToString()");
@@ -231,12 +242,12 @@
                 a.setAttribute("onclick", "return newpage(@item.ImageId);");
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.SchoolYearEnd >= 1971 && item.SchoolYearEnd <= 1980)
                 {
-<script>
+                    <script>
                         document.getElementById('1971').style.display = "block";
 
     createDiv("1971 - 1980" + "@item.SchoolYearEnd.ToString()", "1971 - 1980", "@item.SchoolYearEnd.ToString()");
@@ -245,12 +256,12 @@
     a = document.getElementById("1971 - 1980"" + "@item.SchoolYearEnd.ToString()" + "@item.Grade" + "@item.TeacherName.ToString()" + "1");
                 a.setAttribute("onclick", "return newpage(@item.ImageId);");
 
-</script>
+                    </script>
 
                 }
                 else if (item.SchoolYearEnd >= 1981 && item.SchoolYearEnd <= 1990)
                 {
-<script>
+                    <script>
                         document.getElementById('1981').style.display = "block";
 
                         createDiv("1981 - 1990" + "@item.SchoolYearEnd.ToString()", "1981 - 1990", "@item.SchoolYearEnd.ToString()");
@@ -260,12 +271,12 @@
                 a.setAttribute("onclick", "return newpage(@item.ImageId);");
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.SchoolYearEnd >= 1991 && item.SchoolYearEnd <= 2000)
                 {
-<script>
+                    <script>
                         document.getElementById('1991').style.display = "block";
 
                         createDiv("1991 - 2000" + "@item.SchoolYearEnd.ToString()", "1991 - 2000", "@item.SchoolYearEnd.ToString()");
@@ -275,12 +286,12 @@
                 a.setAttribute("onclick", "return newpage(@item.ImageId);");
 
 
-</script>
+                    </script>
 
                 }
                 else if (item.SchoolYearEnd >= 2001 && item.SchoolYearEnd <= 2010)
                 {
-<script>
+                    <script>
                         document.getElementById('2001').style.display = "block";
 
                         createDiv("2001 - 2010" + "@item.SchoolYearEnd.ToString()", "2001 - 2010", "@item.SchoolYearEnd.ToString()");
@@ -288,11 +299,11 @@
                         createDiv("2001 - 2010" + "@item.SchoolYearEnd.ToString()" + "@item.Grade" + "@item.TeacherName.ToString()", "2001 - 2010" + "@item.SchoolYearEnd.ToString()" + "@item.Grade.ToString()","@item.TeacherName.ToString()");
     a = document.getElementById("2001 - 2010" + "@item.SchoolYearEnd.ToString()" + "@item.Grade" + "@item.TeacherName.ToString()" + "1");
                 a.setAttribute("onclick", "return newpage(@item.ImageId);");
-</script>
+                    </script>
 
                 }
 
-               
+
 
             }
 

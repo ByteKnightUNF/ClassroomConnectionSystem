@@ -15,7 +15,7 @@ namespace ImageUpload.Models
         public int CommentId { get; set; }
 
         [Required(ErrorMessage = "Please enter your Comment.")]
-        [StringLength(256, ErrorMessage = "The Comment cannot exceed 256 characters.")]
+        [StringLength(144, ErrorMessage = "The Comment cannot exceed 144 characters.")]
         public string Comment { get; set; }
 
         [Required(ErrorMessage = "Please enter your name.")]
@@ -30,5 +30,13 @@ namespace ImageUpload.Models
         public ImageModel ImageModel { get; set; }
 
         public FlagModel FlagModel { get; set; }
+
+        public int Pages { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public string Filter { get; set; }
+
+        public string CommentDate { get; set; }
     }
 }

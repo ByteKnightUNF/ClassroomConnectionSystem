@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Manage Comment";
 }
-
+<p>@Html.ActionLink("<Back", "index", "home") </p>
 <h1>Manage Comments</h1>
 
 
@@ -11,58 +11,36 @@
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="navbar-toggler-icon"></span>
-    </button> <a class="navbar-brand">Apply Filter</a>
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <form class="form-inline">
-                      <input class="form-control mr-sm-2" type="text" />
-                      <button class="btn btn-primary my-2 my-sm-0" type="submit">
-                          Search
-                      </button>
-                  </form>
-                  <span style="padding: 0px 10px 0px 10px"></span>
-                  <ul class="navbar-nav">
-                      <li class="nav-item dropdown">
-                          <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Sort by Name</a>
-                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              @Html.ActionLink("Ascending", "ViewComment", new { filter = "ascending" })<br />
-                              @Html.ActionLink("Descending", "ViewComment", new { filter = "descending" })
-                          </div>
-                      </li>
-                      <span style="padding: 0px 10px 0px 10px"></span>
-                      <li class="nav-item dropdown">
-                          <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Sort by Date</a>
-                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              @Html.ActionLink("Newest", "ViewComment", new { filter = "new" })<br />
-                              @Html.ActionLink("Oldest", "ViewComment", new { filter = "old" })
-                          </div>
-                      </li>
-                      <span style="padding: 0px 10px 0px 10px"></span>
-                      <li class="nav-item dropdown">
-                          <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Class</a>
-                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                              @{string classes = "class";
-                                  foreach (var item in Model)
-                                  {
-                                      if (!classes.Contains(item.Class))
-                                      {
-                                          classes += item.Class;
-                                          @Html.ActionLink(item.Class, "ViewComment", new { filter = "class", cla = item.Class })<br />
-                                      }
-                                  }
-                              }
-                          </div>
-                      </li>
-                      <span style="padding: 0px 10px 0px 10px"></span>
-                      <li class="nav-item">
-                          @Html.ActionLink("Flagged Comments", "ViewComment", new { filter = "flag" })
-                      </li>
-                  </ul>
-                  <ul class="navbar-nav ml-md-auto">
-                      <li class="nav-item">
-                          @Html.ActionLink("Remove Filter", "ViewComment", new { filter = "" })
-                      </li>
-                  </ul>
-              </div>
+    </button> <a class="navbar-brand">Search Comments:</a>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <form class="form-inline" asp-action="ViewComment" method="get">
+            <input class="form-control mr-sm-2" type="text" style="width:350px;" name="search" value="@ViewBag.CurrentSearch" placeholder="Search by Comment or Commenter's Name" />
+            <input class="btn btn-primary my-2 my-sm-0" type="submit" value="Search" />
+        </form>
+        <span style="padding: 0px 10px 0px 10px"></span>
+        <ul class="navbar-nav">
+            <span style="padding: 0px 10px 0px 10px"></span>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Sort</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @Html.ActionLink("Name: A-Z", "ViewComment", new { filter = "ascending" })<br />
+                    @Html.ActionLink("Name: Z-A", "ViewComment", new { filter = "descending" })<br />
+                    @Html.ActionLink("Newest", "ViewComment", new { filter = "new" })<br />
+                    @Html.ActionLink("Oldest", "ViewComment", new { filter = "old" })
+                </div>
+            </li>
+            
+            <span style="padding: 0px 10px 0px 10px"></span>
+            <li class="nav-item">
+                @Html.ActionLink("Flagged Comments", "ViewComment", new { filter = "flag" })
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-md-auto">
+            <li class="nav-item">
+                @Html.ActionLink("Remove Filter", "ViewComment", new { filter = "" })
+            </li>
+        </ul>
+    </div>
 </nav>
 
 <table class="table">
@@ -70,7 +48,7 @@
         <tr>
             <th>
                 <div class="grid-container1">
-                    
+
                     <div class="Name">@Html.DisplayNameFor(model => model.Comment) | @Html.DisplayNameFor(model => model.Name)</div>
                     <div class="Date">Date</div>
                 </div>
@@ -85,7 +63,9 @@
             <th>
                 Image
             </th>
-            <th></th>
+            <th>
+                
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -96,9 +76,9 @@
                     <div class="grid-container1">
                         <div class="Comment">@Html.DisplayFor(modelItem => item.Comment)</div>
                         <div class="Name">@Html.DisplayFor(modelItem => item.Name)</div>
-                        <div class="Date">1/1/2021</div>
+                        <div class="Date">@Html.DisplayFor(modelItem => item.CommentDate)</div>
                     </div>
- 
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Class)
@@ -111,10 +91,36 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "EditComment", new { id = item.CommentId }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Delete", "Delete_Comment", new { ID = item.CommentId }, new { onclick = "return confirm ( 'Are you sure?');" })
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@{var t = 0; }
+@foreach (var item in Model)
+{
+    if (t == 0)
+    {
+        <p style="text-align:center">
+            Pages:&nbsp;
+            @for (int i = 1; i <= item.Pages; i++)
+            {
+                if (i != item.CurrentPage)
+                {
+                    @Html.ActionLink(i.ToString(), "ViewComment", "Image", new { page = i, filter = item.Filter, Search = ViewBag.CurrentSearch })
+                }
+                else
+                {
+                    @Html.DisplayFor(Model => item.CurrentPage)
+                }
+                if (i < item.Pages)
+                {
+                    @:&nbsp;|&nbsp;
+                }
+            }
+         </p>
+        t = 2;
+    }
+}

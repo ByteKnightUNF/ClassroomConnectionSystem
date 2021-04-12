@@ -85,10 +85,10 @@ namespace CCS2._0.Controllers
 
 
 
-        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString, string searchInput)
+        public IActionResult ViewImage(string sBase64String, ImageModel model, string searchString)
         {
             ViewBag.CurrentSearch = searchString;
-            ViewBag.CurrentSearch2 = searchInput;
+         
             List<ImageModel> Match = new List<ImageModel>();
 
             var match = LoadPhoto();
@@ -115,19 +115,78 @@ namespace CCS2._0.Controllers
                     SchoolYearEnd = row.SchoolYearEnd,
                     Grade = row.Grade,
                     TeacherName = row.TeacherName,
-                    src = this.ViewImage(row.ImageFile)
+                    src = this.ViewImage(row.ImageFile),
+                    NumberOfPeople = row.NumberOfPeople
 
                 });
             }
 
             return View(Match);
         }
+        public IActionResult ManageTag(string sBase64String, ImageModel model, string searchString)
+        {
+            ViewBag.CurrentSearch = searchString;
+            List<ImageModel> Match = new List<ImageModel>();
+            List<ImageUpload.Models.AddingTagModel> Tag = new List<ImageUpload.Models.AddingTagModel>();
+
+            var match = LoadPhoto();
+            var tag = new List<DataLibrary.Models.AddingTagModel>();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                match = FindTag(searchString); 
+            }
+
+
+
+            foreach (var row in match)
+            {
+                if (row.NumberOfPeople > 0)
+                {
+                    tag = getTagId(row.ImageId);
+
+                    foreach (var tags in tag)
+                    {
+                        Tag.Add(new ImageUpload.Models.AddingTagModel
+                        {
+
+                            ImageId = tags.ImageId,
+                            Tag = tags.Tag,
+                            Name = tags.Name
+
+                        });
+                    }
+
+                    Match.Add(new ImageModel
+                    {
+
+                        ImageId = row.ImageId,
+                        SchoolYearBegin = row.SchoolYearBegin,
+                        SchoolYearEnd = row.SchoolYearEnd,
+                        Grade = row.Grade,
+                        TeacherName = row.TeacherName,
+                        Name = row.Name,
+                        NumberOfPeople = row.NumberOfPeople,
+                        TaggedSrc = this.ViewImage(row.TaggedPhoto),
+                        AddingTagModel = Tag
+
+                    });  ;
+
+                    Tag = new List<ImageUpload.Models.AddingTagModel>();
+                }
+
+            }
+
+            return View(Match);
+        }
+
+
 
         public IActionResult DeleteImage(int ID, ImageModel model)
         {
             try
             {
-                int recordCreated = Deleteimage(ID);
+                int recordCreated = RemoveImage(ID);
                 return RedirectToAction("ViewImage");
             }
             catch
@@ -138,31 +197,40 @@ namespace CCS2._0.Controllers
         }
 
 
-        public IActionResult ViewComment(string filter, string cla)
+        public IActionResult ViewComment(string filter, int page = 1, string Search = "")
         {
             List<CommentModel> Com = new List<CommentModel>();
-            var com = LoadComment();
-            bool ss = false;
-            switch (filter)
+            var com = LoadComment(page, 15);
+            var TotalPages = (int)Math.Ceiling((decimal)GetPages() / 15);
+            ViewBag.CurrentSearch = Search;
+            if (!string.IsNullOrEmpty(Search))
             {
-                case "flag":
-                    com = FlaggedComment();
-                    break;
-                case "ascending":
-                    com = SortName("a");
-                    break;
-                case "descending":
-                    com = SortName("d");
-                    break;
-                case "new":
-                    break;
-                case "old":
-                    break;
-                case "class":
-                    ss = true;
-                    break;
-                default:
-                    break;
+                com = FindCom(Search, page);
+                TotalPages = (int)Math.Ceiling((decimal)GetPagesSearchCom(Search) / 15);
+            }
+            else
+            { 
+                switch (filter)
+                {
+                    case "flag":
+                        com = FlaggedComment();
+                        TotalPages = (int)Math.Ceiling((decimal)FlagCount() / 15);
+                        break;
+                    case "ascending":
+                        com = Sort("a", page);
+                        break;
+                    case "descending":
+                        com = Sort("d", page);
+                        break;
+                    case "new":
+                        com = Sort("n", page);
+                        break;
+                    case "old":
+                        com = Sort("o", page);
+                        break;
+                    default:
+                        break;
+                }
             }
             foreach (var row in com)
             {
@@ -172,6 +240,7 @@ namespace CCS2._0.Controllers
                 {
                     Match.Add(new ImageModel
                     {
+                        ImageId = side.ImageId,
                         SchoolYearEnd = side.SchoolYearEnd,
                         Grade = side.Grade,
                         TeacherName = side.TeacherName
@@ -184,30 +253,13 @@ namespace CCS2._0.Controllers
                     Name = row.Names,
                     Flag = row.Flag,
                     ImageId = row.ImageId,
-                    Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName
+                    Class = Match[0].Grade+" | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName,
+                    CurrentPage = page,
+                    Pages = TotalPages,
+                    Filter = filter,
+                    CommentDate = row.CommentDate.ToShortDateString()
                 });
             }
-            if (ss)
-            {
-                List<CommentModel> sea = new List<CommentModel>();
-                foreach (var item in Com)
-                {
-                    if (item.Class == cla)
-                    {
-                        sea.Add(new CommentModel{
-                            CommentId = item.CommentId,
-                            Comment = item.Comment,
-                            Name = item.Name,
-                            Flag = item.Flag,
-                            ImageId = item.ImageId,
-                            Class = item.Class
-                        });
-                    }
-                }
-                return View(sea);
-            }
-
-
             return View(Com);
         }
 
@@ -253,7 +305,8 @@ namespace CCS2._0.Controllers
                         Name = row.Names,
                         Flag = row.Flag,
                         ImageId = row.ImageId,
-                        FlagModel = List[0]
+                        FlagModel = List[0],
+                        CommentDate = row.CommentDate.ToShortDateString()
                     });
                 }
                 else
@@ -264,7 +317,8 @@ namespace CCS2._0.Controllers
                         Comment = row.Comment,
                         Name = row.Names,
                         Flag = row.Flag,
-                        ImageId = row.ImageId
+                        ImageId = row.ImageId,
+                        CommentDate = row.CommentDate.ToShortDateString()
                     });
                 }
 
@@ -320,6 +374,30 @@ namespace CCS2._0.Controllers
 
             return View();
         }
+        public IActionResult DeleteTag(int ID, ImageModel model)
+        {
+            try
+            {
+                int recordCreated = RemoveTag(ID);
+
+                return RedirectToAction("ManageTag");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
+        public IActionResult EditTag(int Id, int Tag, string Name)
+        {
+
+            int recordCreated = Edit_Tag(Id, Tag, Name);
+
+            return RedirectToAction("ManageTag");
+        }
+
+
 
         public IActionResult RemoveFlag(int id)
         {

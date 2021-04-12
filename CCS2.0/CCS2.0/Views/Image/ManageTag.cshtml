@@ -1,0 +1,131 @@
+﻿@model IEnumerable<ImageUpload.Models.ImageModel>
+
+@{
+    ViewData["Title"] = "ManageTag";
+
+}
+<p>@Html.ActionLink("<Back", "index", "home") </p>
+<h1>Manage Tag</h1>
+
+
+<form asp-action="ManageTag" method="get">
+
+
+    Search Tag: <input type="text" style="width:400px;" name="searchString" value="@ViewBag.CurrentSearch" placeholder="Please enter a value here" />
+
+    <input type="submit" value="Search" />
+
+
+    <a asp-action="ManageTag">Remove Filter</a>
+</form>
+
+
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+
+        <div class="card" style="width: 20rem; margin:10px 10px 10px 10px;">
+            <img class="card-img-top mx-auto" style="height:180px; width:277px" src="@item.TaggedSrc" alt="Unknown Image" />
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item"><b>School Year:</b> @Html.DisplayFor(modelItem => item.SchoolYearBegin) - @Html.DisplayFor(modelItem => item.SchoolYearEnd) </li>
+                    <li class="list-group-item"><b>Grade:</b> @Html.DisplayFor(modelItem => item.Grade)</li>
+                    <li class="list-group-item"><b>Teacher Name: </b>@Html.DisplayFor(modelItem => item.TeacherName)</li>
+                    <li class="list-group-item"><b>Amount of tag: </b>@Html.DisplayFor(modelItem => item.NumberOfPeople)</li>
+
+                    <li class="list-group-item">
+                        <b>Tag:</b>
+                        @foreach (var tag in item.AddingTagModel)
+                        {
+                            <button type="button" id="photobutton" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@item.ImageId,@tag.Tag)" >@tag.Tag - @tag.Name</button>
+                        }
+                    </li>
+
+                </ul>
+                <div class="card-body" style="text-align: center;">
+                    @Html.ActionLink("View Image", "ViewPost", "Home", new { Id = item.ImageId }, new { target = "_blank" }) |
+                    @Html.ActionLink("Delete", "DeleteTag", new { ID = item.ImageId }, new { onclick = "return confirm ( 'Are you sure you want to remove all tags from this image?');" })
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">What would you like to change this person name to?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="EditTag">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div style="display:grid; grid-template-columns:auto auto;">
+                            <div id="ImageId" class="form-group">
+
+                            </div>
+                            <div id="TagId" class="form-group">
+
+                            </div>
+                            <div id="TagName">
+
+                                <input type="text" name="Name" />
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            
+
+                         
+
+                        </div>
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+
+
+    function newTag(id, tag) {
+        holder = document.getElementById("ImageId");
+        add1 = document.createElement("input");
+        add1.setAttribute("type", "hidden");
+        add1.setAttribute("name", "Id");
+        add1.setAttribute("value", id);
+        holder.append(add1);
+
+        holder1 = document.getElementById("TagId");
+        add2 = document.createElement("input");
+        add2.setAttribute("type", "hidden");
+        add2.setAttribute("name", "Tag");
+        add2.setAttribute("value", tag);
+        holder1.append(add2);
+
+    }
+    //function newpage(id) {
+        //  <button type="button" class="btn btn-secondary" onclick="return newpage();">Remove Tag</button>
+       // window.location.href = "/Home/ViewPost/" + id;
+    //}
+
+</script>

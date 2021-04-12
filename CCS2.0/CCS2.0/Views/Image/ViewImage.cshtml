@@ -4,7 +4,7 @@
     ViewData["Title"] = "ViewImage";
 
 }
-
+<p>@Html.ActionLink("<Back", "index", "home") </p>
 <h1>Manage Images</h1>
 
 
@@ -20,21 +20,6 @@
 
     <input type="submit" value="Search" />
 
-
-
-
-
-
-
-    <!-- <label for="criteria">Search Images By:</label>
-
-     <select name="criteria" id="criteria">
-         <option value="Name">Name</option>
-         <option value="Email">Email</option>
-         <option value="School_Year_Begin">Beginning School Year</option>
-         <option value="School_Year_End">Ending School Year</option>
-     </select> -->
-
     <a asp-action="ViewImage">Remove Filter</a>
 </form>
 
@@ -46,7 +31,7 @@
     {
 
             <div class="card" style="width: 20rem; margin:10px 10px 10px 10px;">
-                <img class="card-img-top" style="height:180px; width:277px" src="@item.src" alt="Unknown Image" />
+                <img class="card-img-top mx-auto" style="height:180px; width:277px" src="@item.src" alt="Unknown Image" />
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><b>Name:</b> @Html.DisplayFor(modelItem => item.Name)</li>
@@ -58,10 +43,18 @@
 
                     </ul>
                     <div class="card-body" style="text-align: center;">
+
                         @Html.ActionLink("Edit", "Edit", new { ID = item.ImageId }) |
-                        @Html.ActionLink("Tag", "Tag", new { ID = item.ImageId }) |
+                        @if (item.NumberOfPeople > 0)
+                        {
+                            @Html.ActionLink("Manage Tag", "ManageTag", new { ID = item.ImageId })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Tag", "Tag", new { ID = item.ImageId })} |
                         @Html.ActionLink("Delete", "DeleteImage", new { ID = item.ImageId }, new { onclick = "return confirm ( 'Are you sure?');" })
                         <br />
+
                         @Html.ActionLink("View Image", "ViewPost", "Home", new { Id = item.ImageId }, new { target = "_blank" })
                     </div>
                 </div>

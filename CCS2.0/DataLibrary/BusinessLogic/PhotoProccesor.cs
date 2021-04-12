@@ -72,12 +72,12 @@ namespace DataLibrary.BussinessLogic
                 Comment = Comment,
                 Names = Name,
                 Flag = Flag,
-                ImageId = ImageId
-
+                ImageId = ImageId,
+                CommentDate = DateTime.Today
             };
 
-            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId)
-                          values (@Comment, @Names, @Flag, @ImageId);";
+            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId, CommentDate)
+                          values (@Comment, @Names, @Flag, @ImageId, @CommentDate);";
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -108,7 +108,16 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
         }
-        
+        public static List<AddingTagModel> getTag()
+        {
+         
+            string sql = @"select *
+                        from dbo.Tag;";
+
+            return SqlDataAccess.LoadData<AddingTagModel>(sql);
+
+        }
+
         public static List<AddingTagModel> getTagId(int ImageId)
         {
             var parameters = new { ImageId = ImageId };
@@ -121,12 +130,36 @@ namespace DataLibrary.BussinessLogic
 
         }
 
-        public static List<CommentModel> GetCommentId(int ImageId)
+        public static int GetPages(int ImageId)
         {
             var parameters = new { ImageId = ImageId };
+
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where ImageId = @ImageId;";
+
+            var page = SqlDataAccess.LoadData<int>(sql, parameters)[0];
+            return page;
+        }
+
+        public static int GetPages()
+        {
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment;";
+
+            var page = SqlDataAccess.LoadData<int>(sql)[0];
+            return page;
+        }
+
+        public static List<CommentModel> GetCommentId(int ImageId, int PageNumber)
+        {
+            var parameters = new { ImageId = ImageId,  PageNumber = PageNumber, RowOfPage = 5 };
             string sql = @"select *
                         from dbo.Comment
-                        Where ImageId = @ImageId ;";
+                        Where ImageId = @ImageId 
+                        ORDER BY CommentId DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
@@ -137,46 +170,119 @@ namespace DataLibrary.BussinessLogic
 
             string sql = @"select *
                         from dbo.Comment
-                        Where Comment_Id = @ImageId ;";
+                        Where CommentId = @ImageId ;";
 
             return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
         public static List<ImageModel> FindImg(string ImageId)
         {
             var parameters = new { ImageId = ImageId };
+
+
             string sql = @"select *
+
                         from dbo.Image
 
+                        Where Name Like '%'+@ImageId+'%' OR Email Like '%'+@ImageId+'%'" +
+                        "OR SchoolYearBegin Like '%'+@ImageId+'%' OR SchoolYearEnd Like '%'+@ImageId+'%'" +
+                        "OR Grade Like '%'+@ImageId+'%' OR TeacherName Like '%'+@ImageId+'%';";
 
-                        Where Name Like '%@ImageId%' OR Email Like '%@ImageId%'" +
-
-                        "OR SchoolYearBegin Like '%@ImageId%' OR SchoolYearEnd Like '%@ImageId%'" +
-                        "OR Grade Like '%@ImageId%' OR TeacherName Like '%@ImageId%';";
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
 
         }
+        public static List<ImageModel> FindTag(string ImageId)
+        {
+            var parameters = new { ImageId = ImageId };
+            string sql = @"select *
 
+                        from dbo.Image
+
+                        Where Name Like '%'+@ImageId+'%' OR Email Like '%'+@ImageId+'%'" +
+                        "OR SchoolYearBegin Like '%'+@ImageId+'%' OR SchoolYearEnd Like '%'+@ImageId+'%'" +
+                        "OR Grade Like '%'+@ImageId+'%' OR NumberOfPeople Like '%'+@ImageId+'%' OR TeacherName Like '%'+@ImageId+'%';";
+
+
+            return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
+
+        }
+        public static List<CommentModel> FindCom(string search, int PageNumber)
+        {
+            var parameters = new { Search = search, PageNumber = PageNumber, RowOfPage = 15 };
+
+
+            string sql = @"select * from dbo.Comment "+ 
+                        "Where Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%' "+
+                        "ORDER BY CommentId DESC " +
+                        "OFFSET (@PageNumber-1)*@RowOfPage ROWS " +
+                        "FETCH NEXT @RowOfPage ROWS ONLY;";
+
+
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
+
+        }
+
+        public static List<CommentModel> FindComi(string search, int id, int PageNumber)
+        {
+            var parameters = new { Search = search, ImageId = id, PageNumber = PageNumber, RowOfPage = 5 };
+            
+            string sql = @"select * from dbo.Comment "+
+                        "Where ImageId = @ImageId AND (Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%') "+
+                        "ORDER BY CommentId DESC "+
+                        "OFFSET (@PageNumber-1)*@RowOfPage ROWS " +
+                        "FETCH NEXT @RowOfPage ROWS ONLY;";
+
+
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
+
+        }
+
+        public static int GetPagesSearchCom(string search)
+        {
+            var parameters = new { Search = search };
+
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%';";
+
+            var page = SqlDataAccess.LoadData<int>(sql, parameters)[0];
+            return page;
+        }
+
+        public static int GetPagesSearch(int ImageId, string search)
+        {
+            var parameters = new { ImageId = ImageId, Search = search };
+
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where ImageId = @ImageId AND (Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%');";
+
+            var page = SqlDataAccess.LoadData<int>(sql, parameters)[0];
+            return page;
+        }
 
         public static List<ImageModel> LoadPhoto()
         {
 
-            string sql = @"select ImageId, Name, Email, SchoolYearBegin, SchoolYearEnd, Grade, TeacherName, ImageFile
+            string sql = @"select *
                         from dbo.Image;";
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
 
-        public static List<CommentModel> LoadComment()
+        public static List<CommentModel> LoadComment(int page, int row = 10)
         {
+            var parameters = new { PageNumber = page, RowOfPage = row };
+            string sql = @"select CommentId, Comment, Names, Flag, ImageId, CommentDate
+                        from dbo.Comment
+                        ORDER BY CommentId DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
 
-            string sql = @"select CommentId, Comment, Names, Flag, ImageId
-                        from dbo.Comment;";
-
-            return SqlDataAccess.LoadData<CommentModel>(sql);
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
 
-        public static int Deleteimage(int ImageId)
+        public static int RemoveImage(int ImageId)
         {
 
             ImageModel data = new ImageModel
@@ -186,6 +292,24 @@ namespace DataLibrary.BussinessLogic
             };
 
             string sql = @"DELETE FROM dbo.Image WHERE ImageId= @ImageId; DELETE FROM dbo.Comment WHERE ImageId= @ImageId;";
+
+            return SqlDataAccess.SaveData(sql, data);
+
+        }
+        public static int RemoveTag(int ImageId)
+        {
+
+            ImageModel data = new ImageModel
+            {
+                ImageId = ImageId
+
+            };
+
+            string sql = @"Update dbo.Image
+                           set NumberOfPeople = NULL , TaggedPhoto = NULL
+                           WHERE ImageId= @ImageId;
+                           Delete From dbo.Tag
+                           WHERE ImageId= @ImageId; ";
 
             return SqlDataAccess.SaveData(sql, data);
 
@@ -220,6 +344,20 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
         }
+        public static int Edit_Tag(int ImageId, int Tag, string Name)
+        {
+            AddingTagModel data = new AddingTagModel
+            {
+                ImageId = ImageId,
+                Tag = Tag,
+                Name = Name
+               
+            };
+
+            string sql = @"UPDATE dbo.Tag SET Name = @Name WHERE ImageId = @ImageId AND Tag = @Tag;";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
 
         public static List<CommentModel> FlaggedComment()
         {
@@ -230,21 +368,53 @@ namespace DataLibrary.BussinessLogic
 
         }
 
-        public static List<CommentModel> SortName(string option)
+        public static int FlagCount()
         {
-            string sql;
-            if (option == "a") {
-                sql = @"select *
-                            from dbo.Comment
-                            ORDER BY Names ASC;";
-            } 
-            else
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where Flag = 1;";
+
+            var page = SqlDataAccess.LoadData<int>(sql)[0];
+            return page;
+        }
+
+        public static List<CommentModel> Sort(string option, int page)
+        {
+            var parameters = new { PageNumber = page, RowOfPage = 15 };
+            string sql = "";
+            if (option == "a") 
             {
                 sql = @"select *
-                            from dbo.Comment
-                            ORDER BY Names DESC;";
+                        from dbo.Comment
+                        ORDER BY Names ASC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
+            } 
+            else if (option == "d")
+            {
+                sql = @"select *
+                        from dbo.Comment
+                        ORDER BY Names DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
             }
-            return SqlDataAccess.LoadData<CommentModel>(sql);
+            else if (option == "n")
+            {
+                sql = @"select *
+                        from dbo.Comment
+                        ORDER BY CommentId DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
+            }
+            else if (option == "o")
+            {
+                sql = @"select *
+                        from dbo.Comment
+                        ORDER BY CommentId ASC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
+            }
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
 
         public static int CreateFlag(int Id, string Rea)
@@ -277,11 +447,15 @@ namespace DataLibrary.BussinessLogic
         public static List<FlagModel> GetReason(int Id)
         {
 
+            var parameters = new { Id = Id };
+
             string sql = @"select *
                         from dbo.FlaggedComments
-                        Where comment_id = " + @Id + ";";
 
-            return SqlDataAccess.LoadData<FlagModel>(sql);
+                        Where CommentId = @Id;";
+
+
+            return SqlDataAccess.LoadData<FlagModel>(sql, parameters);
         }
 
         public static int DeleteFlag(int Id)
