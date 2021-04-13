@@ -20,6 +20,7 @@ using ImageModel = ImageUpload.Models.ImageModel;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using GalleryModel = CCS2._0.Models.GalleryModel;
 
 namespace CCS2._0.Controllers
 {
@@ -69,6 +70,7 @@ namespace CCS2._0.Controllers
             List<ImageModel> Match = new List<ImageModel>();
             List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
             List<ImageUpload.Models.AddingTagModel> Tag = new List<ImageUpload.Models.AddingTagModel>();
+            List<Models.GalleryModel> Gallery = new List<Models.GalleryModel>();
 
             var match = GetPhotoId(ID);
 
@@ -84,6 +86,8 @@ namespace CCS2._0.Controllers
                 com = FindComi(Search, ID, page);
                 Pages = (int)Math.Ceiling((decimal)GetPagesSearch(ID, Search) / 5);
             }
+
+            var gallery = new List<Models.GalleryModel>();
 
             foreach (var entry in com)
             {
@@ -114,6 +118,16 @@ namespace CCS2._0.Controllers
 
             foreach (var row in match)
             {
+
+                foreach (var entry in GetGallery(row.ImageId))
+                {
+                    gallery.Add(new GalleryModel
+                    {
+                        Id = entry.Id, 
+                        GallerySrc = this.ViewImage(entry.ImageFile)
+                    });
+                }
+
                 if (row.NumberOfPeople > 0)
                 {
 
@@ -133,7 +147,8 @@ namespace CCS2._0.Controllers
                         CommentModel = Com,
                         Comments = new ImageUpload.Models.CommentModel(),
                         Pages = Pages,
-                        CurrentPage = page
+                        CurrentPage = page,
+                        GalleryModel = gallery
                     });
                 }
                 else
@@ -152,10 +167,11 @@ namespace CCS2._0.Controllers
                         CommentModel = Com,
                         Comments = new ImageUpload.Models.CommentModel(),
                         Pages = Pages,
-                        CurrentPage = page
-
+                        CurrentPage = page,
+                        GalleryModel = gallery
                     });
                 }
+                gallery = new List<Models.GalleryModel>();
             }
 
             return View(Match[0]);
@@ -169,6 +185,7 @@ namespace CCS2._0.Controllers
 
             return RedirectToAction("ViewPost", new { ID = Id });
         }
+
 
         public IActionResult NewTag(int Id, int Tag, string Name)
         {

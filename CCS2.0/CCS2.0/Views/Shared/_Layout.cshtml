@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    <style>
+        a {
+            color: black;
+            text-decoration: none;
+            background-color: none;
+        }
+    </style>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -21,13 +28,14 @@
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="/Images/Dinsmore-Logo.png" width="auto" height="50%" alt="Dinsmore Logo" />
                     </a>
-                    <a class="home-link" href="http://friendsofdinsmoreelementary.org/" title="Friends of Dinsmore Elementary, Inc." rel="home">
+                    <a class="home-link" asp-controller="Home" asp-action="Index" title="Friends of Dinsmore Elementary, Inc." rel="home">
                         <div class="site-description">
-                            <h1 class="site-title ">Friends of Dinsmore Elementary, Inc.</h1>
+                            <h4 class="site-title ">Friends of Dinsmore Elementary, Inc.</h4>
                             <p class="site-tagline">501(c)(3) charitable organization</p>
                         </div>
                     </a>
 
+             
 
 
                 }
@@ -37,17 +45,16 @@
                         <img src="/Images/Dinsmore-Logo.png" width="auto" height="50%" alt="Dinsmore Logo" />
 
                     </a>
-                    <a class="home-link" href="http://friendsofdinsmoreelementary.org/" title="Friends of Dinsmore Elementary, Inc." rel="home">
+                    <a class="home-link" asp-controller="Home" asp-action="Index" rel="home">
                         <div class="site-description">
-                            <h1 class="site-title ">Friends of Dinsmore Elementary, Inc.</h1>
+                            <h4 class="site-title ">Friends of Dinsmore Elementary, Inc.</h4>
                             <p class="site-tagline">501(c)(3) charitable organization</p>
                         </div>
                     </a>
 
-                   
 
 
-
+               
 
 
                 }
@@ -84,7 +91,7 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - Classroom Connection System
-            <a href="/identity/account/login">login</a>
+            <a href="/identity/account/login">Admin login</a>
             <a style="float:right;" href="mailto:FriendsOfDinsmoreElementary@gmail.com">Contact Email</a>
           
         </div>

@@ -7,10 +7,10 @@ namespace CCS2._0.Models
 {
     public class DecadeModel
     {
-
+       
         public int SchoolYearBegin { get; set; }
-
-
+        public string Grade { get; set; }
+        public string TeacherName { get; set; }
 
     }
 }
