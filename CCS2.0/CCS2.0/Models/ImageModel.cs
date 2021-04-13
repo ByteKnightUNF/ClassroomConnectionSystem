@@ -57,6 +57,10 @@ namespace ImageUpload.Models
         [NotMapped]
         public string TaggedSrc { get; set; }
 
+
+        public ICollection<GalleryModel> GalleryModel { get; set; }
+
+
         public ICollection<CommentModel> CommentModel { get; set; }
 
 

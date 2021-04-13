@@ -73,6 +73,7 @@
     <Compile Include="Models\AddingTagModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\FlagModel.cs" />
+    <Compile Include="Models\GalleryModel.cs" />
     <Compile Include="Models\ImageModel.cs" />
     <Compile Include="Models\TagModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

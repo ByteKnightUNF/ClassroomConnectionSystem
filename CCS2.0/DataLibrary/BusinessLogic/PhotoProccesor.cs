@@ -58,14 +58,27 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
         }
+        
+        public static int recordGallery(int ImageId, Byte[] ImageFile)
+        {
 
-      
+            GalleryModel data = new GalleryModel
+            {
+                ImageId = ImageId,
+                ImageFile = ImageFile,
+
+            };
+
+            string sql = @"insert into dbo.Gallery (ImageId, ImageFile)
+                          values(@ImageId, @ImageFile); ";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+
 
         public static int CreateComment(string Comment, string Name, Boolean Flag, int ImageId)
         {
-
-
-
 
             CommentModel data = new CommentModel
             {
@@ -212,11 +225,26 @@ namespace DataLibrary.BussinessLogic
         {
 
             string sql = @"select *
-                        from dbo.Image;";
+                        from dbo.Image
+                         Order by SchoolYearBegin ASC ;";
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
+        public static List<GalleryModel> GetGallery(int ImageId)
+        {
 
+            GalleryModel data = new GalleryModel
+            {
+                ImageId = ImageId
+
+            };
+            string sql = @"select *
+                        from dbo.Gallery
+                         where ImageId = @ImageId;";
+
+            return SqlDataAccess.LoadData<GalleryModel>(sql, data);
+        }
+        
         public static List<CommentModel> LoadComment(int page, int row = 10)
         {
             var parameters = new { PageNumber = page, RowOfPage = row };
