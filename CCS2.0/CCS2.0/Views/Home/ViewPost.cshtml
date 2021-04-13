@@ -322,16 +322,17 @@
             </div>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form class="form-inline">
+                <div>
+                    <form class="form-inline" asp-action="ViewPost" method="get">
                         <p style="font-size:13px; margin-bottom:0px">
                             To search for information on a specific person, enter the first name in the search. Then,
                             you can further narrow your search results, if needed.
                         </p>
-                        <input class="form-control mr-sm-2" type="text" maxlength="35" size="35" placeholder="Search..." />
-                        <button class="btn btn-primary my-2 my-sm-0" type="submit">
-                            Search
-                        </button>
+
+                        <input class="form-control mr-sm-2" type="text" style="width:60%;" name="search" value="@ViewBag.CurrentSearch" placeholder="Search..." />
+                        <input class="btn btn-primary my-2 my-sm-0" type="submit" value="Search" />
+                        <span style="padding: 0px 10px 0px 10px"></span>
+                        <a asp-action="ViewPost">Cancel</a>
                     </form>
                 </div>
             </nav>
@@ -354,7 +355,7 @@
                                     <div class="grid-container1">
                                         <div class="Comment"><p style="font-weight:bold">@Html.DisplayFor(modelItem => com.Comment)</p></div>
                                         <div class="Name">@Html.DisplayFor(modelItem => com.Name)</div>
-                                        <div class="Date">01/04/2012</div>
+                                        <div class="Date">@Html.DisplayFor(modelItem => com.CommentDate)</div>
                                         <div class="Flag"><button class="btn btn-outline-secondary" onclick="window.location.href = '/Home/FlagComment/@com.CommentId';">Flag</button></div>
                                     </div>
                                 </td>
@@ -369,7 +370,7 @@
                 {
                     if (i != Model.CurrentPage)
                     {
-                        @Html.ActionLink(i.ToString(), "ViewPost", "Home", new { Id = Model.ImageId, page = i })
+                        @Html.ActionLink(i.ToString(), "ViewPost", "Home", new { Id = Model.ImageId, page = i, Search = ViewBag.CurrentSearch })
                     }
                     else
                     {

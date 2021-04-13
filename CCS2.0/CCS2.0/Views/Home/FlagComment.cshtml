@@ -9,7 +9,7 @@
 <div class="grid-container-flag">
     <div class="Comment"><h4>@Html.DisplayFor(modelItem => Model.Comment)</h4></div>
     <div class="Name">@Html.DisplayFor(modelItem => Model.Name)</div>
-    <div class="Date">Date to be added</div>
+    <div class="Date">@Html.DisplayFor(modelItem => Model.CommentDate)</div>
 </div>
 <br />
 <form asp-action="FlagComment">

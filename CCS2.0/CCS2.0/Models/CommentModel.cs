@@ -36,5 +36,7 @@ namespace ImageUpload.Models
         public int CurrentPage { get; set; }
 
         public string Filter { get; set; }
+
+        public string CommentDate { get; set; }
     }
 }

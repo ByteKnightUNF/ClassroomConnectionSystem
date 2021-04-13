@@ -85,12 +85,12 @@ namespace DataLibrary.BussinessLogic
                 Comment = Comment,
                 Names = Name,
                 Flag = Flag,
-                ImageId = ImageId
-
+                ImageId = ImageId,
+                CommentDate = DateTime.Today
             };
 
-            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId)
-                          values (@Comment, @Names, @Flag, @ImageId);";
+            string sql = @"insert into dbo.Comment (Comment, Names, Flag, ImageId, CommentDate)
+                          values (@Comment, @Names, @Flag, @ImageId, @CommentDate);";
 
             return SqlDataAccess.SaveData(sql, data);
         }
@@ -219,7 +219,60 @@ namespace DataLibrary.BussinessLogic
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
 
         }
+        public static List<CommentModel> FindCom(string search, int PageNumber)
+        {
+            var parameters = new { Search = search, PageNumber = PageNumber, RowOfPage = 15 };
 
+
+            string sql = @"select * from dbo.Comment "+ 
+                        "Where Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%' "+
+                        "ORDER BY CommentId DESC " +
+                        "OFFSET (@PageNumber-1)*@RowOfPage ROWS " +
+                        "FETCH NEXT @RowOfPage ROWS ONLY;";
+
+
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
+
+        }
+
+        public static List<CommentModel> FindComi(string search, int id, int PageNumber)
+        {
+            var parameters = new { Search = search, ImageId = id, PageNumber = PageNumber, RowOfPage = 5 };
+            
+            string sql = @"select * from dbo.Comment "+
+                        "Where ImageId = @ImageId AND (Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%') "+
+                        "ORDER BY CommentId DESC "+
+                        "OFFSET (@PageNumber-1)*@RowOfPage ROWS " +
+                        "FETCH NEXT @RowOfPage ROWS ONLY;";
+
+
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
+
+        }
+
+        public static int GetPagesSearchCom(string search)
+        {
+            var parameters = new { Search = search };
+
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%';";
+
+            var page = SqlDataAccess.LoadData<int>(sql, parameters)[0];
+            return page;
+        }
+
+        public static int GetPagesSearch(int ImageId, string search)
+        {
+            var parameters = new { ImageId = ImageId, Search = search };
+
+            string sql = @"SELECT count(*)
+                        FROM dbo.Comment
+                        Where ImageId = @ImageId AND (Names Like '%'+@Search+'%' OR Comment Like '%'+@Search+'%');";
+
+            var page = SqlDataAccess.LoadData<int>(sql, parameters)[0];
+            return page;
+        }
 
         public static List<ImageModel> LoadPhoto()
         {
@@ -248,7 +301,7 @@ namespace DataLibrary.BussinessLogic
         public static List<CommentModel> LoadComment(int page, int row = 10)
         {
             var parameters = new { PageNumber = page, RowOfPage = row };
-            string sql = @"select CommentId, Comment, Names, Flag, ImageId
+            string sql = @"select CommentId, Comment, Names, Flag, ImageId, CommentDate
                         from dbo.Comment
                         ORDER BY CommentId DESC
                         OFFSET (@PageNumber-1)*@RowOfPage ROWS
@@ -353,21 +406,43 @@ namespace DataLibrary.BussinessLogic
             return page;
         }
 
-        public static List<CommentModel> SortName(string option)
+        public static List<CommentModel> Sort(string option, int page)
         {
-            string sql;
-            if (option == "a") {
-                sql = @"select *
-                            from dbo.Comment
-                            ORDER BY Names ASC;";
-            } 
-            else
+            var parameters = new { PageNumber = page, RowOfPage = 15 };
+            string sql = "";
+            if (option == "a") 
             {
                 sql = @"select *
-                            from dbo.Comment
-                            ORDER BY Names DESC;";
+                        from dbo.Comment
+                        ORDER BY Names ASC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
+            } 
+            else if (option == "d")
+            {
+                sql = @"select *
+                        from dbo.Comment
+                        ORDER BY Names DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
             }
-            return SqlDataAccess.LoadData<CommentModel>(sql);
+            else if (option == "n")
+            {
+                sql = @"select *
+                        from dbo.Comment
+                        ORDER BY CommentId DESC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
+            }
+            else if (option == "o")
+            {
+                sql = @"select *
+                        from dbo.Comment
+                        ORDER BY CommentId ASC
+                        OFFSET (@PageNumber-1)*@RowOfPage ROWS
+                        FETCH NEXT @RowOfPage ROWS ONLY;";
+            }
+            return SqlDataAccess.LoadData<CommentModel>(sql, parameters);
         }
 
         public static int CreateFlag(int Id, string Rea)

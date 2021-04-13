@@ -65,7 +65,7 @@ namespace CCS2._0.Controllers
 
 
 
-    public IActionResult ViewPost(int ID, int page = 1)
+    public IActionResult ViewPost(int ID, int page = 1, string Search = "")
         {
             List<ImageModel> Match = new List<ImageModel>();
             List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
@@ -78,7 +78,14 @@ namespace CCS2._0.Controllers
 
             var tag = getTagId(ID);
 
-            var Pages = (int)Math.Ceiling((decimal)GetPages(ID)/5);
+            var Pages = (int)Math.Ceiling((decimal)GetPages(ID) / 5);
+
+            ViewBag.CurrentSearch = Search;
+            if (!string.IsNullOrEmpty(Search))
+            {
+                com = FindComi(Search, ID, page);
+                Pages = (int)Math.Ceiling((decimal)GetPagesSearch(ID, Search) / 5);
+            }
 
             var gallery = new List<Models.GalleryModel>();
 
@@ -90,7 +97,8 @@ namespace CCS2._0.Controllers
                     Comment = entry.Comment,
                     Name = entry.Names,
                     Flag = entry.Flag,
-                    ImageId = entry.ImageId
+                    ImageId = entry.ImageId,
+                    CommentDate = entry.CommentDate.ToShortDateString()
                 });
             }
 
@@ -220,7 +228,8 @@ namespace CCS2._0.Controllers
                     Comment = row.Comment,
                     Name = row.Names,
                     Flag = row.Flag,
-                    ImageId = row.ImageId
+                    ImageId = row.ImageId,
+                    CommentDate = row.CommentDate.ToShortDateString()
                 });
             }
 

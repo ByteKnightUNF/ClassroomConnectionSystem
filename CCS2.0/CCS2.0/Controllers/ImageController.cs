@@ -212,38 +212,40 @@ namespace CCS2._0.Controllers
         }
 
 
-        public IActionResult ViewComment(string filter, string cla, int page = 1, int comRow = 10)
+        public IActionResult ViewComment(string filter, int page = 1, string Search = "")
         {
             List<CommentModel> Com = new List<CommentModel>();
-            var com = LoadComment(page, comRow);
-            var TotalPages = 0;
-            var ComRow = comRow;
-            bool ss = false;
-            switch (filter)
+            var com = LoadComment(page, 15);
+            var TotalPages = (int)Math.Ceiling((decimal)GetPages() / 15);
+            ViewBag.CurrentSearch = Search;
+            if (!string.IsNullOrEmpty(Search))
             {
-                case "flag":
-                    com = FlaggedComment();
-                    TotalPages = (int)Math.Ceiling((decimal)FlagCount() / ComRow);
-                    break;
-                case "ascending":
-                    com = SortName("a");
-                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
-                    break;
-                case "descending":
-                    com = SortName("d");
-                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
-                    break;
-                case "new":
-                    break;
-                case "old":
-                    break;
-                case "class":
-                    ss = true;
-                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
-                    break;
-                default:
-                    TotalPages = (int)Math.Ceiling((decimal)GetPages() / ComRow);
-                    break;
+                com = FindCom(Search, page);
+                TotalPages = (int)Math.Ceiling((decimal)GetPagesSearchCom(Search) / 15);
+            }
+            else
+            { 
+                switch (filter)
+                {
+                    case "flag":
+                        com = FlaggedComment();
+                        TotalPages = (int)Math.Ceiling((decimal)FlagCount() / 15);
+                        break;
+                    case "ascending":
+                        com = Sort("a", page);
+                        break;
+                    case "descending":
+                        com = Sort("d", page);
+                        break;
+                    case "new":
+                        com = Sort("n", page);
+                        break;
+                    case "old":
+                        com = Sort("o", page);
+                        break;
+                    default:
+                        break;
+                }
             }
             foreach (var row in com)
             {
@@ -266,36 +268,13 @@ namespace CCS2._0.Controllers
                     Name = row.Names,
                     Flag = row.Flag,
                     ImageId = row.ImageId,
-                    Class = Match[0].Grade+" Grade | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName,
+                    Class = Match[0].Grade+" | "+Match[0].SchoolYearEnd+" | "+Match[0].TeacherName,
                     CurrentPage = page,
                     Pages = TotalPages,
-                    Filter = filter
+                    Filter = filter,
+                    CommentDate = row.CommentDate.ToShortDateString()
                 });
             }
-            if (ss)
-            {
-                List<CommentModel> sea = new List<CommentModel>();
-                foreach (var item in Com)
-                {
-                    if (item.Class == cla)
-                    {
-                        sea.Add(new CommentModel{
-                            CommentId = item.CommentId,
-                            Comment = item.Comment,
-                            Name = item.Name,
-                            Flag = item.Flag,
-                            ImageId = item.ImageId,
-                            Class = item.Class,
-                            CurrentPage = page,
-                            Pages = TotalPages,
-                            Filter = filter
-                        });
-                    }
-                }
-                return View(sea);
-            }
-
-
             return View(Com);
         }
 
@@ -341,7 +320,8 @@ namespace CCS2._0.Controllers
                         Name = row.Names,
                         Flag = row.Flag,
                         ImageId = row.ImageId,
-                        FlagModel = List[0]
+                        FlagModel = List[0],
+                        CommentDate = row.CommentDate.ToShortDateString()
                     });
                 }
                 else
@@ -352,7 +332,8 @@ namespace CCS2._0.Controllers
                         Comment = row.Comment,
                         Name = row.Names,
                         Flag = row.Flag,
-                        ImageId = row.ImageId
+                        ImageId = row.ImageId,
+                        CommentDate = row.CommentDate.ToShortDateString()
                     });
                 }
 

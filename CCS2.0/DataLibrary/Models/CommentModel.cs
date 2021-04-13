@@ -17,5 +17,7 @@ namespace DataLibrary.Models
         public bool Flag { get; set; }
 
         public int ImageId { get; set; }
+
+        public DateTime CommentDate { get; set; }
     }
 }
