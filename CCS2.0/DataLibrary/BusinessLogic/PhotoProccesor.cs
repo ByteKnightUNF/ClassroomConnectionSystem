@@ -121,6 +121,29 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
         }
+
+        public static int Edit_Image(int ImageId, string Name, string Email, int SchoolYearBegin, int SchoolYearEnd, string Grade, string TeacherName)
+        {
+            ImageModel data = new ImageModel
+            { 
+                ImageId = ImageId,
+                Name = Name,
+                Email = Email,
+                SchoolYearBegin = SchoolYearBegin,
+                SchoolYearEnd = SchoolYearEnd,
+                Grade = Grade,
+                TeacherName = TeacherName
+             
+            };
+
+            string sql = @"update dbo.Image
+            Set Name = @Name, Email = @Email, SchoolYearBegin = @SchoolYearBegin, SchoolYearEnd = @SchoolYearEnd, Grade = @Grade, TeacherName = @TeacherName
+            where ImageId = @ImageId;";
+            
+            
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
         public static List<AddingTagModel> getTag()
         {
          
