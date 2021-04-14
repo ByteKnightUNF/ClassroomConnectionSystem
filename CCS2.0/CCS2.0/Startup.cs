@@ -12,6 +12,7 @@ using CCS2._0.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace CCS2._0
 {
@@ -34,6 +35,15 @@ namespace CCS2._0
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddMvc();
+
+            services.AddRecaptcha(new RecaptchaOptions
+            {
+                SiteKey = Configuration["Recaptcha:SiteKey"],
+                SecretKey = Configuration["Recaptcha:SecretKey"],
+                ValidationMessage = "Are you a robot?"
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

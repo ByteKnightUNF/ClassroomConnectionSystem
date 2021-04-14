@@ -14,6 +14,7 @@ namespace ImageUpload.Models
 
     public class ImageModel
     {
+
         [Key]
         public int ImageId { get; set; }
 
