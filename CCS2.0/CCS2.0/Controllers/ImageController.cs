@@ -211,6 +211,45 @@ namespace CCS2._0.Controllers
 
         }
 
+        public IActionResult EditImage(int Id)
+        {
+            List<ImageModel> Img = new List<ImageModel>();
+            var img = GetPhotoId(Id);
+
+            foreach (var row in img)
+            {
+                
+                    Img.Add(new ImageModel
+                    {
+                        ImageId = row.ImageId,
+                        Name = row.Name,
+                        Email = row.Email,
+                        SchoolYearBegin = row.SchoolYearBegin,
+                        Grade = row.Grade,
+                        TeacherName = row.TeacherName,
+                        src = this.ViewImage(row.ImageFile),
+                    });
+                
+
+            }
+
+            return View(Img[0]);
+        }
+
+        [HttpPost]
+        public IActionResult EditImage(ImageUpload.Models.ImageModel model)
+        {
+            
+
+                    int recordCreated = Edit_Image(model.ImageId, model.Name, model.Email, model.SchoolYearBegin, model.SchoolYearBegin + 1, model.Grade, model.TeacherName);
+
+                    
+
+                
+                return RedirectToAction("ViewImage");
+ 
+        }
+
 
         public IActionResult ViewComment(string filter, int page = 1, string Search = "")
         {

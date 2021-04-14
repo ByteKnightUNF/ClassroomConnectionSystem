@@ -86,7 +86,7 @@
                 </ul>
                 <div class="card-body" style="text-align: center;">
 
-                    @Html.ActionLink("Edit", "Edit", new { ID = item.ImageId }) |
+                    @Html.ActionLink("Edit", "EditImage", new { ID = item.ImageId }) |
                     @if (item.NumberOfPeople > 0)
                     {
                         @Html.ActionLink("Manage Tag", "ManageTag", new { ID = item.ImageId })

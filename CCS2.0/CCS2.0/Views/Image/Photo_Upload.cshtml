@@ -44,14 +44,11 @@
                     <input asp-for="TeacherName" class="form-control" />
                     <span asp-validation-for="TeacherName" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Upload Image</label>
-                    <input type="file" id="File_Upload" name="File" accept="image/*" required />
-                </div>
+ 
 
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                    <button type="button" class="btn btn-secondary" onclick="window.location.href='/home/index'" >Cancel</button>
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='/image/ViewImage'" >Cancel</button>
                 </div>
             </form>
         }
