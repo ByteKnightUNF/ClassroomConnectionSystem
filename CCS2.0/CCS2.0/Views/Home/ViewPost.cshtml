@@ -1,128 +1,11 @@
-﻿
-@model ImageUpload.Models.ImageModel
+﻿@model ImageUpload.Models.ImageModel
+@using PaulMiami.AspNetCore.Mvc.Recaptcha
 
 @{
     ViewData["Title"] = "Photo";
 }
 
-<style>
-    #hid1, #hid2, #hid3, #hid5, #hid6 {
-        display: none;
-    }
-
-    #hid4, #hid7 {
-        display: block;
-    }
-
-    #Image:hover {
-        opacity: 0.7;
-    }
-
-    #Image {
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-        #Image:hover {
-            opacity: 0.7;
-        }
-    /*Credit for pop up Image: w3schools*/
-    /* The Modal (background) */
-    .modal1 {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-    }
-    /* Modal Content (Image) */
-    .modal1-content {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-    }
-    /* Caption of Modal Image (Image Text) - Same Width as the Image */
-    #caption {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-        text-align: center;
-        color: #ccc;
-        padding: 10px 0;
-        height: 150px;
-    }
-    /* Add Animation */
-    .modal1-content, #caption {
-        -webkit-animation-name: zoom;
-        -webkit-animation-duration: 0.6s;
-        animation-name: zoom;
-        animation-duration: 0.6s;
-    }
-
-    @@-webkit-keyframes zoom {
-        from {
-            -webkit-transform: scale(0)
-        }
-
-        to {
-            -webkit-transform: scale(1)
-        }
-    }
-
-    @@keyframes zoom {
-        from {
-            transform: scale(0)
-        }
-
-        to {
-            transform: scale(1)
-        }
-    }
-    /* The Close Button */
-    .close {
-        position: absolute;
-        top: 15px;
-        right: 35px;
-        color: #f1f1f1;
-        font-size: 40px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    /* 100% Image Width on Smaller Screens */
-    @@media only screen and (max-width: 700px) {
-        .modal1-content {
-            width: 100%;
-        }
-    }
-
-    .carousel-control-prev-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
-    }
-
-    .carousel-control-next-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
-    }
-  
-
-
-</style>
-
+<link type="text/css" rel="stylesheet" href="~/css/style.css" />
 
 
 <div class="container-fluid">
@@ -139,7 +22,7 @@
                 <div class="card-body">
                     <p class="card-text">
                         <div class="container">
-                            
+
                             <div id="MainImage">
                                 @if (Model.GalleryModel.Count is 0)
                                 {
@@ -161,10 +44,10 @@
 
 
                                                 <div class="carousel-item">
-                                                    <img class="d-block w-100" id="Image" style="width: 100%; height: auto" src="@entry.GallerySrc" alt="Class of @Model.SchoolYearBegin - @Model.SchoolYearEnd" >
+                                                    <img class="d-block w-100" id="Image-@entry.Id" style="width: 100%; height: auto" src="@entry.GallerySrc" alt="Class of @Model.SchoolYearBegin - @Model.SchoolYearEnd" onclick="ViewImage(@entry.Id)">
                                                 </div>
 
-                                               
+
 
                                             }
 
@@ -204,7 +87,7 @@
                     {
                         <button id="hid7" type="button" class="btn btn-secondary" onclick="viewTags()">Show Tags</button>
                         <div id="hid5" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                            <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
+                            <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()" >Hide Tags</button>
                             @for (int i = 1; i < Model.NumberOfPeople + 1; i++)
                             {
                                 int a = i;
@@ -310,12 +193,24 @@
                                     </div>
                                     <input type="number" name="Comments.Flag" hidden value="0">
                                     <input type="number" name="Comments.ImageId" hidden value="@Model.ImageId">
+
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <recaptcha />
+                                        <span class="text-danger" id="recaptchaErrorMessage"></span>
+
+                                    </div>
+                                    <br />
                                     <div class="modal-footer" style="border-top:none">
                                         <input type="submit" value="Post Comment" class="btn btn-primary" />
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                             </form>
+                            @section Scripts {
+                                <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+                                <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -385,6 +280,9 @@
         </div>
     </div>
 </div>
+
+
+
 <script>
     function newTag(id, tag) {
         holder = document.getElementById("Tag_Photo_id");
@@ -420,6 +318,7 @@
     }
     var modal = document.getElementById("myModal");
     // Get the image and insert it inside the modal - use its "alt" text as a caption
+
     var img = document.getElementById("Image");
     var modalImg = document.getElementById("img01");
     var captionText = document.getElementById("caption");
@@ -428,6 +327,8 @@
         modalImg.src = this.src;
         captionText.innerHTML = this.alt;
     }
+
+
     var Tagimg = document.getElementById("TagImage");
     Tagimg.onclick = function () {
         modal.style.display = "block";

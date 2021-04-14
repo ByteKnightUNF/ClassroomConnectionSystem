@@ -21,6 +21,10 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GalleryModel = CCS2._0.Models.GalleryModel;
+using System.Net.Http;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace CCS2._0.Controllers
 {
@@ -33,6 +37,7 @@ namespace CCS2._0.Controllers
             _logger = logger;
         }
 
+   
 
 
         public IActionResult Index(string sBase64String, ImageModel model)
@@ -63,10 +68,9 @@ namespace CCS2._0.Controllers
 
         }
 
-
-
-    public IActionResult ViewPost(int ID, int page = 1, string Search = "")
+        public IActionResult ViewPost(int ID, int page = 1, string Search = "")
         {
+
             List<ImageModel> Match = new List<ImageModel>();
             List<ImageUpload.Models.CommentModel> Com = new List<ImageUpload.Models.CommentModel>();
             List<ImageUpload.Models.AddingTagModel> Tag = new List<ImageUpload.Models.AddingTagModel>();
@@ -177,14 +181,20 @@ namespace CCS2._0.Controllers
             return View(Match[0]);
         }
 
+        [ValidateRecaptcha]
         [HttpPost]
         public IActionResult ViewPost(ImageUpload.Models.ImageModel model, int Id)
         {
-          
+            string captchaResponse =
+            HttpContext.Request.Form["g-Recaptcha-Response"];
+
             _ = CreateComment(model.Comments.Comment, model.Comments.Name, model.Comments.Flag, model.Comments.ImageId);
+           
+            
 
             return RedirectToAction("ViewPost", new { ID = Id });
         }
+   
 
 
         public IActionResult NewTag(int Id, int Tag, string Name)
