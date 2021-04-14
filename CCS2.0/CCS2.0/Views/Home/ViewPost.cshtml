@@ -1,26 +1,17 @@
 ﻿@model ImageUpload.Models.ImageModel
+@using PaulMiami.AspNetCore.Mvc.Recaptcha
 
 @{
     ViewData["Title"] = "Photo";
 }
-<style>
-#hid1, #hid2, #hid3, #hid5, #hid6 {
-    display: none;
-}
-#hid4, #hid7 {
-    display: block;
-}
 
+<link type="text/css" rel="stylesheet" href="~/css/style.css" />
 
-    
-
-</style>
 
 <div class="container-fluid">
     <p>@Html.ActionLink("<Back", "index") </p>
-    
-    <div class="row">
 
+    <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header" style="text-align:center">
@@ -28,60 +19,97 @@
                     @Html.DisplayFor(model => model.Grade) Grade &emsp;|&emsp;
                     @Html.DisplayFor(model => model.TeacherName)
                 </h5>
-
-
-
                 <div class="card-body">
                     <p class="card-text">
                         <div class="container">
-                            <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Unknown Image" class="center" />
+
+                            <div id="MainImage">
+                                @if (Model.GalleryModel.Count is 0)
+                                {
+                                    <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Class of @Model.SchoolYearBegin - @Model.SchoolYearEnd" class="center" />
+                                }
+                                else
+                                {
+                                    <div id="carouselExampleControls-@Model.ImageId" class="carousel slide" data-ride="carousel" data-interval="false">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="@Model.src" id="Image" style="width: 100%; height: auto" alt="Class of @Model.SchoolYearBegin - @Model.SchoolYearEnd" class="center" />
+                                            </div>
+
+
+
+
+                                            @foreach (var entry in Model.GalleryModel)
+                                            {
+
+
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100" id="Image-@entry.Id" style="width: 100%; height: auto" src="@entry.GallerySrc" alt="Class of @Model.SchoolYearBegin - @Model.SchoolYearEnd" onclick="ViewImage(@entry.Id)">
+                                                </div>
+
+
+
+                                            }
+
+
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleControls-@Model.ImageId" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls-@Model.ImageId" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+
                             <div class="overlay">
-                                <img src="@Model.TaggedSrc" id="TagImage" style="width: 100%; height: auto; display:none" alt="Unknown Image" class="center" />
+                                <img src="@Model.TaggedSrc" id="TagImage" style="width: 100%; height: auto; display:none" alt="Tagged Image" />
                             </div>
                         </div>
                     </p>
+
+
+                    <div id="myModal" class="modal1">
+                        <!-- The Close Button -->
+                        <span class="close">&times;</span>
+                        <!-- Modal Content (The Image) -->
+                        <img class="modal-content" id="img01">
+                        <!-- Modal Caption (Image Text) -->
+                        <div id="caption"></div>
+                    </div>
 
 
 
                     @if (Model.NumberOfPeople > 0)
                     {
                         <button id="hid7" type="button" class="btn btn-secondary" onclick="viewTags()">Show Tags</button>
-
                         <div id="hid5" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-
-                            <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()">Hide Tags</button>
-
+                            <button id="hid6" class="btn btn-outline-secondary" onclick="hideTags()" >Hide Tags</button>
                             @for (int i = 1; i < Model.NumberOfPeople + 1; i++)
                             {
                                 int a = i;
-
                                 @foreach (var tags in Model.AddingTagModel)
                                 {
-
                                     @if (tags.Tag == @i)
                                     {
                                         <button type="button" id="photobutton" class="btn btn-secondary">@i - @tags.Name</button>
                                         i++;
                                         break;
                                     }
-
                                 }
-
                                 @if (a == @i)
                                 {
                                     <button type="button" id="photobutton" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="newTag(@Model.ImageId,@i)">@i</button>
                                 }
-
                                 else
                                 {
                                     i--;
                                 }
                             }
-
-
                         </div>
-
-
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -96,18 +124,13 @@
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                             <div style="display:grid; grid-template-columns:auto auto;">
                                                 <div id="Tag_Photo_id" class="form-group">
-
                                                 </div>
                                                 <div id="Tag_id" class="form-group">
-
                                                 </div>
                                                 <div class="form-group">
-
                                                     <input asp-for="Name" value="" class="form-control" />
                                                     <span asp-validation-for="Name" class="text-danger"></span>
                                                 </div>
-
-
                                             </div>
                                             <div class="modal-footer">
                                                 <input type="submit" value="Submit" class="btn btn-primary" />
@@ -115,29 +138,18 @@
                                             </div>
                                         </form>
                                     </div>
-
-
-
                                 </div>
                             </div>
                         </div>
-
-
                     }
                     else
                     {
-
                         <div>Currently working on the tags for this photo. Thank you for your patience!</div>
                     }
                 </div>
-
-
             </div>
-
         </div>
-
         <div class="col-md-6">
-
             <h3 style="padding: 5px 0px 4px 10px;">
                 Connect with Classmates and Teachers
             </h3>
@@ -145,11 +157,11 @@
                 <h5 style="font-weight:normal">
                     Share some memories!
                 </h5>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">
                     Leave a Comment
                 </button>
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -182,21 +194,28 @@
                                     <input type="number" name="Comments.Flag" hidden value="0">
                                     <input type="number" name="Comments.ImageId" hidden value="@Model.ImageId">
 
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <recaptcha />
+                                        <span class="text-danger" id="recaptchaErrorMessage"></span>
 
-
-
-
+                                    </div>
+                                    <br />
                                     <div class="modal-footer" style="border-top:none">
                                         <input type="submit" value="Post Comment" class="btn btn-primary" />
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                             </form>
+                            @section Scripts {
+                                <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+                                <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                            }
+
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div>
                     <form class="form-inline" asp-action="ViewPost" method="get">
@@ -212,8 +231,6 @@
                     </form>
                 </div>
             </nav>
-
-
             <table class="table table-striped">
                 @if (Model.CommentModel.Count() == 0)
                 {
@@ -223,10 +240,7 @@
                         </td>
                     </tr>
                 }
-
-
                 <tbody>
-
                     @foreach (var com in Model.CommentModel)
                     {
                         if (com.Flag != true)
@@ -243,10 +257,8 @@
                             </tr>
                         }
                     }
-
                 </tbody>
             </table>
-
             <p style="text-align:center">
                 Pages:&nbsp;
                 @for (int i = 1; i <= Model.Pages; i++)
@@ -265,58 +277,87 @@
                     }
                 }
             </p>
-
-
-
-
-
-
         </div>
-
-        </div>
-
+    </div>
 </div>
 
 
+
 <script>
-
-
     function newTag(id, tag) {
-                    holder = document.getElementById("Tag_Photo_id");
-                    add1 = document.createElement("input");
-                    add1.setAttribute("type", "hidden");
-                    add1.setAttribute("name", "Id");
-                    add1.setAttribute("value", id);
-                    holder.append(add1);
+        holder = document.getElementById("Tag_Photo_id");
+        add1 = document.createElement("input");
+        add1.setAttribute("type", "hidden");
+        add1.setAttribute("name", "Id");
+        add1.setAttribute("value", id);
+        holder.append(add1);
+        holder1 = document.getElementById("Tag_id");
+        add2 = document.createElement("input");
+        add2.setAttribute("type", "hidden");
+        add2.setAttribute("name", "Tag");
+        add2.setAttribute("value", tag);
+        holder1.append(add2);
+    }
+    function viewTags() {
+        document.getElementById("TagImage").style.display = "block";
+        document.getElementById("MainImage").style.display = "none";
+        document.getElementById("hid5").style.display = "flex";
+        document.getElementById("hid5").style.justifyContent = "center";
+        document.getElementById("hid5").style.alignItems = "center";
+        document.getElementById("hid6").style.display = "block";
+        document.getElementById("hid7").style.display = "none";
 
-                    holder1 = document.getElementById("Tag_id");
-                    add2 = document.createElement("input");
-                    add2.setAttribute("type", "hidden");
-                    add2.setAttribute("name", "Tag");
-                    add2.setAttribute("value", tag);
-                    holder1.append(add2);
+    }
+    function hideTags() {
+        document.getElementById("TagImage").style.display = "none";
+        document.getElementById("MainImage").style.display = "block";
+        document.getElementById("hid5").style.display = "none";
+        document.getElementById("hid6").style.display = "none";
+        document.getElementById("hid7").style.display = "block";
 
-                }
+    }
+    var modal = document.getElementById("myModal");
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+
+    var img = document.getElementById("Image");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
 
 
-                function viewTags() {
+    var Tagimg = document.getElementById("TagImage");
+    Tagimg.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+    // Get the <span> element that closes the modal1
+    var span = document.getElementsByClassName("close")[0];
+    // When the user clicks on <span> (x), close the modal1
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
 
-                    document.getElementById("TagImage").style.display = "block";
-                    document.getElementById("Image").style.display = "none";
-                    document.getElementById("hid5").style.display = "flex";
-                    document.getElementById("hid5").style.justifyContent = "center";
-                    document.getElementById("hid5").style.alignItems = "center";
-                    document.getElementById("hid6").style.display = "block";
-                    document.getElementById("hid7").style.display = "none";
-                }
 
-                function hideTags() {
-                    document.getElementById("TagImage").style.display = "none";
-                    document.getElementById("Image").style.display = "block";
-                    document.getElementById("hid5").style.display = "none";
-                    document.getElementById("hid6").style.display = "none";
-                    document.getElementById("hid7").style.display = "block";
-                }
+
+    function ViewImage(i) {
+
+        ImageN = document.getElementById("Image-" + i);
+
+        ImageN.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+
+        }
+
+    }
+
+
+
 
 </script>
-

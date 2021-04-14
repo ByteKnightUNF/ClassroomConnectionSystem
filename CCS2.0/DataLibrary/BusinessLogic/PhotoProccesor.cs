@@ -58,14 +58,27 @@ namespace DataLibrary.BussinessLogic
 
             return SqlDataAccess.SaveData(sql, data);
         }
+        
+        public static int recordGallery(int ImageId, Byte[] ImageFile)
+        {
 
-      
+            GalleryModel data = new GalleryModel
+            {
+                ImageId = ImageId,
+                ImageFile = ImageFile,
+
+            };
+
+            string sql = @"insert into dbo.Gallery (ImageId, ImageFile)
+                          values(@ImageId, @ImageFile); ";
+
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
+
 
         public static int CreateComment(string Comment, string Name, Boolean Flag, int ImageId)
         {
-
-
-
 
             CommentModel data = new CommentModel
             {
@@ -107,6 +120,29 @@ namespace DataLibrary.BussinessLogic
                         Where ImageId = @ImageId ;";
 
             return SqlDataAccess.LoadData<ImageModel>(sql, parameters);
+        }
+
+        public static int Edit_Image(int ImageId, string Name, string Email, int SchoolYearBegin, int SchoolYearEnd, string Grade, string TeacherName)
+        {
+            ImageModel data = new ImageModel
+            { 
+                ImageId = ImageId,
+                Name = Name,
+                Email = Email,
+                SchoolYearBegin = SchoolYearBegin,
+                SchoolYearEnd = SchoolYearEnd,
+                Grade = Grade,
+                TeacherName = TeacherName
+             
+            };
+
+            string sql = @"update dbo.Image
+            Set Name = @Name, Email = @Email, SchoolYearBegin = @SchoolYearBegin, SchoolYearEnd = @SchoolYearEnd, Grade = @Grade, TeacherName = @TeacherName
+            where ImageId = @ImageId;";
+            
+            
+
+            return SqlDataAccess.SaveData(sql, data);
         }
         public static List<AddingTagModel> getTag()
         {
@@ -265,11 +301,26 @@ namespace DataLibrary.BussinessLogic
         {
 
             string sql = @"select *
-                        from dbo.Image;";
+                        from dbo.Image
+                         Order by SchoolYearBegin ASC ;";
 
             return SqlDataAccess.LoadData<ImageModel>(sql);
         }
+        public static List<GalleryModel> GetGallery(int ImageId)
+        {
 
+            GalleryModel data = new GalleryModel
+            {
+                ImageId = ImageId
+
+            };
+            string sql = @"select *
+                        from dbo.Gallery
+                         where ImageId = @ImageId;";
+
+            return SqlDataAccess.LoadData<GalleryModel>(sql, data);
+        }
+        
         public static List<CommentModel> LoadComment(int page, int row = 10)
         {
             var parameters = new { PageNumber = page, RowOfPage = row };

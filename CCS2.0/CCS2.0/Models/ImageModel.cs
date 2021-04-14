@@ -14,6 +14,7 @@ namespace ImageUpload.Models
 
     public class ImageModel
     {
+
         [Key]
         public int ImageId { get; set; }
 
@@ -27,7 +28,7 @@ namespace ImageUpload.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter the beginning School Year of the photo")]
-        [Display(Name = "School Year Beginning")]
+        [Display(Name = "Beginning School Year ")]
         
         public int SchoolYearBegin { get; set; }
 
@@ -56,6 +57,10 @@ namespace ImageUpload.Models
         public string src { get; set; }
         [NotMapped]
         public string TaggedSrc { get; set; }
+
+
+        public ICollection<GalleryModel> GalleryModel { get; set; }
+
 
         public ICollection<CommentModel> CommentModel { get; set; }
 

@@ -11,6 +11,7 @@ namespace ImageUpload.Models
 {
     public class CommentModel
     {
+
         [Key]
         public int CommentId { get; set; }
 

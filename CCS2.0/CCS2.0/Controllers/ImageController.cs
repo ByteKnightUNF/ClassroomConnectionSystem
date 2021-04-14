@@ -21,6 +21,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Configuration;
 using CCS2._0.Models;
 using TagModel = ImageUpload.Models.TagModel;
+using GalleryModel = CCS2._0.Models.GalleryModel;
 
 namespace CCS2._0.Controllers
 {
@@ -58,7 +59,7 @@ namespace CCS2._0.Controllers
                     }
 
 
-                    int recordCreated = CreatePhoto(model.Name,model.Email,model.SchoolYearBegin, model.SchoolYearEnd, model.Grade,model.TeacherName, bytes);
+                    int recordCreated = CreatePhoto(model.Name,model.Email,model.SchoolYearBegin, model.SchoolYearBegin +1 , model.Grade,model.TeacherName, bytes);
 
                     ViewBag.image = ViewImage(bytes);
 
@@ -91,8 +92,11 @@ namespace CCS2._0.Controllers
          
             List<ImageModel> Match = new List<ImageModel>();
 
-            var match = LoadPhoto();
+            List<Models.GalleryModel> Gallery = new List<Models.GalleryModel>();
 
+            var match = LoadPhoto();
+            var gallery = new List<Models.GalleryModel>();
+             
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -100,11 +104,19 @@ namespace CCS2._0.Controllers
 
             }
 
+            
 
 
             foreach (var row in match)
             {
 
+                foreach(var entry in GetGallery(row.ImageId))
+                {
+                    gallery.Add(new GalleryModel
+                    {
+                        GallerySrc = this.ViewImage(entry.ImageFile)
+                    });
+                }
 
                 Match.Add(new ImageModel
                 {
@@ -116,9 +128,12 @@ namespace CCS2._0.Controllers
                     Grade = row.Grade,
                     TeacherName = row.TeacherName,
                     src = this.ViewImage(row.ImageFile),
-                    NumberOfPeople = row.NumberOfPeople
+                    NumberOfPeople = row.NumberOfPeople,
+                    GalleryModel = gallery
 
                 });
+
+                gallery = new List<Models.GalleryModel>();
             }
 
             return View(Match);
@@ -194,6 +209,45 @@ namespace CCS2._0.Controllers
                 return View();
             }
 
+        }
+
+        public IActionResult EditImage(int Id)
+        {
+            List<ImageModel> Img = new List<ImageModel>();
+            var img = GetPhotoId(Id);
+
+            foreach (var row in img)
+            {
+                
+                    Img.Add(new ImageModel
+                    {
+                        ImageId = row.ImageId,
+                        Name = row.Name,
+                        Email = row.Email,
+                        SchoolYearBegin = row.SchoolYearBegin,
+                        Grade = row.Grade,
+                        TeacherName = row.TeacherName,
+                        src = this.ViewImage(row.ImageFile),
+                    });
+                
+
+            }
+
+            return View(Img[0]);
+        }
+
+        [HttpPost]
+        public IActionResult EditImage(ImageUpload.Models.ImageModel model)
+        {
+            
+
+                    int recordCreated = Edit_Image(model.ImageId, model.Name, model.Email, model.SchoolYearBegin, model.SchoolYearBegin + 1, model.Grade, model.TeacherName);
+
+                    
+
+                
+                return RedirectToAction("ViewImage");
+ 
         }
 
 
@@ -342,6 +396,7 @@ namespace CCS2._0.Controllers
         {
             ViewBag.image = null;
             return View();
+
         }
 
 
@@ -374,6 +429,46 @@ namespace CCS2._0.Controllers
 
             return View();
         }
+        public IActionResult ImageGallery()
+        {
+            ViewBag.image = null;
+            return View();
+
+        }
+
+
+        [HttpPost]
+
+        public IActionResult ImageGallery(int ID, GalleryModel model)
+        {
+            Byte[] bytes = null;
+
+            if (model.ImageFile != null)
+            {
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    {
+                        model.ImageFile.OpenReadStream().CopyTo(ms);
+
+                        bytes = ms.ToArray();
+                    }
+
+
+                    int RecordGallery = recordGallery(ID, bytes);
+
+                    ViewBag.image = ViewImage(bytes);
+
+                }
+                return RedirectToAction("ViewImage");
+
+
+            }
+
+            return View();
+        }
+
+
         public IActionResult DeleteTag(int ID, ImageModel model)
         {
             try
@@ -391,10 +486,15 @@ namespace CCS2._0.Controllers
 
         public IActionResult EditTag(int Id, int Tag, string Name)
         {
-
-            int recordCreated = Edit_Tag(Id, Tag, Name);
-
-            return RedirectToAction("ManageTag");
+            try
+            {
+                int recordCreated = Edit_Tag(Id, Tag, Name);
+                return RedirectToAction("ManageTag");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
 
